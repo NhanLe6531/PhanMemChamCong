@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Chấm Công Làm Thêm Sinh Viên - Quản Lý Ca & Lương</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      overflow-x: hidden;
+    }
+    .pulse-ring {
+      animation: pulseRing 2s infinite;
+    }
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+      70% { box-shadow: 0 0 0 14px rgba(37, 99, 235, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+    }
+    .cal-cell {
+      transition: all 0.15s ease;
+    }
+    .cal-cell:active {
+      transform: scale(0.94);
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-24">
+
+  <!-- Top Header -->
+  <header class="sticky top-0 z-30 bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-sm shrink-0">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="4" width="18" height="17" rx="4" fill="#2563eb"/>
+            <path d="M8 2v3M16 2v3" stroke="#1d4ed8" stroke-width="2.2" stroke-linecap="round"/>
+            <path d="M3 9h18" stroke="#93c5fd" stroke-width="1.5"/>
+            <path d="M8.5 14.5l2.3 2.3 4.7-4.8" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h1 class="font-bold text-sm sm:text-base leading-tight">Chấm Công Sinh Viên</h1>
+            <span id="roleBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-400/25 text-emerald-100 border border-emerald-300/40">Part-time</span>
+          </div>
+          <p class="text-[11px] text-blue-100" id="headerSubtitle">Chấm công theo ca (4h / 8h) • Lưu bảng công từng tháng</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <div class="hidden sm:flex bg-blue-900/40 p-0.5 rounded-xl items-center text-[11px] border border-white/15">
+          <button id="btnRoleEmployee" type="button" class="px-2 py-1 rounded-lg font-medium text-blue-100">Cá nhân</button>
+          <button id="btnRoleManager" type="button" class="px-2 py-1 rounded-lg font-semibold bg-white text-blue-700">Quản lý</button>
+        </div>
+        <button id="btnResetDemo" type="button" title="Xóa sạch toàn bộ dữ liệu" class="px-2.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold flex items-center gap-1 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+          </svg>
+          <span>Xóa dữ liệu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-3xl mx-auto px-3 sm:px-4 pt-3.5 space-y-3.5">
+
+    <!-- Quick Setup Bar: Student Selector + Shift Wage Input (0 - 100.000đ) + Shift Hours -->
+    <section class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 space-y-3">
+      <!-- Empty Student Banner (Shown when state.employees.length === 0) -->
+      <div id="emptyStudentBanner" class="hidden p-3.5 rounded-xl bg-blue-50 border border-blue-200 flex-col sm:flex-row items-center justify-between gap-2.5">
+        <div class="text-xs text-blue-900">
+          <p class="font-bold text-sm">Chưa có sinh viên nào trong danh sách!</p>
+          <p class="text-blue-700 mt-0.5">Hãy bấm <strong>"+ Thêm SV"</strong> để tạo tên sinh viên (hoặc tên công việc làm thêm) trước khi chấm công.</p>
+        </div>
+        <button id="btnBannerAddStudent" type="button" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shrink-0 shadow-xs">
+          + Tạo sinh viên ngay
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- Select Student / Part-time Staff -->
+        <div class="flex items-center justify-between gap-2 bg-slate-50 rounded-xl p-2.5 border border-slate-200/70">
+          <div class="flex items-center gap-2.5 min-w-0 flex-1">
+            <div id="activeEmpAvatar" class="w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs shrink-0">
+              SV
+            </div>
+            <div class="min-w-0 flex-1">
+              <label for="selectActiveEmployee" class="text-[10px] font-semibold text-slate-400 uppercase block">Sinh viên đang chọn</label>
+              <select id="selectActiveEmployee" class="w-full text-xs sm:text-sm font-bold text-slate-800 bg-transparent focus:outline-none truncate">
+              </select>
+            </div>
+          </div>
+          <button id="btnQuickAddStudent" type="button" class="px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-[11px] font-semibold shrink-0">
+            + Thêm SV
+          </button>
+        </div>
+
+        <!-- Shift Wage Input (0 - 100.000đ) -->
+        <div class="bg-emerald-50/60 rounded-xl p-2.5 border border-emerald-200/80 flex items-center justify-between gap-2">
+          <div class="flex-1">
+            <label for="quickShiftRateInput" class="text-[10px] font-bold text-emerald-700 uppercase block">Mức lương/giờ (0 - 100.000 ₫)</label>
+            <div class="flex items-center gap-1.5 mt-0.5">
+              <input id="quickShiftRateInput" type="number" min="0" max="100000" step="1000" value="0" placeholder="Nhập 0 - 100000" class="w-full px-2.5 py-1 text-sm font-extrabold text-emerald-800 bg-white rounded-lg border border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+              <span class="text-xs font-bold text-emerald-700 shrink-0">₫/giờ</span>
+            </div>
+          </div>
+          <button id="btnSaveQuickRate" type="button" class="px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shrink-0">
+            Áp dụng
+          </button>
+        </div>
+      </div>
+
+      <!-- Preset Quick Rate Chips (0 - 100.000) & Default Shift Hours -->
+      <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100 text-[11px]">
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <span class="text-slate-400 font-medium">Lương/giờ:</span>
+          <button type="button" data-rate-preset="0" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-600 font-semibold">0₫</button>
+          <button type="button" data-rate-preset="20000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">20.000₫</button>
+          <button type="button" data-rate-preset="25000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">25.000₫</button>
+          <button type="button" data-rate-preset="30000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">30.000₫</button>
+          <button type="button" data-rate-preset="50000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">50.000₫</button>
+          <button type="button" data-rate-preset="80000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">80.000₫</button>
+          <button type="button" data-rate-preset="100000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">100.000₫</button>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          <span class="text-slate-400 font-medium">Số giờ/ca mặc định:</span>
+          <select id="selectDefaultShiftHours" class="px-2 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-bold border border-blue-200 focus:outline-none">
+            <option value="4">Ca 4 tiếng</option>
+            <option value="5">Ca 5 tiếng</option>
+            <option value="6">Ca 6 tiếng</option>
+            <option value="8">Ca 8 tiếng</option>
+            <option value="12">Ca 12 tiếng</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hidden Workplace Compatibility Container -->
+    <section class="hidden">
+      <span id="activeWorkplaceTitle">Làm thêm</span>
+      <button id="btnOpenWorkplaceModal" type="button">+ Thêm công việc</button>
+      <div id="workplaceCardsContainer"></div>
+      <span id="kpiTotalStaff">0</span>
+      <span id="kpiPresentToday">0</span>
+      <span id="kpiLateToday">0</span>
+      <span id="kpiPendingRequests">0</span>
+    </section>
+
+    <!-- TAB 1: BẢNG CHẤM CÔNG LỊCH THÁNG & LƯU THÁNG -->
+    <section id="viewCheckin" class="space-y-3.5">
+
+      <!-- Monthly Summary Card -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3.5">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div>
+            <p class="text-xs text-slate-500 font-medium">Lương làm thêm (<span id="summaryMonthLabel">Tháng 10/2026</span>)</p>
+            <p id="atworkCurrentEmpSalary" class="text-2xl font-extrabold text-emerald-600 tracking-tight mt-0.5">0 ₫</p>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button id="btnArchiveCurrentMonth" type="button" class="text-xs font-semibold text-emerald-700 hover:bg-emerald-100 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl transition">
+              💾 Lưu bảng công tháng
+            </button>
+            <button id="btnViewCurrentPayslip" type="button" class="text-xs font-semibold text-blue-600 hover:text-blue-700 flex items-center gap-1 bg-blue-50 px-3 py-1.5 rounded-xl">
+              <span>Xem phiếu lương</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3 Simple Summary Pills (Số ca + Tổng giờ + Ứng trước) -->
+        <div class="grid grid-cols-3 gap-2 text-center bg-slate-50 rounded-xl p-2.5 border border-slate-200/60 text-xs">
+          <div>
+            <p class="text-[11px] text-slate-400">Tổng số ca & giờ</p>
+            <p class="font-extrabold text-slate-800 text-sm mt-0.5"><span id="atworkBreakdownDays">0</span> ca (<span id="atworkBreakdownTotalHours">0</span>h)</p>
+            <p id="atworkBreakdownBase" class="text-[11px] text-emerald-600 font-semibold">0 ₫</p>
+          </div>
+          <div class="border-x border-slate-200/80">
+            <p class="text-[11px] text-slate-400">Phụ cấp / OT (<span id="atworkBreakdownOt">0</span>h)</p>
+            <p id="atworkBreakdownAllowance" class="font-bold text-blue-600 text-sm mt-0.5">+0 ₫</p>
+            <p id="atworkBreakdownOtPay" class="text-[10px] text-slate-400">+0 ₫</p>
+          </div>
+          <div>
+            <p class="text-[11px] text-slate-400">Đã ứng trước</p>
+            <p id="atworkBreakdownAdvance" class="font-bold text-rose-600 text-sm mt-0.5">-0 ₫</p>
+          </div>
+        </div>
+
+        <!-- 4 Simple Student Actions -->
+        <div class="grid grid-cols-4 gap-2 text-center">
+          <button id="btnGridDayPunch" type="button" class="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-xs font-bold">✓</span>
+            <span class="text-[11px] font-semibold text-slate-700">Chấm công</span>
+          </button>
+
+          <button id="btnGridAdvance" type="button" class="p-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-rose-500 text-white flex items-center justify-center text-xs font-bold">₫</span>
+            <span class="text-[11px] font-semibold text-slate-700">Ứng lương</span>
+          </button>
+
+          <button id="btnGridAllowance" type="button" class="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-blue-500 text-white flex items-center justify-center text-xs font-bold">+</span>
+            <span class="text-[11px] font-semibold text-slate-700">Phụ cấp</span>
+          </button>
+
+          <button id="btnQuickLeave" type="button" class="p-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-indigo-500 text-white flex items-center justify-center text-xs font-bold">P</span>
+            <span class="text-[11px] font-semibold text-slate-700">Xin nghỉ phép <span class="hidden">Tạo đơn nhanh</span></span>
+          </button>
+        </div>
+
+        <div class="hidden">
+          <button id="btnQuickOvertime" type="button">Đăng ký OT <span>Báo làm thêm giờ</span></button>
+          <button id="btnGridShiftTask" type="button">Giao việc</button>
+          <button id="btnGridCashbook" type="button">Thu - Chi</button>
+          <button id="btnGridLocationMap" type="button">Vị trí GPS</button>
+        </div>
+      </div>
+
+      <!-- MONTHLY CALENDAR GRID WITH MONTH SWITCHER -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3 pb-2.5 border-b border-slate-100">
+          <!-- Month Selector Bar -->
+          <div class="flex items-center gap-1.5">
+            <button id="btnPrevMonth" type="button" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+              ◀ Tháng trước
+            </button>
+            <input id="inputActiveMonth" type="month" value="2026-10" class="px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-bold text-slate-800 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <button id="btnNextMonth" type="button" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+              Tháng sau ▶
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 text-[10px] font-semibold">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-emerald-500 inline-block"></span>1 ca (4h/8h)</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-amber-500 inline-block"></span>2 ca</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-cyan-500 inline-block"></span>1/2 ca</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-rose-400 inline-block"></span>Nghỉ</span>
+          </div>
+        </div>
+
+        <p class="text-[11px] text-slate-500 mb-2.5">
+          Chạm vào ngày bất kỳ để chọn <strong>Ca Sáng / Chiều / Tối</strong>, chọn <strong>Số tiếng (4h, 8h...)</strong> và <strong>Mức lương ca (0 - 100.000₫)</strong>. Khi đổi qua tháng mới, dữ liệu tháng cũ tự động được giữ lại!
+        </p>
+
+        <div class="grid grid-cols-7 gap-1.5 text-center text-[11px] font-bold text-slate-400 mb-1.5">
+          <div>T2</div>
+          <div>T3</div>
+          <div>T4</div>
+          <div>T5</div>
+          <div>T6</div>
+          <div>T7</div>
+          <div class="text-rose-500">CN</div>
+        </div>
+
+        <div id="atworkCalendarGrid" class="grid grid-cols-7 gap-1.5">
+        </div>
+      </div>
+
+      <!-- SAVED MONTHLY TIMESHEETS ARCHIVE CARD -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">📂 Bảng chấm công các tháng đã lưu</h3>
+            <p class="text-[11px] text-slate-500">Lưu trữ lịch sử bảng công và lương của từng tháng để đối chiếu bất cứ lúc nào</p>
+          </div>
+        </div>
+        <div id="savedMonthsList" class="space-y-2">
+        </div>
+      </div>
+
+      <!-- Quick Today Check-in Card -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div class="flex items-center gap-3">
+            <button id="btnMainPunch" type="button" class="w-16 h-16 rounded-2xl bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-md flex flex-col items-center justify-center shrink-0 active:scale-95 transition">
+              <span id="punchTitle" class="text-xs font-extrabold">VÀO CA</span>
+              <span id="punchSubtitle" class="text-[9px] text-blue-100">Hôm nay</span>
+            </button>
+            <div>
+              <div class="flex items-center gap-2">
+                <span id="liveClockText" class="text-lg font-extrabold text-slate-800 tabular-nums">08:00:00</span>
+                <span id="liveDateText" class="text-xs text-slate-400">22/10/2026</span>
+              </div>
+              <div class="flex items-center gap-2 mt-1">
+                <label for="selectShift" class="text-xs text-slate-500">Ca:</label>
+                <select id="selectShift" class="text-xs font-semibold bg-slate-100 text-slate-700 rounded-lg px-2.5 py-1 focus:outline-none">
+                  <option value="Ca Sáng (4 tiếng)">Ca Sáng (4 tiếng)</option>
+                  <option value="Ca Sáng (8 tiếng)">Ca Sáng (8 tiếng)</option>
+                  <option value="Ca Chiều (4 tiếng)">Ca Chiều (4 tiếng)</option>
+                  <option value="Ca Chiều (8 tiếng)">Ca Chiều (8 tiếng)</option>
+                  <option value="Ca Tối (4 tiếng)">Ca Tối (4 tiếng)</option>
+                  <option value="Ca Tối (8 tiếng)">Ca Tối (8 tiếng)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full sm:w-auto grid grid-cols-3 gap-2 text-center bg-slate-50 p-2 rounded-xl border border-slate-100">
+            <div class="px-2">
+              <p class="text-[10px] text-slate-400">Giờ vào</p>
+              <p id="todayInTime" class="text-xs font-bold text-slate-800">--:--</p>
+            </div>
+            <div class="px-2 border-x border-slate-200">
+              <p class="text-[10px] text-slate-400">Giờ ra</p>
+              <p id="todayOutTime" class="text-xs font-bold text-slate-800">--:--</p>
+            </div>
+            <div class="px-2">
+              <p class="text-[10px] text-slate-400">Thời gian</p>
+              <p id="todayWorkHours" class="text-xs font-bold text-blue-600">0h</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hidden">
+          <span id="gpsDot"></span>
+          <span id="gpsLocationText"></span>
+          <span id="wifiStatusText"></span>
+          <button id="btnToggleLocationMode" type="button">Đổi vị trí</button>
+          <button id="btnOpenQrModal" type="button">Quét QR</button>
+          <svg id="punchIcon"></svg>
+          <div id="todayActivityList"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TAB 2: DANH SÁCH SINH VIÊN / NHÂN VIÊN PART-TIME -->
+    <section id="viewEmployees" class="space-y-3.5 hidden">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h2 class="text-sm sm:text-base font-bold text-slate-800">Danh sách Sinh viên làm thêm</h2>
+            <p class="text-xs text-slate-500">Thêm các bạn sinh viên, cài đặt mức lương/giờ (0 - 100.000₫/giờ) và số giờ mỗi ca (4h, 8h...)</p>
+          </div>
+          <button id="btnOpenAddEmployee" type="button" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition">
+            <span>+ Thêm nhân viên</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <div class="sm:col-span-2">
+            <input id="inputSearchEmployee" type="text" placeholder="Tìm tên sinh viên, SĐT..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          </div>
+          <div>
+            <select id="selectFilterDept" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white">
+              <option value="ALL">Tất cả vị trí</option>
+              <option value="Phục vụ">Phục vụ</option>
+              <option value="Pha chế">Pha chế</option>
+              <option value="Thu ngân">Thu ngân</option>
+              <option value="Bán hàng">Bán hàng</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div id="employeeGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      </div>
+    </section>
+
+    <!-- TAB 3: NHẬT KÝ BẢNG CÔNG & XIN NGHỈ CA -->
+    <section id="viewTimesheet" class="space-y-3.5 hidden">
+      <div class="bg-white rounded-2xl p-2 shadow-sm border border-slate-100 flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-1.5">
+          <button id="btnSubTabLogs" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white transition">
+            Nhật ký chấm công
+          </button>
+          <button id="btnSubTabLeaves" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1">
+            Đơn xin phép / Tăng ca
+            <span id="badgeLeaveCount" class="px-1.5 py-0.5 text-[10px] rounded-full bg-amber-100 text-amber-700 font-bold">0</span>
+          </button>
+          <button id="btnSubTabTasks" type="button" class="px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition">
+            Ghi chú ca
+          </button>
+        </div>
+
+        <div class="flex items-center gap-1.5">
+          <button id="btnOpenManualLog" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">
+            + Chấm công bù
+          </button>
+          <button id="btnExportLogsCsv" type="button" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold">
+            Xuất CSV
+          </button>
+        </div>
+      </div>
+
+      <!-- Sub-view 3A: Logs -->
+      <div id="subViewLogs" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+        <div class="flex items-center justify-between gap-2">
+          <h3 class="text-sm font-bold text-slate-800">Lịch sử vào/ra ca</h3>
+          <select id="filterLogStatus" class="text-xs border border-slate-200 rounded-xl px-2.5 py-1 bg-white">
+            <option value="ALL">Tất cả</option>
+            <option value="Đúng giờ">Đúng giờ</option>
+            <option value="Đi muộn">Đi muộn</option>
+            <option value="Đang làm việc">Đang làm việc</option>
+            <option value="Tăng ca">Tăng ca</option>
+          </select>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 text-[11px] font-semibold text-slate-400 uppercase">
+                <th class="py-2 px-2">Sinh viên</th>
+                <th class="py-2 px-2">Ngày</th>
+                <th class="py-2 px-2">Vào - Ra</th>
+                <th class="py-2 px-2">Giờ</th>
+                <th class="py-2 px-2">Trạng thái</th>
+                <th class="py-2 px-2 text-right">Xóa</th>
+              </tr>
+            </thead>
+            <tbody id="timesheetTableBody" class="divide-y divide-slate-100 text-xs">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Sub-view 3B: Leave Requests -->
+      <div id="subViewLeaves" class="space-y-3 hidden">
+        <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center justify-between gap-2">
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">Đơn xin nghỉ ca / Đổi ca</h3>
+            <p class="text-xs text-slate-500">Lưu lại các ngày sinh viên báo bận học hoặc xin nghỉ</p>
+          </div>
+          <button id="btnNewLeaveRequest" type="button" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-semibold">
+            + Tạo đơn mới
+          </button>
+        </div>
+        <div id="leaveRequestsContainer" class="space-y-2">
+        </div>
+      </div>
+
+      <!-- Sub-view 3C: Shift Checklist -->
+      <div id="subViewTasks" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3 hidden">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <h3 class="text-sm font-bold text-slate-800">Công việc cần làm trong ca</h3>
+          <div class="flex items-center gap-2">
+            <input id="inputNewTaskTitle" type="text" placeholder="VD: Lau quầy, kiểm kho..." class="px-3 py-1.5 text-xs rounded-xl border border-slate-200" />
+            <button id="btnAddShiftTask" type="button" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-semibold">+ Giao việc</button>
+          </div>
+        </div>
+        <div id="shiftTasksList" class="space-y-2">
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: TỔNG KẾT LƯƠNG SINH VIÊN -->
+    <section id="viewPayroll" class="space-y-3.5 hidden">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-slate-800">Bảng Tính Lương Làm Thêm (<span id="payrollMonthTitle">Tháng 10/2026</span>)</h3>
+            <p class="text-xs text-slate-500">Lương thực nhận = Tổng tiền các ca đã làm + Phụ cấp/Thưởng - Ứng trước</p>
+          </div>
+          <button id="btnExportPayrollCsv" type="button" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">
+            Xuất Bảng Lương (CSV)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div class="p-3 rounded-xl bg-blue-50/70 border border-blue-100">
+            <p class="text-xs text-blue-600 font-medium">Tổng tiền lương tháng</p>
+            <p id="summaryTotalPayroll" class="text-base sm:text-lg font-extrabold text-blue-900 mt-0.5">0 ₫</p>
+          </div>
+          <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-100">
+            <p class="text-xs text-emerald-600 font-medium">Tổng số giờ làm trong tháng</p>
+            <p id="summaryTotalOtHours" class="text-base sm:text-lg font-extrabold text-emerald-900 mt-0.5">0 giờ</p>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="border-b border-slate-200 text-[11px] font-semibold text-slate-400 uppercase">
+                <th class="py-2 px-2">Sinh viên</th>
+                <th class="py-2 px-2">Lương/giờ</th>
+                <th class="py-2 px-2">Số ca (Giờ)</th>
+                <th class="py-2 px-2">Phụ cấp</th>
+                <th class="py-2 px-2">Ứng trước</th>
+                <th class="py-2 px-2">Thực lĩnh</th>
+                <th class="py-2 px-2 text-right">Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="payrollTableBody" class="divide-y divide-slate-100 text-xs">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Compact Chart Box -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+        <h3 class="text-xs font-bold text-slate-700 mb-2">Biểu đồ số giờ làm trong 7 ngày</h3>
+        <div class="relative h-48">
+          <canvas id="attendanceChart"></canvas>
+        </div>
+      </div>
+
+      <div class="hidden">
+        <button id="btnOpenCashbookModal" type="button">+ Ghi Thu/Chi</button>
+        <span id="cashTotalIncome">0</span>
+        <span id="cashTotalExpense">0</span>
+        <span id="cashNetProfit">0</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 shadow-lg">
+    <div class="max-w-md mx-auto grid grid-cols-4 px-2 py-1.5">
+      <button id="navBtnCheckin" type="button" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-blue-600 font-semibold transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        <span class="text-[11px] mt-0.5">Chấm công</span>
+      </button>
+
+      <button id="navBtnEmployees" type="button" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
+        <span class="text-[11px] mt-0.5">Nhân viên</span>
+      </button>
+
+      <button id="navBtnTimesheet" type="button" class="relative flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
+        <span class="text-[11px] mt-0.5">Bảng công</span>
+        <span id="navBadgeRequests" class="hidden absolute top-1 right-6 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold items-center justify-center">0</span>
+      </button>
+
+      <button id="navBtnPayroll" type="button" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span class="text-[11px] mt-0.5">Tính lương</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MODAL A: CHẤM CÔNG CA LÀM THÊM THEO NGÀY (Chọn Ca Sáng/Chiều/Tối + Số giờ 4h/8h + Lương 0-100.000đ) -->
+  <div id="modalDayEditor" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-3.5 my-8">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <div>
+          <h3 id="modalDayEditorTitle" class="text-base font-bold text-slate-800">Chấm công ngày 22/10/2026</h3>
+          <p id="modalDayEditorSub" class="text-xs text-slate-500">Chọn ca làm, số giờ (4 tiếng / 8 tiếng) và mức lương ca</p>
+        </div>
+        <button id="btnCloseDayEditor" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
+      </div>
+
+      <form id="formDayEditor" class="space-y-3">
+        <input type="hidden" id="dayEditorDayNum" value="22" />
+
+        <!-- 1. Chọn Ca làm việc & Số ca -->
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1.5">1. Chọn ca làm việc trong ngày</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 p-2 rounded-xl border border-emerald-200 bg-emerald-50/60 cursor-pointer text-xs font-semibold text-emerald-800">
+              <input type="radio" name="dayStatusRadio" value="full" checked class="accent-emerald-600" />
+              <span>Làm 1 ca</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl border border-amber-200 bg-amber-50/60 cursor-pointer text-xs font-semibold text-amber-800">
+              <input type="radio" name="dayStatusRadio" value="ot" class="accent-amber-600" />
+              <span>Làm 2 ca (Sáng + Tối)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl border border-cyan-200 bg-cyan-50/60 cursor-pointer text-xs font-semibold text-cyan-800">
+              <input type="radio" name="dayStatusRadio" value="half" class="accent-cyan-600" />
+              <span>Nửa ca (0.5 ca)</span>
+            </label>
+            <label class="flex items-center gap-2 p-2 rounded-xl border border-rose-200 bg-rose-50/60 cursor-pointer text-xs font-semibold text-rose-800">
+              <input type="radio" name="dayStatusRadio" value="off" class="accent-rose-600" />
+              <span>Nghỉ / Xóa chấm công</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 2. Chọn Tên Ca (Ca Sáng / Ca Chiều / Ca Tối) & Số giờ mỗi ca (4 tiếng / 8 tiếng...) -->
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label for="dayEditorShiftNameSelect" class="text-[11px] font-semibold text-slate-600 block mb-1">Buổi / Ca làm</label>
+              <select id="dayEditorShiftNameSelect" class="w-full px-2.5 py-1.5 text-xs font-bold rounded-lg border border-slate-200 bg-white">
+                <option value="Ca Sáng">Ca Sáng</option>
+                <option value="Ca Chiều">Ca Chiều</option>
+                <option value="Ca Tối">Ca Tối</option>
+                <option value="Cả Ngày">Cả Ngày</option>
+              </select>
+            </div>
+            <div>
+              <label for="dayEditorShiftHoursInput" class="text-[11px] font-semibold text-slate-600 block mb-1">Số giờ của ca (tiếng)</label>
+              <input id="dayEditorShiftHoursInput" type="number" min="0.5" max="24" step="0.5" value="4" class="w-full px-2.5 py-1.5 text-xs font-bold rounded-lg border border-slate-200 bg-white" />
+            </div>
+          </div>
+
+          <!-- Quick Shift Hour Buttons: 4 tiếng, 5 tiếng, 6 tiếng, 8 tiếng, 12 tiếng -->
+          <div class="flex items-center gap-1.5 flex-wrap">
+            <span class="text-[10px] font-semibold text-slate-400">Chọn nhanh số giờ:</span>
+            <button type="button" data-hour-preset="4" class="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-700 text-[11px] font-bold hover:bg-blue-200">4 tiếng</button>
+            <button type="button" data-hour-preset="5" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-semibold hover:bg-slate-100">5 tiếng</button>
+            <button type="button" data-hour-preset="6" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-semibold hover:bg-slate-100">6 tiếng</button>
+            <button type="button" data-hour-preset="8" class="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-700 text-[11px] font-bold hover:bg-blue-200">8 tiếng</button>
+            <button type="button" data-hour-preset="12" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-semibold hover:bg-slate-100">12 tiếng</button>
+          </div>
+        </div>
+
+        <!-- 3. Mức lương chấm theo ca (0 - 100.000) & Cách tính -->
+        <div class="p-3 rounded-xl bg-blue-50/60 border border-blue-200/80 space-y-2">
+          <div class="flex items-center justify-between">
+            <label for="dayEditorShiftRateInput" class="text-xs font-bold text-blue-800">Mức lương/giờ (0 – 100.000 ₫/giờ)</label>
+            <select id="dayEditorCalcType" class="text-[11px] font-semibold bg-white border border-blue-200 text-blue-700 rounded-lg px-2 py-0.5">
+              <option value="per_hour">Tính theo Giờ (Lương/giờ × Số tiếng)</option>
+              <option value="per_shift">Tính theo Ca (Lương/ca × Số ca)</option>
+              <option value="per_hour_scale">Nhân theo chuẩn 4h/ca (8h = ×2)</option>
+            </select>
+          </div>
+          <input id="dayEditorShiftRateInput" type="number" min="0" max="100000" step="500" value="0" required placeholder="Nhập số tiền từ 0 đến 100000" class="w-full px-3 py-2 text-sm font-extrabold text-blue-900 bg-white rounded-xl border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Phụ cấp / Thưởng thêm (₫)</label>
+            <input id="dayEditorAllowanceInput" type="number" min="0" max="100000" step="1000" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ứng lương ngày này (₫)</label>
+            <input id="dayEditorAdvanceInput" type="number" min="0" max="1000000" step="5000" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Giờ OT ngoài ca</label>
+            <input id="dayEditorOtInput" type="number" min="0" max="12" step="0.5" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ghi chú ca làm</label>
+            <input id="dayEditorNoteInput" type="text" placeholder="VD: Ca sáng 8 tiếng..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="btnCancelDayEditor" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Lưu chấm công ngày</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 1: ADD / EDIT STUDENT EMPLOYEE (Lương ca 0 - 100.000đ) -->
+  <div id="modalEmployee" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 id="modalEmployeeTitle" class="text-base font-bold text-slate-800">Thêm sinh viên làm thêm</h3>
+        <button id="btnCloseEmployeeModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
+      </div>
+      <form id="formEmployee" class="space-y-3">
+        <input type="hidden" id="empEditId" />
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Họ tên sinh viên / Tên công việc *</label>
+          <input id="empNameInput" type="text" required placeholder="VD: Nguyễn Văn A (hoặc Quán Cafe...)" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Vị trí làm thêm</label>
+            <select id="empDeptInput" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white">
+              <option value="Phục vụ">Phục vụ</option>
+              <option value="Pha chế">Pha chế</option>
+              <option value="Thu ngân">Thu ngân</option>
+              <option value="Bán hàng">Bán hàng</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ca đăng ký & Số tiếng</label>
+            <input id="empRoleInput" type="text" placeholder="VD: Ca sáng 4 tiếng / 8 tiếng" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Số điện thoại</label>
+            <input id="empPhoneInput" type="text" placeholder="09xxxxxxxx" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-bold text-blue-700 block mb-1">Mức lương/giờ (0 - 100.000₫/giờ)</label>
+            <input id="empRateInput" type="number" required min="0" max="100000" step="500" value="0" placeholder="0 - 100000" class="w-full px-3 py-2 text-xs sm:text-sm font-bold text-blue-800 rounded-xl border border-blue-300" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Số ca ban đầu</label>
+            <input id="empBaseDaysInput" type="number" min="0" max="100" step="0.5" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Phụ cấp thêm (VNĐ)</label>
+            <input id="empAllowanceInput" type="number" min="0" step="1000" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="btnCancelEmployeeModal" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Lưu thông tin</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: LEAVE / OVERTIME REQUEST -->
+  <div id="modalLeave" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 id="modalLeaveTitle" class="text-base font-bold text-slate-800">Báo nghỉ ca / Đổi ca học</h3>
+        <button id="btnCloseLeaveModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
+      </div>
+      <form id="formLeave" class="space-y-3">
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Sinh viên</label>
+          <select id="leaveEmpSelect" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white"></select>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Loại đơn</label>
+            <select id="leaveTypeSelect" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white">
+              <option value="Xin nghỉ ca (Bận lịch học/thi)">Xin nghỉ ca (Bận lịch học/thi)</option>
+              <option value="Xin đổi ca làm">Xin đổi ca làm</option>
+              <option value="Đăng ký Tăng ca (OT)">Đăng ký làm thêm ca</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ngày áp dụng</label>
+            <input id="leaveDateInput" type="date" required value="2026-10-22" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Số giờ làm thêm (nếu có)</label>
+          <input id="leaveOtHoursInput" type="number" min="0" max="12" step="0.5" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Ghi chú / Lý do *</label>
+          <textarea id="leaveReasonInput" rows="2" required placeholder="VD: Bận thi cuối kỳ môn Toán, nhờ bạn trực thay..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200"></textarea>
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="btnCancelLeaveModal" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Gửi duyệt</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 3: MANUAL ATTENDANCE LOG -->
+  <div id="modalManualLog" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-800">Chấm công bù theo giờ</h3>
+        <button id="btnCloseManualLogModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
+      </div>
+      <form id="formManualLog" class="space-y-3">
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Sinh viên</label>
+          <select id="manualEmpSelect" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white"></select>
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ngày</label>
+            <input id="manualDateInput" type="date" required value="2026-10-22" class="w-full px-2.5 py-2 text-xs rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Giờ vào</label>
+            <input id="manualInInput" type="time" required value="18:00" class="w-full px-2.5 py-2 text-xs rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Giờ ra</label>
+            <input id="manualOutInput" type="time" required value="22:00" class="w-full px-2.5 py-2 text-xs rounded-xl border border-slate-200" />
+          </div>
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Trạng thái</label>
+          <select id="manualStatusSelect" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white">
+            <option value="Đúng giờ">Đúng giờ</option>
+            <option value="Đi muộn">Đi muộn</option>
+            <option value="Tăng ca">Tăng ca</option>
+          </select>
+        </div>
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="btnCancelManualLogModal" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Lưu chấm công</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 5: PAYSLIP DETAIL -->
+  <div id="modalPayslip" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-800">Phiếu Lương Sinh Viên</h3>
+        <button id="btnClosePayslipModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
+      </div>
+      <div id="payslipContent" class="space-y-2.5 text-xs">
+      </div>
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+        <button id="btnCopyPayslip" type="button" class="px-3.5 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-semibold">Sao chép phiếu lương</button>
+        <button id="btnOkPayslipModal" type="button" class="px-4 py-2 rounded-xl bg-slate-800 text-white text-xs font-semibold">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden Secondary Modals kept for script compatibility -->
+  <div id="modalLocationMap" class="hidden">
+    <button id="btnCloseLocationMap" type="button">✕</button>
+    <button id="btnPunchFromMap" type="button">Xác nhận vị trí & Chấm công ngay</button>
+  </div>
+  <div id="modalWorkplace" class="hidden">
+    <button id="btnCloseWorkplaceModal" type="button">✕</button>
+    <form id="formWorkplace">
+      <input id="wpNameInput" type="text" />
+      <select id="wpTypeInput"><option value="Theo ca">Theo ca</option></select>
+      <input id="wpRateInput" type="number" min="0" max="100000" value="0" />
+      <button id="btnCancelWorkplaceModal" type="button">Hủy</button>
+      <button type="submit">Tạo công việc</button>
+    </form>
+  </div>
+  <div id="modalCashbook" class="hidden">
+    <button id="btnCloseCashbookModal" type="button">✕</button>
+    <form id="formCashbook">
+      <select id="cashTypeInput"><option value="income">Thu</option></select>
+      <input id="cashAmountInput" type="number" value="0" />
+      <input id="cashNoteInput" type="text" />
+      <button id="btnCancelCashbookModal" type="button">Đóng</button>
+      <button type="submit">Lưu sổ quỹ</button>
+    </form>
+    <div id="cashbookHistoryList"></div>
+  </div>
+  <div id="modalQrScanner" class="hidden">
+    <button id="btnCloseQrModal" type="button">✕</button>
+    <button id="btnConfirmQrPunch" type="button">Xác nhận quét QR thành công</button>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastBox" class="fixed top-16 right-4 z-50 max-w-xs bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none translate-y-2">
+    <span id="toastIcon" class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
+    <span id="toastMessage">Đã cập nhật!</span>
+  </div>
+
+  <script>
+    (function () {
+      // Clear all previous mock data keys
+      try {
+        localStorage.removeItem('smarthr_mobile_state_v1');
+        localStorage.removeItem('atwork_vinkatech_state_v2');
+        localStorage.removeItem('atwork_student_clean_v3');
+      } catch (e) {}
+
+      const STORAGE_KEY = 'atwork_student_clean_v4';
+
+      // Completely empty state (no Sinh viên 1, no fake logs)
+      const defaultState = {
+        role: 'manager',
+        activeTab: 'checkin',
+        activeMonth: '2026-10',
+        defaultShiftHours: 4,
+        activeWorkplaceId: 'WP01',
+        activeEmployeeId: '',
+        selectedShift: 'Ca Sáng (4 tiếng)',
+        gpsModeIndex: 0,
+        workplaces: [],
+        employees: [],
+        logs: [],
+        leaves: [],
+        shiftTasks: [],
+        cashbook: [],
+        savedMonths: []
+      };
+
+      const _compatIds = ['LOG105'];
+
+      let state = loadState();
+      let attendanceChartInstance = null;
+      let currentPayslipText = '';
+
+      function clampShiftRate(val) {
+        const n = Number(val);
+        if (isNaN(n) || n < 0) return 0;
+        if (n > 100000) return 100000;
+        return Math.round(n);
+      }
+
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed && Array.isArray(parsed.employees)) {
+              if (!parsed.activeMonth) parsed.activeMonth = '2026-10';
+              if (!parsed.savedMonths) parsed.savedMonths = [];
+              if (!parsed.defaultShiftHours) parsed.defaultShiftHours = 4;
+              return parsed;
+            }
+          }
+        } catch (err) {}
+        return JSON.parse(JSON.stringify(defaultState));
+      }
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (err) {}
+      }
+
+      function formatMonthTitle(ym) {
+        if (!ym || !ym.includes('-')) return 'Tháng 10/2026';
+        const parts = ym.split('-');
+        return 'Tháng ' + parts[1] + '/' + parts[0];
+      }
+
+      function getDaysInMonth(ym) {
+        const parts = (ym || '2026-10').split('-').map(Number);
+        const year = parts[0] || 2026;
+        const month = parts[1] || 10;
+        return new Date(year, month, 0).getDate();
+      }
+
+      function getFirstDayOffsetMonday(ym) {
+        const parts = (ym || '2026-10').split('-').map(Number);
+        const year = parts[0] || 2026;
+        const month = parts[1] || 10;
+        const dow = new Date(year, month - 1, 1).getDay(); // 0=Sun..6=Sat
+        return dow === 0 ? 6 : dow - 1;
+      }
+
+      function getEmpCalendarForMonth(emp, ym) {
+        if (!emp) return {};
+        if (!emp.monthlyData) emp.monthlyData = {};
+        const key = ym || state.activeMonth || '2026-10';
+        if (!emp.monthlyData[key]) {
+          emp.monthlyData[key] = {};
+        }
+        return emp.monthlyData[key];
+      }
+
+      function showToast(message, isWarning) {
+        const toastBox = document.getElementById('toastBox');
+        const toastMessage = document.getElementById('toastMessage');
+        const toastIcon = document.getElementById('toastIcon');
+        toastMessage.textContent = message;
+        toastIcon.className = isWarning
+          ? 'w-2 h-2 rounded-full bg-amber-400 shrink-0'
+          : 'w-2 h-2 rounded-full bg-emerald-400 shrink-0';
+        toastBox.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+        toastBox.classList.add('opacity-100', 'translate-y-0');
+        clearTimeout(window.__toastTimer);
+        window.__toastTimer = setTimeout(function () {
+          toastBox.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+          toastBox.classList.remove('opacity-100', 'translate-y-0');
+        }, 2500);
+      }
+
+      function formatCurrency(val) {
+        return Number(val || 0).toLocaleString('vi-VN') + ' ₫';
+      }
+
+      function getInitials(fullName) {
+        if (!fullName) return 'SV';
+        const clean = fullName.split('(')[0].trim();
+        const parts = clean.split(/\s+/);
+        if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      }
+
+      function getEmployeeById(empId) {
+        if (!state.employees || state.employees.length === 0) return null;
+        return state.employees.find(function (e) { return e.id === empId; }) || state.employees[0];
+      }
+
+      function getTodayString() {
+        return (state.activeMonth || '2026-10') + '-22';
+      }
+
+      function getNowTimeString() {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        return hh + ':' + mm;
+      }
+
+      function updateLiveClock() {
+        const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
+        const clockEl = document.getElementById('liveClockText');
+        if (clockEl) clockEl.textContent = hh + ':' + mm + ':' + ss;
+      }
+
+      function calculateHoursBetween(inTime, outTime) {
+        if (!inTime || !outTime) return 0;
+        const p1 = inTime.split(':').map(Number);
+        const p2 = outTime.split(':').map(Number);
+        const mins = (p2[0] * 60 + p2[1]) - (p1[0] * 60 + p1[1]);
+        if (mins <= 0) return 4.0;
+        const hrs = Math.round((mins / 60) * 10) / 10;
+        return hrs > 0.5 ? hrs : 0.5;
+      }
+
+      function computeDayEarned(item, defaultRate) {
+        if (!item || item.status === 'off') return { shifts: 0, hours: 0, pay: 0 };
+        let shiftCount = 1;
+        if (item.status === 'full') shiftCount = 1;
+        else if (item.status === 'ot') shiftCount = 2;
+        else if (item.status === 'half') shiftCount = 0.5;
+
+        const hoursPerShift = Number(item.shiftHours || state.defaultShiftHours || 4);
+        const totalDayHours = shiftCount * hoursPerShift;
+        const rate = (item.shiftRate !== undefined) ? clampShiftRate(item.shiftRate) : clampShiftRate(defaultRate);
+        const calcType = item.calcType || 'per_hour';
+
+        let pay = 0;
+        if (calcType === 'per_hour') {
+          pay = Math.round(totalDayHours * rate);
+        } else if (calcType === 'per_hour_scale') {
+          pay = Math.round(shiftCount * (hoursPerShift / 4) * rate);
+        } else {
+          pay = Math.round(shiftCount * rate);
+        }
+
+        return {
+          shifts: shiftCount,
+          hours: totalDayHours,
+          pay: pay
+        };
+      }
+
+      function syncEmployeeStatsFromCalendar(emp, ym) {
+        if (!emp) return;
+        const cal = getEmpCalendarForMonth(emp, ym || state.activeMonth);
+        let totalShifts = 0;
+        let totalWorkHours = 0;
+        let totalOtHours = 0;
+        let totalAllowance = 0;
+        let totalAdvance = 0;
+        let totalShiftSalary = 0;
+
+        Object.keys(cal).forEach(function (k) {
+          const item = cal[k];
+          if (!item) return;
+          const dCalc = computeDayEarned(item, emp.dailyRate);
+          totalShifts += dCalc.shifts;
+          totalWorkHours += dCalc.hours;
+          totalShiftSalary += dCalc.pay;
+          totalOtHours += Number(item.ot || 0);
+          totalAllowance += Number(item.allowance || 0);
+          totalAdvance += Number(item.advance || 0);
+        });
+
+        emp.baseDays = totalShifts;
+        emp.totalWorkHours = totalWorkHours;
+        emp.otHours = totalOtHours;
+        emp.allowance = totalAllowance;
+        emp.advance = totalAdvance;
+        emp.calculatedShiftSalary = totalShiftSalary;
+      }
+
+      function computeEmployeePayroll(emp, ym) {
+        if (!emp) return { baseSalary: 0, otPay: 0, latePenalty: 0, advanceAmt: 0, netPay: 0, totalHours: 0 };
+        syncEmployeeStatsFromCalendar(emp, ym || state.activeMonth);
+        const baseSalary = emp.calculatedShiftSalary || 0;
+        const otPay = Math.round((emp.otHours || 0) * 20000);
+        const advanceAmt = Number(emp.advance || 0);
+        const allowanceAmt = Number(emp.allowance || 0);
+        const netPay = baseSalary + otPay + allowanceAmt - advanceAmt;
+        return {
+          baseSalary: baseSalary,
+          otPay: otPay,
+          latePenalty: 0,
+          advanceAmt: advanceAmt,
+          netPay: netPay,
+          totalHours: (emp.totalWorkHours || 0) + (emp.otHours || 0)
+        };
+      }
+
+      function renderEmployeeSelectors() {
+        const banner = document.getElementById('emptyStudentBanner');
+        if (state.employees.length === 0) {
+          banner.classList.remove('hidden');
+          banner.classList.add('flex');
+        } else {
+          banner.classList.add('hidden');
+          banner.classList.remove('flex');
+        }
+
+        const selects = ['selectActiveEmployee', 'leaveEmpSelect', 'manualEmpSelect'];
+        selects.forEach(function (selId) {
+          const el = document.getElementById(selId);
+          if (!el) return;
+          if (state.employees.length === 0) {
+            el.innerHTML = '<option value="">-- Chưa có sinh viên (Bấm + Thêm SV) --</option>';
+            return;
+          }
+          if (!state.activeEmployeeId || !state.employees.some(function (e) { return e.id === state.activeEmployeeId; })) {
+            state.activeEmployeeId = state.employees[0].id;
+          }
+          el.innerHTML = state.employees.map(function (emp) {
+            return '<option value="' + emp.id + '">' + emp.name + ' (' + formatCurrency(emp.dailyRate) + '/giờ)</option>';
+          }).join('');
+          el.value = state.activeEmployeeId;
+        });
+      }
+
+      function renderSavedMonthsArchive() {
+        const container = document.getElementById('savedMonthsList');
+        if (!container) return;
+        if (!state.savedMonths || state.savedMonths.length === 0) {
+          container.innerHTML = '<p class="text-xs text-slate-400 py-2">Chưa có bảng công tháng nào được lưu chốt. Bấm <strong>"💾 Lưu bảng công tháng"</strong> ở trên để lưu lại trước khi qua tháng mới.</p>';
+          return;
+        }
+
+        container.innerHTML = state.savedMonths.map(function (arc) {
+          return (
+            '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">' +
+              '<div>' +
+                '<span class="font-bold text-slate-800">' + arc.monthTitle + '</span>' +
+                '<span class="text-slate-500 ml-2">• ' + arc.studentCount + ' SV • Tổng ca: <strong>' + arc.totalShifts + ' ca (' + arc.totalHours + 'h)</strong></span>' +
+                '<p class="text-[11px] text-emerald-700 font-bold mt-0.5">Tổng thực lĩnh: ' + formatCurrency(arc.totalPay) + ' <span class="text-slate-400 font-normal">(Lưu lúc: ' + arc.savedAt + ')</span></p>' +
+              '</div>' +
+              '<div class="flex items-center gap-1.5 shrink-0">' +
+                '<button type="button" data-archive-open="' + arc.monthKey + '" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-semibold hover:bg-blue-100">Mở lại tháng này</button>' +
+                '<button type="button" data-archive-delete="' + arc.id + '" class="px-2 py-1 rounded-lg bg-rose-50 text-rose-600 font-semibold hover:bg-rose-100">Xóa</button>' +
+              '</div>' +
+            '</div>'
+          );
+        }).join('');
+      }
+
+      function renderAtWorkCalendar() {
+        const grid = document.getElementById('atworkCalendarGrid');
+        if (!grid) return;
+
+        const monthLabel = formatMonthTitle(state.activeMonth);
+        document.getElementById('summaryMonthLabel').textContent = monthLabel;
+        const payrollTitle = document.getElementById('payrollMonthTitle');
+        if (payrollTitle) payrollTitle.textContent = monthLabel;
+
+        const monthInput = document.getElementById('inputActiveMonth');
+        if (monthInput && monthInput.value !== state.activeMonth) {
+          monthInput.value = state.activeMonth;
+        }
+
+        const activeEmp = getEmployeeById(state.activeEmployeeId);
+        const cal = activeEmp ? getEmpCalendarForMonth(activeEmp, state.activeMonth) : {};
+
+        const quickInput = document.getElementById('quickShiftRateInput');
+        if (quickInput && document.activeElement !== quickInput) {
+          quickInput.value = activeEmp ? clampShiftRate(activeEmp.dailyRate) : 0;
+        }
+
+        const calc = activeEmp
+          ? computeEmployeePayroll(activeEmp, state.activeMonth)
+          : { baseSalary: 0, otPay: 0, advanceAmt: 0, netPay: 0, totalHours: 0 };
+
+        document.getElementById('atworkCurrentEmpSalary').textContent = formatCurrency(calc.netPay);
+        document.getElementById('atworkBreakdownDays').textContent = activeEmp ? activeEmp.baseDays : 0;
+        document.getElementById('atworkBreakdownTotalHours').textContent = activeEmp ? (activeEmp.totalWorkHours || 0) : 0;
+        document.getElementById('atworkBreakdownBase').textContent = formatCurrency(calc.baseSalary);
+        document.getElementById('atworkBreakdownOt').textContent = activeEmp ? activeEmp.otHours : 0;
+        document.getElementById('atworkBreakdownOtPay').textContent = '+' + formatCurrency(calc.otPay);
+        document.getElementById('atworkBreakdownAllowance').textContent = '+' + formatCurrency((activeEmp ? activeEmp.allowance : 0) + calc.otPay);
+        document.getElementById('atworkBreakdownAdvance').textContent = '-' + formatCurrency(calc.advanceAmt);
+
+        const padCount = getFirstDayOffsetMonday(state.activeMonth);
+        const daysInMonth = getDaysInMonth(state.activeMonth);
+
+        const cells = [];
+        for (let pad = 0; pad < padCount; pad++) {
+          cells.push('<div class="h-12 sm:h-14 rounded-xl bg-slate-50/40"></div>');
+        }
+
+        for (let day = 1; day <= daysInMonth; day++) {
+          const info = cal[day];
+          const isToday = (state.activeMonth === '2026-10' && day === 22);
+
+          let bgClass = 'bg-slate-50 text-slate-700 border-slate-200 hover:border-blue-400';
+          let badgeText = 'Chấm';
+          let subMoney = '';
+
+          if (info && info.status !== 'off') {
+            const dCalc = computeDayEarned(info, activeEmp ? activeEmp.dailyRate : 0);
+            const hrs = info.shiftHours || state.defaultShiftHours || 4;
+            const sName = (info.shiftName || 'Ca').replace('Ca ', '');
+
+            if (info.status === 'full') {
+              bgClass = 'bg-emerald-500 text-white border-emerald-600 shadow-xs';
+              badgeText = sName + ' (' + hrs + 'h)';
+            } else if (info.status === 'ot') {
+              bgClass = 'bg-amber-500 text-white border-amber-600 shadow-xs';
+              badgeText = '2 ca (' + dCalc.hours + 'h)';
+            } else if (info.status === 'half') {
+              bgClass = 'bg-cyan-500 text-white border-cyan-600 shadow-xs';
+              badgeText = '1/2 (' + dCalc.hours + 'h)';
+            }
+            if (dCalc.pay > 0) {
+              subMoney = Math.round(dCalc.pay / 1000) + 'k';
+            }
+          } else if (info && info.status === 'off') {
+            bgClass = 'bg-rose-50 text-rose-500 border-rose-200';
+            badgeText = 'Nghỉ';
+          }
+
+          const todayRing = isToday ? 'ring-2 ring-blue-600 ring-offset-1' : '';
+
+          cells.push(
+            '<button type="button" data-cal-day="' + day + '" class="cal-cell h-12 sm:h-14 rounded-xl border p-1 flex flex-col items-center justify-between ' + bgClass + ' ' + todayRing + '">' +
+              '<div class="w-full flex items-center justify-between px-0.5 leading-none">' +
+                '<span class="text-xs font-extrabold">' + day + '</span>' +
+                '<span class="text-[9px] font-semibold opacity-90">' + subMoney + '</span>' +
+              '</div>' +
+              '<span class="text-[9px] font-semibold truncate max-w-full">' + badgeText + '</span>' +
+            '</button>'
+          );
+        }
+
+        grid.innerHTML = cells.join('');
+        renderSavedMonthsArchive();
+      }
+
+      function renderCheckinTab() {
+        const activeEmp = getEmployeeById(state.activeEmployeeId);
+        document.getElementById('activeEmpAvatar').textContent = activeEmp ? getInitials(activeEmp.name) : 'SV';
+        renderAtWorkCalendar();
+
+        const todayLog = activeEmp
+          ? state.logs.find(function (l) { return l.empId === activeEmp.id && l.date === getTodayString(); })
+          : null;
+
+        const btnPunch = document.getElementById('btnMainPunch');
+        const punchTitle = document.getElementById('punchTitle');
+        const punchSubtitle = document.getElementById('punchSubtitle');
+        const todayInEl = document.getElementById('todayInTime');
+        const todayOutEl = document.getElementById('todayOutTime');
+        const todayHrsEl = document.getElementById('todayWorkHours');
+
+        if (!todayLog) {
+          btnPunch.className = 'w-16 h-16 rounded-2xl bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-md flex flex-col items-center justify-center shrink-0 active:scale-95 transition';
+          punchTitle.textContent = 'VÀO CA';
+          punchSubtitle.textContent = 'Check-in';
+          todayInEl.textContent = '--:--';
+          todayOutEl.textContent = '--:--';
+          todayHrsEl.textContent = '0h';
+        } else if (todayLog && !todayLog.outTime) {
+          btnPunch.className = 'w-16 h-16 rounded-2xl bg-gradient-to-b from-amber-500 to-orange-600 text-white shadow-md flex flex-col items-center justify-center shrink-0 active:scale-95 transition';
+          punchTitle.textContent = 'RA CA';
+          punchSubtitle.textContent = 'Check-out';
+          todayInEl.textContent = todayLog.inTime;
+          todayOutEl.textContent = 'Đang làm';
+          todayHrsEl.textContent = '...';
+        } else {
+          btnPunch.className = 'w-16 h-16 rounded-2xl bg-gradient-to-b from-emerald-500 to-teal-700 text-white shadow-md flex flex-col items-center justify-center shrink-0 active:scale-95 transition';
+          punchTitle.textContent = 'XONG CA';
+          punchSubtitle.textContent = 'Chấm lại';
+          todayInEl.textContent = todayLog.inTime;
+          todayOutEl.textContent = todayLog.outTime;
+          todayHrsEl.textContent = todayLog.hours + 'h';
+        }
+      }
+
+      function handlePunchAction() {
+        let activeEmp = getEmployeeById(state.activeEmployeeId);
+        if (!activeEmp) {
+          openAddStudentModal();
+          showToast('Vui lòng thêm tên sinh viên trước khi chấm công!', true);
+          return;
+        }
+
+        const nowTime = getNowTimeString();
+        const existingLog = state.logs.find(function (l) {
+          return l.empId === activeEmp.id && l.date === getTodayString();
+        });
+
+        // Parse hours from selectedShift (e.g. "Ca Sáng (8 tiếng)")
+        const shiftText = state.selectedShift || 'Ca Sáng (4 tiếng)';
+        const hourMatch = shiftText.match(/(\d+)\s*tiếng/);
+        const chosenHours = hourMatch ? Number(hourMatch[1]) : Number(state.defaultShiftHours || 4);
+        const shiftName = shiftText.split(' (')[0];
+
+        if (!existingLog) {
+          state.logs.unshift({
+            id: 'LOG' + Date.now(),
+            empId: activeEmp.id,
+            date: getTodayString(),
+            inTime: nowTime,
+            outTime: '',
+            hours: chosenHours,
+            status: 'Đang làm việc',
+            shift: shiftText,
+            location: 'Ca làm thêm'
+          });
+          const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
+          cal[22] = {
+            status: 'full',
+            shiftName: shiftName,
+            shiftHours: chosenHours,
+            calcType: 'per_hour',
+            shiftRate: clampShiftRate(activeEmp.dailyRate),
+            ot: 0,
+            advance: 0,
+            allowance: 0,
+            note: shiftText
+          };
+          syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
+          saveState();
+          renderAll();
+          showToast('Đã vào ' + shiftText + ' lúc ' + nowTime);
+        } else if (!existingLog.outTime) {
+          existingLog.outTime = nowTime;
+          existingLog.hours = chosenHours;
+          existingLog.status = 'Đúng giờ';
+          saveState();
+          renderAll();
+          showToast('Đã hoàn thành ' + shiftText + ' lúc ' + nowTime);
+        } else {
+          existingLog.outTime = '';
+          existingLog.status = 'Đang làm việc';
+          saveState();
+          renderAll();
+          showToast('Đã mở lại ca làm hôm nay');
+        }
+      }
+
+      function renderEmployeesTab() {
+        const query = (document.getElementById('inputSearchEmployee').value || '').trim().toLowerCase();
+        const deptFilter = document.getElementById('selectFilterDept').value;
+        const container = document.getElementById('employeeGrid');
+
+        if (state.employees.length === 0) {
+          container.innerHTML = '<div class="col-span-2 bg-white rounded-2xl p-8 text-center text-xs text-slate-400 border border-slate-100">Danh sách đang trống. Hãy bấm <strong>"+ Thêm nhân viên"</strong> để thêm sinh viên làm thêm!</div>';
+          return;
+        }
+
+        const filtered = state.employees.filter(function (emp) {
+          const matchDept = deptFilter === 'ALL' || emp.dept === deptFilter;
+          const matchQuery =
+            !query ||
+            emp.name.toLowerCase().includes(query) ||
+            (emp.phone || '').toLowerCase().includes(query);
+          return matchDept && matchQuery;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="col-span-2 bg-white rounded-2xl p-6 text-center text-xs text-slate-400 border border-slate-100">Không tìm thấy sinh viên phù hợp.</div>';
+          return;
+        }
+
+        container.innerHTML = filtered.map(function (emp) {
+          const calc = computeEmployeePayroll(emp, state.activeMonth);
+          return (
+            '<div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col justify-between gap-3">' +
+              '<div class="flex items-start justify-between gap-2">' +
+                '<div class="flex items-center gap-2.5">' +
+                  '<div class="w-10 h-10 rounded-xl bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">' +
+                    getInitials(emp.name) +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="text-sm font-bold text-slate-800">' + emp.name + '</h3>' +
+                    '<p class="text-xs text-slate-500">' + emp.dept + ' • ' + (emp.role || 'Ca 4h/8h') + '</p>' +
+                  '</div>' +
+                '</div>' +
+                '<span class="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">' + formatCurrency(emp.dailyRate) + '/giờ</span>' +
+              '</div>' +
+
+              '<div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-center">' +
+                '<div class="bg-slate-50 rounded-xl p-2">' +
+                  '<p class="text-[10px] text-slate-400">Số ca (Giờ)</p>' +
+                  '<p class="text-xs font-bold text-slate-800">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + 'h)</p>' +
+                '</div>' +
+                '<div class="bg-slate-50 rounded-xl p-2">' +
+                  '<p class="text-[10px] text-slate-400">Phụ cấp</p>' +
+                  '<p class="text-xs font-bold text-blue-600">' + formatCurrency(emp.allowance) + '</p>' +
+                '</div>' +
+                '<div class="bg-slate-50 rounded-xl p-2">' +
+                  '<p class="text-[10px] text-slate-400">Thực nhận</p>' +
+                  '<p class="text-xs font-bold text-emerald-600">' + formatCurrency(calc.netPay) + '</p>' +
+                '</div>' +
+              '</div>' +
+
+              '<div class="flex items-center justify-between gap-2 pt-1">' +
+                '<button type="button" data-action="switch-checkin" data-id="' + emp.id + '" class="text-xs font-semibold text-blue-600 hover:underline">Mở lịch chấm công</button>' +
+                '<div class="flex items-center gap-1.5">' +
+                  '<button type="button" data-action="edit-emp" data-id="' + emp.id + '" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium">Sửa</button>' +
+                  '<button type="button" data-action="delete-emp" data-id="' + emp.id + '" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-medium">Xóa</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+          );
+        }).join('');
+      }
+
+      function renderTimesheetTab() {
+        const statusFilter = document.getElementById('filterLogStatus').value;
+        const tbody = document.getElementById('timesheetTableBody');
+
+        const filteredLogs = state.logs.filter(function (l) {
+          return statusFilter === 'ALL' || l.status === statusFilter;
+        });
+
+        if (filteredLogs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center py-6 text-slate-400">Chưa có lịch sử chấm công nào.</td></tr>';
+        } else {
+          tbody.innerHTML = filteredLogs.map(function (log) {
+            const emp = getEmployeeById(log.empId);
+            const empName = emp ? emp.name : log.empId;
+            return (
+              '<tr class="hover:bg-slate-50">' +
+                '<td class="py-2 px-2 font-semibold text-slate-800">' + empName + ' <span class="block text-[10px] text-slate-400">' + (log.shift || '') + '</span></td>' +
+                '<td class="py-2 px-2 text-slate-600">' + log.date + '</td>' +
+                '<td class="py-2 px-2 text-slate-700 font-medium">' + log.inTime + ' - ' + (log.outTime || '--:--') + '</td>' +
+                '<td class="py-2 px-2 font-semibold text-blue-600">' + (log.hours ? log.hours + 'h' : '--') + '</td>' +
+                '<td class="py-2 px-2"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700">' + log.status + '</span></td>' +
+                '<td class="py-2 px-2 text-right">' +
+                  '<button type="button" data-action="delete-log" data-id="' + log.id + '" class="text-rose-500 hover:text-rose-700 font-medium">Xóa</button>' +
+                '</td>' +
+              '</tr>'
+            );
+          }).join('');
+        }
+
+        const leaveContainer = document.getElementById('leaveRequestsContainer');
+        if (state.leaves.length === 0) {
+          leaveContainer.innerHTML = '<div class="bg-white rounded-2xl p-6 text-center text-xs text-slate-400 border border-slate-100">Chưa có đơn xin nghỉ ca hay đổi ca nào.</div>';
+        } else {
+          leaveContainer.innerHTML = state.leaves.map(function (req) {
+            const emp = getEmployeeById(req.empId);
+            const empName = emp ? emp.name : req.empId;
+            const actionButtons =
+              req.status === 'Chờ duyệt'
+                ? '<div class="flex items-center gap-2 mt-2 sm:mt-0">' +
+                    '<button type="button" data-action="approve-leave" data-id="' + req.id + '" class="px-3 py-1 rounded-xl bg-emerald-600 text-white text-xs font-semibold">Duyệt đơn</button>' +
+                    '<button type="button" data-action="reject-leave" data-id="' + req.id + '" class="px-3 py-1 rounded-xl bg-rose-50 text-rose-600 text-xs font-semibold">Từ chối</button>' +
+                  '</div>'
+                : '';
+
+            return (
+              '<div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">' +
+                '<div>' +
+                  '<p class="text-xs font-bold text-slate-800">' + empName + ' • <span class="text-blue-600">' + req.type + '</span> (' + req.status + ')</p>' +
+                  '<p class="text-xs text-slate-600 mt-0.5">' + req.reason + ' (Ngày: ' + req.date + ')</p>' +
+                '</div>' +
+                actionButtons +
+              '</div>'
+            );
+          }).join('');
+        }
+
+        const taskContainer = document.getElementById('shiftTasksList');
+        if (taskContainer) {
+          if (!state.shiftTasks || state.shiftTasks.length === 0) {
+            taskContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có ghi chú công việc ca nào.</p>';
+          } else {
+            taskContainer.innerHTML = state.shiftTasks.map(function (t) {
+              return (
+                '<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2">' +
+                  '<label class="flex items-center gap-2 text-xs cursor-pointer">' +
+                    '<input type="checkbox" data-task-id="' + t.id + '" ' + (t.done ? 'checked' : '') + ' class="w-4 h-4 accent-blue-600 rounded" />' +
+                    '<span class="' + (t.done ? 'line-through text-slate-400' : 'font-semibold text-slate-800') + '">' + t.title + '</span>' +
+                  '</label>' +
+                  '<span class="text-[10px] text-slate-500">' + t.shift + '</span>' +
+                '</div>'
+              );
+            }).join('');
+          }
+        }
+      }
+
+      function renderPayrollTab() {
+        let totalPayroll = 0;
+        let totalHoursAll = 0;
+        const tbody = document.getElementById('payrollTableBody');
+
+        if (state.employees.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-slate-400">Chưa có sinh viên nào. Hãy thêm sinh viên và chấm công trên lịch!</td></tr>';
+        } else {
+          tbody.innerHTML = state.employees.map(function (emp) {
+            const calc = computeEmployeePayroll(emp, state.activeMonth);
+            totalPayroll += calc.netPay;
+            totalHoursAll += Number(calc.totalHours || 0);
+
+            return (
+              '<tr class="hover:bg-slate-50">' +
+                '<td class="py-2.5 px-2 font-bold text-slate-800">' + emp.name + '</td>' +
+                '<td class="py-2.5 px-2 text-slate-600">' + formatCurrency(emp.dailyRate) + '</td>' +
+                '<td class="py-2.5 px-2 font-semibold text-blue-600">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + 'h)</td>' +
+                '<td class="py-2.5 px-2 text-emerald-600">+' + formatCurrency(emp.allowance) + '</td>' +
+                '<td class="py-2.5 px-2 text-rose-600">-' + formatCurrency(calc.advanceAmt) + '</td>' +
+                '<td class="py-2.5 px-2 font-extrabold text-emerald-700">' + formatCurrency(calc.netPay) + '</td>' +
+                '<td class="py-2.5 px-2 text-right space-x-1">' +
+                  '<button type="button" data-action="bonus-emp" data-id="' + emp.id + '" class="px-2 py-1 rounded-lg bg-blue-50 text-blue-600 font-semibold">+Thưởng</button>' +
+                  '<button type="button" data-action="view-payslip" data-id="' + emp.id + '" class="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">Xem</button>' +
+                '</td>' +
+              '</tr>'
+            );
+          }).join('');
+        }
+
+        document.getElementById('summaryTotalPayroll').textContent = formatCurrency(totalPayroll);
+        document.getElementById('summaryTotalOtHours').textContent = totalHoursAll + ' giờ';
+
+        renderAttendanceChart();
+      }
+
+      function renderAttendanceChart() {
+        const canvas = document.getElementById('attendanceChart');
+        if (!canvas || typeof Chart === 'undefined') return;
+
+        const activeEmp = getEmployeeById(state.activeEmployeeId);
+        const cal = activeEmp ? getEmpCalendarForMonth(activeEmp, state.activeMonth) : {};
+        const days = [16, 17, 18, 19, 20, 21, 22];
+        const hoursData = days.map(function (d) {
+          const item = cal[d];
+          if (!item || item.status === 'off') return 0;
+          const dCalc = computeDayEarned(item, activeEmp ? activeEmp.dailyRate : 0);
+          return dCalc.hours;
+        });
+
+        if (attendanceChartInstance) {
+          attendanceChartInstance.data.datasets[0].data = hoursData;
+          attendanceChartInstance.update();
+          return;
+        }
+
+        attendanceChartInstance = new Chart(canvas, {
+          type: 'bar',
+          data: {
+            labels: ['Ngày 16', 'Ngày 17', 'Ngày 18', 'Ngày 19', 'Ngày 20', 'Ngày 21', 'Ngày 22'],
+            datasets: [
+              {
+                label: 'Số giờ làm trong ngày',
+                data: hoursData,
+                backgroundColor: '#16a34a',
+                borderRadius: 6
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: { beginAtZero: true, max: 16, ticks: { stepSize: 2, font: { size: 11 } } },
+              x: { ticks: { font: { size: 11 } } }
+            }
+          }
+        });
+      }
+
+      function switchMainTab(tabName) {
+        state.activeTab = tabName;
+        saveState();
+
+        const views = {
+          checkin: document.getElementById('viewCheckin'),
+          employees: document.getElementById('viewEmployees'),
+          timesheet: document.getElementById('viewTimesheet'),
+          payroll: document.getElementById('viewPayroll')
+        };
+
+        const navBtns = {
+          checkin: document.getElementById('navBtnCheckin'),
+          employees: document.getElementById('navBtnEmployees'),
+          timesheet: document.getElementById('navBtnTimesheet'),
+          payroll: document.getElementById('navBtnPayroll')
+        };
+
+        Object.keys(views).forEach(function (k) {
+          if (k === tabName) {
+            views[k].classList.remove('hidden');
+            navBtns[k].className = 'relative flex flex-col items-center justify-center py-1.5 rounded-xl text-blue-600 font-semibold transition';
+          } else {
+            views[k].classList.add('hidden');
+            navBtns[k].className = 'relative flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition';
+          }
+        });
+
+        renderAll();
+      }
+
+      function openDayEditorModal(dayNum) {
+        const activeEmp = getEmployeeById(state.activeEmployeeId);
+        if (!activeEmp) {
+          openAddStudentModal();
+          showToast('Hãy thêm sinh viên trước khi chấm công trên lịch!', true);
+          return;
+        }
+        const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
+
+        const info = cal[dayNum] || {
+          status: 'full',
+          shiftName: 'Ca Sáng',
+          shiftHours: Number(state.defaultShiftHours || 4),
+          calcType: 'per_hour',
+          shiftRate: clampShiftRate(activeEmp.dailyRate),
+          ot: 0,
+          advance: 0,
+          allowance: 0,
+          note: ''
+        };
+
+        const mParts = (state.activeMonth || '2026-10').split('-');
+        document.getElementById('dayEditorDayNum').value = dayNum;
+        document.getElementById('modalDayEditorTitle').textContent = 'Chấm công ngày ' + dayNum + '/' + mParts[1] + '/' + mParts[0];
+        document.getElementById('modalDayEditorSub').textContent = 'Sinh viên: ' + activeEmp.name;
+
+        const radios = document.querySelectorAll('input[name="dayStatusRadio"]');
+        radios.forEach(function (r) {
+          r.checked = r.value === (info.status || 'full');
+        });
+
+        document.getElementById('dayEditorShiftNameSelect').value = info.shiftName || 'Ca Sáng';
+        document.getElementById('dayEditorShiftHoursInput').value = info.shiftHours || state.defaultShiftHours || 4;
+        document.getElementById('dayEditorCalcType').value = info.calcType || 'per_hour';
+        document.getElementById('dayEditorShiftRateInput').value =
+          info.shiftRate !== undefined ? clampShiftRate(info.shiftRate) : clampShiftRate(activeEmp.dailyRate);
+        document.getElementById('dayEditorOtInput').value = info.ot || 0;
+        document.getElementById('dayEditorAdvanceInput').value = info.advance || 0;
+        document.getElementById('dayEditorAllowanceInput').value = info.allowance || 0;
+        document.getElementById('dayEditorNoteInput').value = info.note || '';
+
+        const modal = document.getElementById('modalDayEditor');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function openPayslipModal(empId) {
+        const emp = getEmployeeById(empId);
+        if (!emp) {
+          showToast('Chưa có dữ liệu sinh viên!', true);
+          return;
+        }
+        const calc = computeEmployeePayroll(emp, state.activeMonth);
+        const content = document.getElementById('payslipContent');
+        const mTitle = formatMonthTitle(state.activeMonth);
+
+        currentPayslipText =
+          'PHIẾU LƯƠNG LÀM THÊM (' + mTitle + ') - ' + emp.name + '\n' +
+          'Vị trí: ' + emp.dept + ' | Mức lương/giờ: ' + formatCurrency(emp.dailyRate) + '\n' +
+          'Tổng số ca đã làm: ' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + ' tiếng)\n' +
+          'Tiền lương ca: ' + formatCurrency(calc.baseSalary) + '\n' +
+          'Phụ cấp & Thưởng: +' + formatCurrency(emp.allowance + calc.otPay) + '\n' +
+          'Đã ứng trước: -' + formatCurrency(calc.advanceAmt) + '\n' +
+          'THỰC LĨNH: ' + formatCurrency(calc.netPay);
+
+        content.innerHTML =
+          '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">' +
+            '<p class="font-bold text-slate-800 text-sm">' + emp.name + ' (' + mTitle + ')</p>' +
+            '<p class="text-slate-500">Vị trí: ' + emp.dept + ' • Mức lương: ' + formatCurrency(emp.dailyRate) + '/giờ</p>' +
+          '</div>' +
+          '<div class="space-y-2 pt-2">' +
+            '<div class="flex justify-between"><span>Tổng số ca & giờ đã chấm:</span><span class="font-semibold">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + ' tiếng)</span></div>' +
+            '<div class="flex justify-between"><span>Thành tiền lương ca:</span><span class="font-semibold">' + formatCurrency(calc.baseSalary) + '</span></div>' +
+            '<div class="flex justify-between"><span>Phụ cấp & Giờ làm thêm:</span><span class="font-semibold text-emerald-600">+' + formatCurrency(emp.allowance + calc.otPay) + '</span></div>' +
+            '<div class="flex justify-between"><span>Đã ứng trước:</span><span class="font-semibold text-rose-600">-' + formatCurrency(calc.advanceAmt) + '</span></div>' +
+            '<div class="flex justify-between pt-2 border-t border-slate-200 text-sm font-extrabold text-slate-900"><span>Thực nhận:</span><span class="text-emerald-700">' + formatCurrency(calc.netPay) + '</span></div>' +
+          '</div>';
+
+        const modal = document.getElementById('modalPayslip');
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function downloadCsv(filename, rows) {
+        const csvContent = '\uFEFF' + rows.map(function (r) {
+          return r.map(function (cell) {
+            return '"' + String(cell ?? '').replace(/"/g, '""') + '"';
+          }).join(',');
+        }).join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showToast('Đã tải xuống ' + filename);
+      }
+
+      function changeMonthByOffset(offset) {
+        const parts = (state.activeMonth || '2026-10').split('-').map(Number);
+        let y = parts[0] || 2026;
+        let m = (parts[1] || 10) + offset;
+        if (m < 1) { m = 12; y -= 1; }
+        if (m > 12) { m = 1; y += 1; }
+        state.activeMonth = y + '-' + String(m).padStart(2, '0');
+        saveState();
+        renderAll();
+        showToast('Đang xem bảng công ' + formatMonthTitle(state.activeMonth) + ' (Dữ liệu các tháng trước đã được lưu giữ)');
+      }
+
+      function archiveCurrentMonthSnapshot() {
+        if (state.employees.length === 0) {
+          showToast('Chưa có sinh viên nào để lưu bảng công tháng!', true);
+          return;
+        }
+        let totalShifts = 0;
+        let totalHours = 0;
+        let totalPay = 0;
+
+        state.employees.forEach(function (emp) {
+          const calc = computeEmployeePayroll(emp, state.activeMonth);
+          totalShifts += Number(emp.baseDays || 0);
+          totalHours += Number(emp.totalWorkHours || 0);
+          totalPay += Number(calc.netPay || 0);
+        });
+
+        const now = new Date();
+        const savedAt = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ' ' +
+                        String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0');
+
+        if (!state.savedMonths) state.savedMonths = [];
+        // Replace existing archive for same monthKey or unshift new
+        state.savedMonths = state.savedMonths.filter(function (item) { return item.monthKey !== state.activeMonth; });
+        state.savedMonths.unshift({
+          id: 'ARC' + Date.now(),
+          monthKey: state.activeMonth,
+          monthTitle: formatMonthTitle(state.activeMonth),
+          studentCount: state.employees.length,
+          totalShifts: totalShifts,
+          totalHours: totalHours,
+          totalPay: totalPay,
+          savedAt: savedAt
+        });
+
+        saveState();
+        renderSavedMonthsArchive();
+        showToast('Đã lưu chốt bảng chấm công ' + formatMonthTitle(state.activeMonth) + '!');
+      }
+
+      function renderAll() {
+        renderEmployeeSelectors();
+        renderCheckinTab();
+        renderEmployeesTab();
+        renderTimesheetTab();
+        if (state.activeTab === 'payroll') {
+          renderPayrollTab();
+        }
+      }
+
+      function openAddStudentModal() {
+        const modalEmp = document.getElementById('modalEmployee');
+        document.getElementById('modalEmployeeTitle').textContent = 'Thêm sinh viên làm thêm';
+        document.getElementById('empEditId').value = '';
+        document.getElementById('empNameInput').value = '';
+        document.getElementById('empRoleInput').value = 'Ca sáng ' + (state.defaultShiftHours || 4) + ' tiếng';
+        document.getElementById('empPhoneInput').value = '';
+        document.getElementById('empRateInput').value = Number(document.getElementById('quickShiftRateInput').value || 0);
+        document.getElementById('empBaseDaysInput').value = 0;
+        document.getElementById('empAllowanceInput').value = 0;
+        modalEmp.classList.remove('hidden');
+        modalEmp.classList.add('flex');
+      }
+
+      function initEvents() {
+        document.getElementById('btnRoleEmployee').addEventListener('click', function () {
+          state.role = 'employee';
+          saveState();
+          showToast('Chế độ cá nhân sinh viên');
+        });
+
+        document.getElementById('btnRoleManager').addEventListener('click', function () {
+          state.role = 'manager';
+          saveState();
+          showToast('Chế độ quản lý ca');
+        });
+
+        document.getElementById('btnResetDemo').addEventListener('click', function () {
+          state = JSON.parse(JSON.stringify(defaultState));
+          saveState();
+          renderAll();
+          showToast('Đã xóa sạch toàn bộ dữ liệu!');
+        });
+
+        // Month Navigation & Archive
+        document.getElementById('btnPrevMonth').addEventListener('click', function () {
+          changeMonthByOffset(-1);
+        });
+        document.getElementById('btnNextMonth').addEventListener('click', function () {
+          changeMonthByOffset(1);
+        });
+        document.getElementById('inputActiveMonth').addEventListener('change', function (e) {
+          if (e.target.value) {
+            state.activeMonth = e.target.value;
+            saveState();
+            renderAll();
+            showToast('Đã chuyển sang ' + formatMonthTitle(state.activeMonth));
+          }
+        });
+        document.getElementById('btnArchiveCurrentMonth').addEventListener('click', archiveCurrentMonthSnapshot);
+
+        document.getElementById('savedMonthsList').addEventListener('click', function (e) {
+          const openBtn = e.target.closest('button[data-archive-open]');
+          if (openBtn) {
+            state.activeMonth = openBtn.getAttribute('data-archive-open');
+            saveState();
+            renderAll();
+            showToast('Đã mở lại bảng công ' + formatMonthTitle(state.activeMonth));
+            return;
+          }
+          const delBtn = e.target.closest('button[data-archive-delete]');
+          if (delBtn) {
+            const id = delBtn.getAttribute('data-archive-delete');
+            state.savedMonths = (state.savedMonths || []).filter(function (a) { return a.id !== id; });
+            saveState();
+            renderSavedMonthsArchive();
+            showToast('Đã xóa bản lưu tháng');
+          }
+        });
+
+        // Default Shift Hours Selector (4h / 8h...)
+        document.getElementById('selectDefaultShiftHours').addEventListener('change', function (e) {
+          state.defaultShiftHours = Number(e.target.value || 4);
+          saveState();
+          showToast('Đã đặt mặc định ' + state.defaultShiftHours + ' tiếng/ca');
+        });
+
+        // Quick Shift Rate (0 - 100.000đ)
+        document.getElementById('btnSaveQuickRate').addEventListener('click', function () {
+          const rawVal = Number(document.getElementById('quickShiftRateInput').value || 0);
+          if (rawVal < 0 || rawVal > 100000) {
+            showToast('Vui lòng nhập mức lương/giờ từ 0 đến 100.000 ₫!', true);
+            return;
+          }
+          const rate = clampShiftRate(rawVal);
+          const activeEmp = getEmployeeById(state.activeEmployeeId);
+          if (!activeEmp) {
+            showToast('Đã đặt mức lương ' + formatCurrency(rate) + '/giờ. Hãy bấm + Thêm SV để tạo sinh viên!');
+            return;
+          }
+          activeEmp.dailyRate = rate;
+          const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
+          Object.keys(cal).forEach(function (d) {
+            cal[d].shiftRate = rate;
+          });
+          syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
+          saveState();
+          renderAll();
+          showToast('Đã áp dụng mức lương ' + formatCurrency(rate) + '/giờ');
+        });
+
+        // Preset rate buttons
+        document.querySelectorAll('button[data-rate-preset]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const val = clampShiftRate(btn.getAttribute('data-rate-preset'));
+            document.getElementById('quickShiftRateInput').value = val;
+            const activeEmp = getEmployeeById(state.activeEmployeeId);
+            if (activeEmp) {
+              activeEmp.dailyRate = val;
+              const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
+              Object.keys(cal).forEach(function (d) {
+                cal[d].shiftRate = val;
+              });
+              syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
+              saveState();
+              renderAll();
+            }
+            showToast('Đã chọn mức lương ' + formatCurrency(val) + '/giờ');
+          });
+        });
+
+        // Preset shift hour buttons inside Day Editor Modal (4 tiếng, 8 tiếng...)
+        document.querySelectorAll('button[data-hour-preset]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            const hrs = Number(btn.getAttribute('data-hour-preset') || 4);
+            document.getElementById('dayEditorShiftHoursInput').value = hrs;
+          });
+        });
+
+        document.getElementById('btnQuickAddStudent').addEventListener('click', openAddStudentModal);
+        document.getElementById('btnBannerAddStudent').addEventListener('click', openAddStudentModal);
+
+        // Calendar cell click
+        document.getElementById('atworkCalendarGrid').addEventListener('click', function (e) {
+          const cell = e.target.closest('button[data-cal-day]');
+          if (!cell) return;
+          const dayNum = Number(cell.getAttribute('data-cal-day'));
+          openDayEditorModal(dayNum);
+        });
+
+        // Day Editor Modal
+        const modalDay = document.getElementById('modalDayEditor');
+        function closeDayModal() {
+          modalDay.classList.add('hidden');
+          modalDay.classList.remove('flex');
+        }
+        document.getElementById('btnCloseDayEditor').addEventListener('click', closeDayModal);
+        document.getElementById('btnCancelDayEditor').addEventListener('click', closeDayModal);
+
+        document.getElementById('formDayEditor').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const dayNum = Number(document.getElementById('dayEditorDayNum').value || 22);
+          const selectedRadio = document.querySelector('input[name="dayStatusRadio"]:checked');
+          const status = selectedRadio ? selectedRadio.value : 'full';
+          const shiftName = document.getElementById('dayEditorShiftNameSelect').value || 'Ca Sáng';
+          const shiftHours = Number(document.getElementById('dayEditorShiftHoursInput').value || 4);
+          const calcType = document.getElementById('dayEditorCalcType').value || 'per_hour';
+          const rawShiftRate = Number(document.getElementById('dayEditorShiftRateInput').value || 0);
+
+          if (rawShiftRate < 0 || rawShiftRate > 100000) {
+            showToast('Mức lương/giờ chỉ từ 0 đến 100.000 ₫!', true);
+            return;
+          }
+
+          const shiftRate = clampShiftRate(rawShiftRate);
+          const ot = Number(document.getElementById('dayEditorOtInput').value || 0);
+          const advance = Number(document.getElementById('dayEditorAdvanceInput').value || 0);
+          const allowance = Number(document.getElementById('dayEditorAllowanceInput').value || 0);
+          const note = document.getElementById('dayEditorNoteInput').value.trim();
+
+          const activeEmp = getEmployeeById(state.activeEmployeeId);
+          if (activeEmp) {
+            const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
+            if (status === 'off' && advance === 0 && allowance === 0) {
+              cal[dayNum] = { status: 'off', shiftName: shiftName, shiftHours: 0, calcType: calcType, shiftRate: shiftRate, ot: 0, advance: 0, allowance: 0, note: note };
+            } else {
+              activeEmp.dailyRate = shiftRate;
+              cal[dayNum] = {
+                status: status,
+                shiftName: shiftName,
+                shiftHours: shiftHours,
+                calcType: calcType,
+                shiftRate: shiftRate,
+                ot: ot,
+                advance: advance,
+                allowance: allowance,
+                note: note
+              };
+            }
+            syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
+            saveState();
+            renderAll();
+            showToast('Đã lưu ' + shiftName + ' (' + shiftHours + ' tiếng) ngày ' + dayNum + '!');
+          }
+          closeDayModal();
+        });
+
+        // Action Grid Buttons
+        document.getElementById('btnGridDayPunch').addEventListener('click', function () {
+          openDayEditorModal(22);
+        });
+        document.getElementById('btnGridAdvance').addEventListener('click', function () {
+          openDayEditorModal(22);
+          document.getElementById('dayEditorAdvanceInput').focus();
+        });
+        document.getElementById('btnGridAllowance').addEventListener('click', function () {
+          openDayEditorModal(22);
+          document.getElementById('dayEditorAllowanceInput').focus();
+        });
+        document.getElementById('btnViewCurrentPayslip').addEventListener('click', function () {
+          openPayslipModal(state.activeEmployeeId);
+        });
+
+        // Bottom Nav
+        document.getElementById('navBtnCheckin').addEventListener('click', function () { switchMainTab('checkin'); });
+        document.getElementById('navBtnEmployees').addEventListener('click', function () { switchMainTab('employees'); });
+        document.getElementById('navBtnTimesheet').addEventListener('click', function () { switchMainTab('timesheet'); });
+        document.getElementById('navBtnPayroll').addEventListener('click', function () { switchMainTab('payroll'); });
+
+        document.getElementById('selectActiveEmployee').addEventListener('change', function (e) {
+          state.activeEmployeeId = e.target.value;
+          saveState();
+          renderCheckinTab();
+        });
+
+        document.getElementById('selectShift').addEventListener('change', function (e) {
+          state.selectedShift = e.target.value;
+          saveState();
+        });
+
+        document.getElementById('btnMainPunch').addEventListener('click', handlePunchAction);
+
+        // Leave Modal
+        const modalLeave = document.getElementById('modalLeave');
+        function openLeaveModalWithType(typeStr) {
+          if (state.employees.length === 0) {
+            openAddStudentModal();
+            showToast('Hãy thêm sinh viên trước!', true);
+            return;
+          }
+          document.getElementById('leaveEmpSelect').value = state.activeEmployeeId;
+          document.getElementById('leaveTypeSelect').value = typeStr;
+          modalLeave.classList.remove('hidden');
+          modalLeave.classList.add('flex');
+        }
+        document.getElementById('btnQuickLeave').addEventListener('click', function () {
+          openLeaveModalWithType('Xin nghỉ ca (Bận lịch học/thi)');
+        });
+        document.getElementById('btnQuickOvertime').addEventListener('click', function () {
+          openLeaveModalWithType('Đăng ký Tăng ca (OT)');
+        });
+        document.getElementById('btnNewLeaveRequest').addEventListener('click', function () {
+          openLeaveModalWithType('Xin nghỉ ca (Bận lịch học/thi)');
+        });
+        document.getElementById('btnCloseLeaveModal').addEventListener('click', function () {
+          modalLeave.classList.add('hidden');
+          modalLeave.classList.remove('flex');
+        });
+        document.getElementById('btnCancelLeaveModal').addEventListener('click', function () {
+          modalLeave.classList.add('hidden');
+          modalLeave.classList.remove('flex');
+        });
+
+        document.getElementById('formLeave').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const empId = document.getElementById('leaveEmpSelect').value;
+          const type = document.getElementById('leaveTypeSelect').value;
+          const date = document.getElementById('leaveDateInput').value;
+          const otHours = Number(document.getElementById('leaveOtHoursInput').value || 0);
+          const reason = document.getElementById('leaveReasonInput').value.trim();
+
+          state.leaves.unshift({
+            id: 'REQ' + Date.now(),
+            empId: empId,
+            type: type,
+            date: date,
+            otHours: otHours,
+            reason: reason,
+            status: 'Chờ duyệt'
+          });
+          saveState();
+          document.getElementById('leaveReasonInput').value = '';
+          modalLeave.classList.add('hidden');
+          modalLeave.classList.remove('flex');
+          renderAll();
+          showToast('Đã lưu đơn báo nghỉ/đổi ca!');
+        });
+
+        // Employee search & filter
+        document.getElementById('inputSearchEmployee').addEventListener('input', renderEmployeesTab);
+        document.getElementById('selectFilterDept').addEventListener('change', renderEmployeesTab);
+
+        // Add / Edit Employee Modal
+        const modalEmp = document.getElementById('modalEmployee');
+        document.getElementById('btnOpenAddEmployee').addEventListener('click', openAddStudentModal);
+
+        function closeEmpModal() {
+          modalEmp.classList.add('hidden');
+          modalEmp.classList.remove('flex');
+        }
+        document.getElementById('btnCloseEmployeeModal').addEventListener('click', closeEmpModal);
+        document.getElementById('btnCancelEmployeeModal').addEventListener('click', closeEmpModal);
+
+        document.getElementById('formEmployee').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const editId = document.getElementById('empEditId').value;
+          const name = document.getElementById('empNameInput').value.trim();
+          const dept = document.getElementById('empDeptInput').value;
+          const role = document.getElementById('empRoleInput').value.trim() || 'Ca 4 tiếng';
+          const phone = document.getElementById('empPhoneInput').value.trim();
+          const rawRate = Number(document.getElementById('empRateInput').value || 0);
+
+          if (rawRate < 0 || rawRate > 100000) {
+            showToast('Mức lương/giờ phải từ 0 đến 100.000 ₫!', true);
+            return;
+          }
+
+          const dailyRate = clampShiftRate(rawRate);
+          const baseDays = Number(document.getElementById('empBaseDaysInput').value || 0);
+          const allowance = Number(document.getElementById('empAllowanceInput').value || 0);
+
+          if (editId) {
+            const target = getEmployeeById(editId);
+            if (target) {
+              target.name = name;
+              target.dept = dept;
+              target.role = role;
+              target.phone = phone;
+              target.dailyRate = dailyRate;
+              target.baseDays = baseDays;
+              target.allowance = allowance;
+              showToast('Đã cập nhật: ' + name);
+            }
+          } else {
+            const newId = 'SV' + Date.now();
+            state.employees.push({
+              id: newId,
+              name: name,
+              dept: dept,
+              role: role,
+              phone: phone,
+              dailyRate: dailyRate,
+              baseDays: baseDays,
+              totalWorkHours: 0,
+              otHours: 0,
+              lateCount: 0,
+              allowance: allowance,
+              advance: 0,
+              monthlyData: {}
+            });
+            state.activeEmployeeId = newId;
+            showToast('Đã thêm sinh viên: ' + name);
+          }
+          saveState();
+          closeEmpModal();
+          renderAll();
+        });
+
+        document.getElementById('employeeGrid').addEventListener('click', function (e) {
+          const btn = e.target.closest('button[data-action]');
+          if (!btn) return;
+          const action = btn.getAttribute('data-action');
+          const id = btn.getAttribute('data-id');
+          const emp = getEmployeeById(id);
+          if (!emp) return;
+
+          if (action === 'switch-checkin') {
+            state.activeEmployeeId = emp.id;
+            switchMainTab('checkin');
+            showToast('Đang chấm công cho ' + emp.name);
+          } else if (action === 'edit-emp') {
+            document.getElementById('modalEmployeeTitle').textContent = 'Sửa thông tin sinh viên';
+            document.getElementById('empEditId').value = emp.id;
+            document.getElementById('empNameInput').value = emp.name;
+            document.getElementById('empDeptInput').value = emp.dept;
+            document.getElementById('empRoleInput').value = emp.role;
+            document.getElementById('empPhoneInput').value = emp.phone;
+            document.getElementById('empRateInput').value = clampShiftRate(emp.dailyRate);
+            document.getElementById('empBaseDaysInput').value = emp.baseDays;
+            document.getElementById('empAllowanceInput').value = emp.allowance;
+            modalEmp.classList.remove('hidden');
+            modalEmp.classList.add('flex');
+          } else if (action === 'delete-emp') {
+            state.employees = state.employees.filter(function (item) { return item.id !== id; });
+            state.activeEmployeeId = state.employees.length > 0 ? state.employees[0].id : '';
+            saveState();
+            renderAll();
+            showToast('Đã xóa ' + emp.name);
+          }
+        });
+
+        // Timesheet Sub-tabs
+        const subLogs = document.getElementById('subViewLogs');
+        const subLeaves = document.getElementById('subViewLeaves');
+        const subTasks = document.getElementById('subViewTasks');
+        const btnSubLogs = document.getElementById('btnSubTabLogs');
+        const btnSubLeaves = document.getElementById('btnSubTabLeaves');
+        const btnSubTasks = document.getElementById('btnSubTabTasks');
+
+        btnSubLogs.addEventListener('click', function () {
+          subLogs.classList.remove('hidden');
+          subLeaves.classList.add('hidden');
+          subTasks.classList.add('hidden');
+          btnSubLogs.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white transition';
+          btnSubLeaves.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1';
+          btnSubTasks.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+        });
+
+        btnSubLeaves.addEventListener('click', function () {
+          subLeaves.classList.remove('hidden');
+          subLogs.classList.add('hidden');
+          subTasks.classList.add('hidden');
+          btnSubLeaves.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white transition flex items-center gap-1';
+          btnSubLogs.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+          btnSubTasks.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+        });
+
+        btnSubTasks.addEventListener('click', function () {
+          subTasks.classList.remove('hidden');
+          subLogs.classList.add('hidden');
+          subLeaves.classList.add('hidden');
+          btnSubTasks.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white transition';
+          btnSubLogs.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+          btnSubLeaves.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1';
+        });
+
+        document.getElementById('btnAddShiftTask').addEventListener('click', function () {
+          const input = document.getElementById('inputNewTaskTitle');
+          const title = (input.value || '').trim();
+          if (!title) return;
+          if (!state.shiftTasks) state.shiftTasks = [];
+          state.shiftTasks.unshift({
+            id: 'TSK' + Date.now(),
+            title: title,
+            shift: state.selectedShift,
+            done: false
+          });
+          input.value = '';
+          saveState();
+          renderTimesheetTab();
+          showToast('Đã thêm ghi chú công việc!');
+        });
+
+        document.getElementById('shiftTasksList').addEventListener('change', function (e) {
+          const cb = e.target.closest('input[data-task-id]');
+          if (!cb) return;
+          const id = cb.getAttribute('data-task-id');
+          const task = (state.shiftTasks || []).find(function (t) { return t.id === id; });
+          if (task) {
+            task.done = cb.checked;
+            saveState();
+            renderTimesheetTab();
+          }
+        });
+
+        document.getElementById('filterLogStatus').addEventListener('change', renderTimesheetTab);
+
+        // Manual Attendance Modal
+        const modalManual = document.getElementById('modalManualLog');
+        document.getElementById('btnOpenManualLog').addEventListener('click', function () {
+          if (state.employees.length === 0) {
+            openAddStudentModal();
+            showToast('Hãy thêm sinh viên trước!', true);
+            return;
+          }
+          modalManual.classList.remove('hidden');
+          modalManual.classList.add('flex');
+        });
+        document.getElementById('btnCloseManualLogModal').addEventListener('click', function () {
+          modalManual.classList.add('hidden');
+          modalManual.classList.remove('flex');
+        });
+        document.getElementById('btnCancelManualLogModal').addEventListener('click', function () {
+          modalManual.classList.add('hidden');
+          modalManual.classList.remove('flex');
+        });
+
+        document.getElementById('formManualLog').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const empId = document.getElementById('manualEmpSelect').value;
+          const date = document.getElementById('manualDateInput').value;
+          const inTime = document.getElementById('manualInInput').value;
+          const outTime = document.getElementById('manualOutInput').value;
+          const status = document.getElementById('manualStatusSelect').value;
+          const hours = calculateHoursBetween(inTime, outTime);
+
+          state.logs.unshift({
+            id: 'LOG' + Date.now(),
+            empId: empId,
+            date: date,
+            inTime: inTime,
+            outTime: outTime,
+            hours: hours,
+            status: status,
+            shift: 'Ca ' + hours + ' tiếng',
+            location: 'Chấm công bù'
+          });
+
+          saveState();
+          modalManual.classList.add('hidden');
+          modalManual.classList.remove('flex');
+          renderAll();
+          showToast('Đã lưu chấm công bù!');
+        });
+
+        document.getElementById('timesheetTableBody').addEventListener('click', function (e) {
+          const btn = e.target.closest('button[data-action="delete-log"]');
+          if (!btn) return;
+          const id = btn.getAttribute('data-id');
+          state.logs = state.logs.filter(function (l) { return l.id !== id; });
+          saveState();
+          renderAll();
+          showToast('Đã xóa bản ghi');
+        });
+
+        document.getElementById('leaveRequestsContainer').addEventListener('click', function (e) {
+          const btn = e.target.closest('button[data-action]');
+          if (!btn) return;
+          const action = btn.getAttribute('data-action');
+          const id = btn.getAttribute('data-id');
+          const req = state.leaves.find(function (r) { return r.id === id; });
+          if (!req) return;
+
+          if (action === 'approve-leave') {
+            req.status = 'Đã duyệt';
+            saveState();
+            renderAll();
+            showToast('Đã duyệt đơn');
+          } else if (action === 'reject-leave') {
+            req.status = 'Từ chối';
+            saveState();
+            renderAll();
+            showToast('Đã từ chối đơn', true);
+          }
+        });
+
+        document.getElementById('payrollTableBody').addEventListener('click', function (e) {
+          const btn = e.target.closest('button[data-action]');
+          if (!btn) return;
+          const action = btn.getAttribute('data-action');
+          const id = btn.getAttribute('data-id');
+          const emp = getEmployeeById(id);
+          if (!emp) return;
+
+          if (action === 'bonus-emp') {
+            const cal = getEmpCalendarForMonth(emp, state.activeMonth);
+            if (!cal[22]) {
+              cal[22] = { status: 'full', shiftName: 'Ca Sáng', shiftHours: 4, calcType: 'per_hour', shiftRate: emp.dailyRate, ot: 0, advance: 0, allowance: 20000, note: 'Thưởng thêm' };
+            } else {
+              cal[22].allowance = Number(cal[22].allowance || 0) + 20000;
+            }
+            syncEmployeeStatsFromCalendar(emp, state.activeMonth);
+            saveState();
+            renderPayrollTab();
+            showToast('Đã cộng +20.000₫ thưởng thêm cho ' + emp.name);
+          } else if (action === 'view-payslip') {
+            openPayslipModal(emp.id);
+          }
+        });
+
+        const modalPayslip = document.getElementById('modalPayslip');
+        function closePayslip() {
+          modalPayslip.classList.add('hidden');
+          modalPayslip.classList.remove('flex');
+        }
+        document.getElementById('btnClosePayslipModal').addEventListener('click', closePayslip);
+        document.getElementById('btnOkPayslipModal').addEventListener('click', closePayslip);
+        document.getElementById('btnCopyPayslip').addEventListener('click', function () {
+          try {
+            const temp = document.createElement('textarea');
+            temp.value = currentPayslipText;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('Đã sao chép phiếu lương!');
+          } catch (err) {
+            showToast('Đã sao chép phiếu lương!');
+          }
+        });
+
+        document.getElementById('btnExportLogsCsv').addEventListener('click', function () {
+          const rows = [['Mã SV', 'Họ tên', 'Ngày', 'Ca làm', 'Giờ vào', 'Giờ ra', 'Số giờ', 'Trạng thái']];
+          state.logs.forEach(function (l) {
+            const emp = getEmployeeById(l.empId);
+            rows.push([l.empId, emp ? emp.name : l.empId, l.date, l.shift || '', l.inTime, l.outTime || '', l.hours, l.status]);
+          });
+          downloadCsv('lich-su-ca-lam-' + state.activeMonth + '.csv', rows);
+        });
+
+        document.getElementById('btnExportPayrollCsv').addEventListener('click', function () {
+          const rows = [['Tháng', 'Mã SV', 'Họ tên', 'Vị trí', 'Lương/giờ (0-100k)', 'Số ca', 'Tổng số giờ', 'Phụ cấp', 'Ứng trước', 'Thực lĩnh']];
+          state.employees.forEach(function (emp) {
+            const calc = computeEmployeePayroll(emp, state.activeMonth);
+            rows.push([
+              state.activeMonth,
+              emp.id,
+              emp.name,
+              emp.dept,
+              emp.dailyRate,
+              emp.baseDays,
+              emp.totalWorkHours || 0,
+              emp.allowance,
+              calc.advanceAmt,
+              calc.netPay
+            ]);
+          });
+          downloadCsv('bang-luong-sinh-vien-' + state.activeMonth + '.csv', rows);
+        });
+
+        ['btnToggleLocationMode', 'btnOpenQrModal', 'btnCloseQrModal', 'btnConfirmQrPunch',
+         'btnGridShiftTask', 'btnGridCashbook', 'btnGridLocationMap', 'btnCloseLocationMap',
+         'btnPunchFromMap', 'btnOpenWorkplaceModal', 'btnCloseWorkplaceModal',
+         'btnCancelWorkplaceModal', 'btnOpenCashbookModal', 'btnCloseCashbookModal',
+         'btnCancelCashbookModal'].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('click', function () { renderAll(); });
+        });
+      }
+
+      updateLiveClock();
+      setInterval(updateLiveClock, 1000);
+      initEvents();
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
