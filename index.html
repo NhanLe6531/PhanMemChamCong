@@ -1,16 +1,9 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <link rel="manifest" href="manifest.json" />
+  <link rel="manifest" href="manifest.json">
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#2563eb" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Chấm Công SV" />
-  <meta name="application-name" content="Chấm Công SV" />
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Chấm Công Làm Thêm Sinh Viên - Quản Lý Ca & Lương</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,17 +14,11 @@
     * {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-tap-highlight-color: transparent;
-      touch-action: pan-y;
     }
-    html, body {
+    body {
       background-color: #f1f5f9;
       color: #0f172a;
       overflow-x: hidden;
-      -webkit-overflow-scrolling: touch; /* Hỗ trợ lướt mượt trên iOS & Android */
-    }
-    input, textarea, select {
-      -webkit-user-select: text;
-      user-select: text;
     }
     .pulse-ring {
       animation: pulseRing 2s infinite;
@@ -47,152 +34,67 @@
     .cal-cell:active {
       transform: scale(0.94);
     }
-    .fn-card {
-      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .fn-card:hover {
-      transform: translateY(-2px);
-    }
-    .fn-card:active {
-      transform: scale(0.96);
-    }
-    .fn-sub::after {
-      content: attr(data-sub);
-      display: block;
-      font-size: 10px;
-      font-weight: 600;
-      margin-top: 2px;
-      opacity: 0.85;
-    }
-    .cta-sub::before {
-      content: attr(data-cta-prefix);
-      margin-right: 6px;
-    }
-    .shopee-gradient {
-      background: linear-gradient(135deg, #ee4d2d 0%, #ff7337 100%);
-    }
-    .shopee-price-text {
-      color: #ee4d2d;
-    }
-    @keyframes flashPulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.88; transform: scale(1.03); }
-    }
-    .flash-badge {
-      animation: flashPulse 1.8s infinite ease-in-out;
-    }
   </style>
 </head>
 <body class="min-h-screen pb-24">
+
   <!-- Top Header -->
-  <header class="sticky top-0 z-30 bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-900 text-white shadow-lg border-b border-white/10">
-    <div class="max-w-3xl mx-auto px-3.5 py-2.5 flex items-center justify-between gap-2">
-      <div class="flex items-center gap-2.5 min-w-0">
-        <div id="appLogoSecretTrigger" title="Chấm Công Sinh Viên" class="w-10 h-10 rounded-2xl bg-gradient-to-br from-white to-blue-50 text-blue-700 flex items-center justify-center shadow-md shrink-0 cursor-pointer active:scale-95 transition">
-          <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+  <header class="sticky top-0 z-30 bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md">
+    <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-white text-blue-600 flex items-center justify-center shadow-sm shrink-0">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">
             <rect x="3" y="4" width="18" height="17" rx="4" fill="#2563eb"/>
             <path d="M8 2v3M16 2v3" stroke="#1d4ed8" stroke-width="2.2" stroke-linecap="round"/>
             <path d="M3 9h18" stroke="#93c5fd" stroke-width="1.5"/>
             <path d="M8.5 14.5l2.3 2.3 4.7-4.8" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="min-w-0">
-          <div class="flex items-center gap-1.5 flex-wrap">
-            <h1 class="font-extrabold text-sm sm:text-base leading-tight tracking-tight truncate">Chấm Công Sinh Viên</h1>
-            <span id="roleBadge" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-200 border border-emerald-400/40">Quản lý Ca</span>
+        <div>
+          <div class="flex items-center gap-1.5">
+            <h1 class="font-bold text-sm sm:text-base leading-tight">Chấm Công Sinh Viên</h1>
+            <span id="roleBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-400/25 text-emerald-100 border border-emerald-300/40">Part-time</span>
           </div>
-          <p class="text-[11px] text-blue-200/90 truncate" id="headerSubtitle">Quản lý ca (4h / 8h) • Tự động tính lương</p>
+          <p class="text-[11px] text-blue-100" id="headerSubtitle">Chấm công theo ca (4h / 8h) • Lưu bảng công từng tháng</p>
         </div>
       </div>
-      <div class="flex items-center gap-1.5 shrink-0">
-        <div class="flex bg-slate-950/50 p-1 rounded-xl items-center text-[11px] border border-white/15 shadow-inner">
-          <button id="btnRoleEmployee" type="button" class="px-2.5 py-1 rounded-lg font-semibold text-blue-200 hover:text-white transition flex items-center gap-1">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg><span>Cá nhân</span>
-          </button>
-          <button id="btnRoleManager" type="button" class="px-2.5 py-1 rounded-lg font-extrabold bg-white text-blue-800 shadow-xs transition flex items-center gap-1">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg><span>Quản lý</span>
-          </button>
+
+      <div class="flex items-center gap-1.5">
+        <div class="hidden sm:flex bg-blue-900/40 p-0.5 rounded-xl items-center text-[11px] border border-white/15">
+          <button id="btnRoleEmployee" type="button" class="px-2 py-1 rounded-lg font-medium text-blue-100">Cá nhân</button>
+          <button id="btnRoleManager" type="button" class="px-2 py-1 rounded-lg font-semibold bg-white text-blue-700">Quản lý</button>
         </div>
-        <button id="btnOpenAdMonetize" type="button" title="Cài đặt kiếm tiền Quảng cáo thật (AdSense / Affiliate)" class="hidden px-2.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold items-center gap-1 shadow-xs transition">
+        <button id="btnOpenAdMonetize" type="button" title="Cài đặt kiếm tiền Quảng cáo thật (AdSense / Affiliate)" class="px-2.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold flex items-center gap-1 shadow-xs transition">
           <span>💰 Kiếm tiền QC</span>
         </button>
-        <button id="btnResetDemo" type="button" title="Xóa sạch toàn bộ dữ liệu" class="p-2 sm:px-2.5 sm:py-1.5 rounded-xl bg-rose-500/20 hover:bg-rose-500/35 border border-rose-400/30 text-rose-100 text-xs font-semibold flex items-center gap-1 transition">
+        <button id="btnResetDemo" type="button" title="Xóa sạch toàn bộ dữ liệu" class="px-2.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold flex items-center gap-1 transition">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
           </svg>
-          <span class="hidden sm:inline">Xóa dữ liệu</span>
+          <span>Xóa dữ liệu</span>
         </button>
       </div>
     </div>
   </header>
+
   <!-- Main Container -->
   <main class="max-w-3xl mx-auto px-3 sm:px-4 pt-3.5 space-y-3.5">
-    <!-- BẢNG ĐIỀU KHIỂN QUẢN LÝ NHANH -->
-    <section id="managerControlPanel" class="bg-gradient-to-br from-slate-900 via-slate-800 to-blue-950 text-white rounded-2xl p-4 shadow-md border border-slate-700/80 space-y-3">
-      <div class="flex items-center justify-between gap-2 border-b border-white/10 pb-2.5">
-        <div class="flex items-center gap-2">
-          <span class="w-7 h-7 rounded-lg bg-blue-500/25 border border-blue-400/40 flex items-center justify-center text-sm">🛡️</span>
-          <div>
-            <h2 class="text-xs sm:text-sm font-extrabold tracking-tight text-white flex items-center gap-1.5">
-              <span>Trung Tâm Quản Lý Ca & Nhân Sự</span>
-              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-bold">PRO</span>
-            </h2>
-            <p class="text-[11px] text-slate-300">Theo dõi tổng quỹ lương, duyệt đơn nghỉ phép và chấm công nhanh toàn bộ nhân viên</p>
-          </div>
-        </div>
-        <button id="btnMgrGoEmployees" type="button" class="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-[11px] font-bold text-blue-200 shrink-0 transition">
-          Quản lý DS →
-        </button>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <div class="bg-white/5 border border-white/10 rounded-xl p-2.5">
-          <p class="text-[10px] text-slate-300 uppercase font-semibold">Tổng nhân sự</p>
-          <p id="mgrKpiStaffCount" class="text-sm sm:text-base font-extrabold text-white mt-0.5">0 sinh viên</p>
-        </div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-2.5">
-          <p class="text-[10px] text-slate-300 uppercase font-semibold">Tổng ca tháng</p>
-          <p id="mgrKpiTotalShifts" class="text-sm sm:text-base font-extrabold text-emerald-400 mt-0.5">0 ca (0h)</p>
-        </div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-2.5">
-          <p class="text-[10px] text-slate-300 uppercase font-semibold">Quỹ lương tháng</p>
-          <p id="mgrKpiTotalPayroll" class="text-sm sm:text-base font-extrabold text-amber-300 mt-0.5">0 ₫</p>
-        </div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-2.5">
-          <p class="text-[10px] text-slate-300 uppercase font-semibold">Đơn chờ duyệt</p>
-          <p id="mgrKpiPendingLeaves" class="text-sm sm:text-base font-extrabold text-rose-300 mt-0.5">0 đơn</p>
-        </div>
-      </div>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-0.5">
-        <button id="btnMgrBatchPunch" type="button" class="fn-card px-3 py-2 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm">
-          <span>⚡</span>
-          <span>Chấm tất cả hôm nay</span>
-        </button>
-        <button id="btnMgrAddEmp" type="button" class="fn-card px-3 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm">
-          <span>➕</span>
-          <span>Thêm nhân viên</span>
-        </button>
-        <button id="btnMgrApproveLeave" type="button" class="fn-card px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white text-xs font-semibold flex items-center justify-center gap-1.5">
-          <span>📋</span>
-          <span>Duyệt đơn nghỉ/OT</span>
-        </button>
-        <button id="btnMgrExportPayroll" type="button" class="fn-card px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-emerald-200 text-xs font-semibold flex items-center justify-center gap-1.5">
-          <span>📊</span>
-          <span>Xuất lương CSV</span>
-        </button>
-      </div>
-    </section>
-    <!-- Quick Setup Bar -->
+
+    <!-- Quick Setup Bar: Student Selector + Shift Wage Input (0 - 100.000đ) + Shift Hours -->
     <section class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 space-y-3">
+      <!-- Empty Student Banner (Shown when state.employees.length === 0) -->
       <div id="emptyStudentBanner" class="hidden p-3.5 rounded-xl bg-blue-50 border border-blue-200 flex-col sm:flex-row items-center justify-between gap-2.5">
         <div class="text-xs text-blue-900">
           <p class="font-bold text-sm">Chưa có sinh viên nào trong danh sách!</p>
-          <p class="text-blue-700 mt-0.5">Hãy bấm <strong>"+ Thêm SV"</strong> để tạo tên sinh viên trước khi chấm công.</p>
+          <p class="text-blue-700 mt-0.5">Hãy bấm <strong>"+ Thêm SV"</strong> để tạo tên sinh viên (hoặc tên công việc làm thêm) trước khi chấm công.</p>
         </div>
         <button id="btnBannerAddStudent" type="button" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shrink-0 shadow-xs">
           + Tạo sinh viên ngay
         </button>
       </div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- Select Student / Part-time Staff -->
         <div class="flex items-center justify-between gap-2 bg-slate-50 rounded-xl p-2.5 border border-slate-200/70">
           <div class="flex items-center gap-2.5 min-w-0 flex-1">
             <div id="activeEmpAvatar" class="w-9 h-9 rounded-full bg-blue-600 text-white font-bold flex items-center justify-center text-xs shrink-0">
@@ -208,6 +110,8 @@
             + Thêm SV
           </button>
         </div>
+
+        <!-- Shift Wage Input (0 - 100.000đ) -->
         <div class="bg-emerald-50/60 rounded-xl p-2.5 border border-emerald-200/80 flex items-center justify-between gap-2">
           <div class="flex-1">
             <label for="quickShiftRateInput" class="text-[10px] font-bold text-emerald-700 uppercase block">Mức lương/giờ (0 - 100.000 ₫)</label>
@@ -221,6 +125,8 @@
           </button>
         </div>
       </div>
+
+      <!-- Preset Quick Rate Chips (0 - 100.000) & Default Shift Hours -->
       <div class="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-slate-100 text-[11px]">
         <div class="flex items-center gap-1.5 flex-wrap">
           <span class="text-slate-400 font-medium">Lương/giờ:</span>
@@ -232,6 +138,7 @@
           <button type="button" data-rate-preset="80000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">80.000₫</button>
           <button type="button" data-rate-preset="100000" class="px-2 py-0.5 rounded-lg bg-slate-100 hover:bg-blue-50 text-slate-700 font-semibold">100.000₫</button>
         </div>
+
         <div class="flex items-center gap-1.5">
           <span class="text-slate-400 font-medium">Số giờ/ca mặc định:</span>
           <select id="selectDefaultShiftHours" class="px-2 py-0.5 rounded-lg bg-blue-50 text-blue-700 font-bold border border-blue-200 focus:outline-none">
@@ -244,8 +151,22 @@
         </div>
       </div>
     </section>
+
+    <!-- Hidden Workplace Compatibility Container -->
+    <section class="hidden">
+      <span id="activeWorkplaceTitle">Làm thêm</span>
+      <button id="btnOpenWorkplaceModal" type="button">+ Thêm công việc</button>
+      <div id="workplaceCardsContainer"></div>
+      <span id="kpiTotalStaff">0</span>
+      <span id="kpiPresentToday">0</span>
+      <span id="kpiLateToday">0</span>
+      <span id="kpiPendingRequests">0</span>
+    </section>
+
     <!-- TAB 1: BẢNG CHẤM CÔNG LỊCH THÁNG & LƯU THÁNG -->
     <section id="viewCheckin" class="space-y-3.5">
+
+      <!-- Monthly Summary Card -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3.5">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
           <div>
@@ -262,6 +183,8 @@
             </button>
           </div>
         </div>
+
+        <!-- 3 Simple Summary Pills (Số ca + Tổng giờ + Ứng trước) -->
         <div class="grid grid-cols-3 gap-2 text-center bg-slate-50 rounded-xl p-2.5 border border-slate-200/60 text-xs">
           <div>
             <p class="text-[11px] text-slate-400">Tổng số ca & giờ</p>
@@ -278,72 +201,42 @@
             <p id="atworkBreakdownAdvance" class="font-bold text-rose-600 text-sm mt-0.5">-0 ₫</p>
           </div>
         </div>
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">Chức năng thao tác nhanh</span>
-            <span class="text-[11px] text-blue-600 font-semibold">Chạm để mở bảng nhập</span>
-          </div>
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-            <button id="btnGridDayPunch" type="button" class="fn-card p-3 rounded-2xl bg-gradient-to-br from-emerald-50 via-white to-teal-50/70 hover:from-emerald-100/80 border border-emerald-200/90 shadow-xs flex items-center sm:flex-col sm:text-center gap-2.5 sm:gap-1.5">
-              <span class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-md shadow-emerald-500/20 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span class="sr-only">✓</span>
-              </span>
-              <span data-sub="Chọn ca 4h / 8h" class="fn-sub text-left sm:text-center text-xs font-extrabold text-slate-800 leading-tight">Chấm công</span>
-            </button>
-            <button id="btnGridAdvance" type="button" class="fn-card p-3 rounded-2xl bg-gradient-to-br from-rose-50 via-white to-pink-50/70 hover:from-rose-100/80 border border-rose-200/90 shadow-xs flex items-center sm:flex-col sm:text-center gap-2.5 sm:gap-1.5">
-              <span class="w-11 h-11 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 text-white flex items-center justify-center shadow-md shadow-rose-500/20 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-                <span class="sr-only">₫</span>
-              </span>
-              <span data-sub="Ghi tạm ứng tiền" class="fn-sub text-left sm:text-center text-xs font-extrabold text-slate-800 leading-tight">Ứng lương</span>
-            </button>
-            <button id="btnGridAllowance" type="button" class="fn-card p-3 rounded-2xl bg-gradient-to-br from-blue-50 via-white to-indigo-50/70 hover:from-blue-100/80 border border-blue-200/90 shadow-xs flex items-center sm:flex-col sm:text-center gap-2.5 sm:gap-1.5">
-              <span class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                </svg>
-                <span class="sr-only">+</span>
-              </span>
-              <span data-sub="Thưởng & hỗ trợ" class="fn-sub text-left sm:text-center text-xs font-extrabold text-slate-800 leading-tight">Phụ cấp</span>
-            </button>
-            <button id="btnQuickLeave" type="button" class="fn-card p-3 rounded-2xl bg-gradient-to-br from-violet-50 via-white to-purple-50/70 hover:from-violet-100/80 border border-violet-200/90 shadow-xs flex items-center sm:flex-col sm:text-center gap-2.5 sm:gap-1.5">
-              <span class="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-600 text-white flex items-center justify-center shadow-md shadow-violet-500/20 shrink-0">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                </svg>
-                <span class="sr-only">P</span>
-              </span>
-              <span data-sub="Báo bận / Đổi ca" class="fn-sub text-left sm:text-center text-xs font-extrabold text-slate-800 leading-tight">Xin nghỉ phép</span>
-            </button>
-          </div>
-          <div class="grid grid-cols-4 gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
-            <button id="btnExtManualLog" type="button" class="fn-card py-2 px-1.5 rounded-xl bg-slate-50 hover:bg-slate-100 border border-slate-200/80 flex flex-col items-center gap-1 text-center">
-              <span class="text-sm">🕒</span>
-              <span class="text-[10px] font-bold text-slate-700 leading-tight">Chấm bù giờ</span>
-            </button>
-            <button id="btnExtOvertime" type="button" class="fn-card py-2 px-1.5 rounded-xl bg-amber-50/70 hover:bg-amber-100/80 border border-amber-200/80 flex flex-col items-center gap-1 text-center">
-              <span class="text-sm">🔥</span>
-              <span class="text-[10px] font-bold text-amber-800 leading-tight">Báo Tăng ca</span>
-            </button>
-            <button id="btnExtShiftTasks" type="button" class="fn-card py-2 px-1.5 rounded-xl bg-cyan-50/70 hover:bg-cyan-100/80 border border-cyan-200/80 flex flex-col items-center gap-1 text-center">
-              <span class="text-sm">📝</span>
-              <span class="text-[10px] font-bold text-cyan-800 leading-tight">Việc trong ca</span>
-            </button>
-            <button id="btnExtPayrollView" type="button" class="fn-card py-2 px-1.5 rounded-xl bg-emerald-50/70 hover:bg-emerald-100/80 border border-emerald-200/80 flex flex-col items-center gap-1 text-center">
-              <span class="text-sm">📊</span>
-              <span class="text-[10px] font-bold text-emerald-800 leading-tight">Bảng lương</span>
-            </button>
-          </div>
+
+        <!-- 4 Simple Student Actions -->
+        <div class="grid grid-cols-4 gap-2 text-center">
+          <button id="btnGridDayPunch" type="button" class="p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-emerald-500 text-white flex items-center justify-center text-xs font-bold">✓</span>
+            <span class="text-[11px] font-semibold text-slate-700">Chấm công</span>
+          </button>
+
+          <button id="btnGridAdvance" type="button" class="p-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-rose-500 text-white flex items-center justify-center text-xs font-bold">₫</span>
+            <span class="text-[11px] font-semibold text-slate-700">Ứng lương</span>
+          </button>
+
+          <button id="btnGridAllowance" type="button" class="p-2.5 rounded-xl bg-blue-50 hover:bg-blue-100 border border-blue-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-blue-500 text-white flex items-center justify-center text-xs font-bold">+</span>
+            <span class="text-[11px] font-semibold text-slate-700">Phụ cấp</span>
+          </button>
+
+          <button id="btnQuickLeave" type="button" class="p-2.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 border border-indigo-200/70 flex flex-col items-center gap-1 transition">
+            <span class="w-7 h-7 rounded-lg bg-indigo-500 text-white flex items-center justify-center text-xs font-bold">P</span>
+            <span class="text-[11px] font-semibold text-slate-700">Xin nghỉ phép <span class="hidden">Tạo đơn nhanh</span></span>
+          </button>
+        </div>
+
+        <div class="hidden">
+          <button id="btnQuickOvertime" type="button">Đăng ký OT <span>Báo làm thêm giờ</span></button>
+          <button id="btnGridShiftTask" type="button">Giao việc</button>
+          <button id="btnGridCashbook" type="button">Thu - Chi</button>
+          <button id="btnGridLocationMap" type="button">Vị trí GPS</button>
         </div>
       </div>
-      <!-- MONTHLY CALENDAR GRID -->
+
+      <!-- MONTHLY CALENDAR GRID WITH MONTH SWITCHER -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 mb-3 pb-2.5 border-b border-slate-100">
+          <!-- Month Selector Bar -->
           <div class="flex items-center gap-1.5">
             <button id="btnPrevMonth" type="button" class="px-2.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
               ◀ Tháng trước
@@ -353,6 +246,7 @@
               Tháng sau ▶
             </button>
           </div>
+
           <div class="flex items-center gap-2 text-[10px] font-semibold">
             <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-emerald-500 inline-block"></span>1 ca (4h/8h)</span>
             <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-amber-500 inline-block"></span>2 ca</span>
@@ -360,19 +254,37 @@
             <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-xs bg-rose-400 inline-block"></span>Nghỉ</span>
           </div>
         </div>
+
         <p class="text-[11px] text-slate-500 mb-2.5">
-          Chạm vào ngày bất kỳ để chọn <strong>Ca Sáng / Chiều / Tối</strong>, chọn <strong>Số tiếng</strong> và <strong>Mức lương ca</strong>.
+          Chạm vào ngày bất kỳ để chọn <strong>Ca Sáng / Chiều / Tối</strong>, chọn <strong>Số tiếng (4h, 8h...)</strong> và <strong>Mức lương ca (0 - 100.000₫)</strong>. Khi đổi qua tháng mới, dữ liệu tháng cũ tự động được giữ lại!
         </p>
+
         <div class="grid grid-cols-7 gap-1.5 text-center text-[11px] font-bold text-slate-400 mb-1.5">
-          <div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div><div class="text-rose-500">CN</div>
+          <div>T2</div>
+          <div>T3</div>
+          <div>T4</div>
+          <div>T5</div>
+          <div>T6</div>
+          <div>T7</div>
+          <div class="text-rose-500">CN</div>
         </div>
-        <div id="atworkCalendarGrid" class="grid grid-cols-7 gap-1.5"></div>
+
+        <div id="atworkCalendarGrid" class="grid grid-cols-7 gap-1.5">
+        </div>
       </div>
-      <!-- SAVED MONTHLY TIMESHEETS ARCHIVE -->
+
+      <!-- SAVED MONTHLY TIMESHEETS ARCHIVE CARD -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-2.5">
-        <h3 class="text-sm font-bold text-slate-800">📂 Bảng chấm công các tháng đã lưu</h3>
-        <div id="savedMonthsList" class="space-y-2"></div>
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-sm font-bold text-slate-800">📂 Bảng chấm công các tháng đã lưu</h3>
+            <p class="text-[11px] text-slate-500">Lưu trữ lịch sử bảng công và lương của từng tháng để đối chiếu bất cứ lúc nào</p>
+          </div>
+        </div>
+        <div id="savedMonthsList" class="space-y-2">
+        </div>
       </div>
+
       <!-- Quick Today Check-in Card -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
@@ -399,6 +311,7 @@
               </div>
             </div>
           </div>
+
           <div class="w-full sm:w-auto grid grid-cols-3 gap-2 text-center bg-slate-50 p-2 rounded-xl border border-slate-100">
             <div class="px-2">
               <p class="text-[10px] text-slate-400">Giờ vào</p>
@@ -414,20 +327,33 @@
             </div>
           </div>
         </div>
+
+        <div class="hidden">
+          <span id="gpsDot"></span>
+          <span id="gpsLocationText"></span>
+          <span id="wifiStatusText"></span>
+          <button id="btnToggleLocationMode" type="button">Đổi vị trí</button>
+          <button id="btnOpenQrModal" type="button">Quét QR</button>
+          <svg id="punchIcon"></svg>
+          <div id="todayActivityList"></div>
+        </div>
       </div>
+
     </section>
-    <!-- TAB 2: DANH SÁCH SINH VIÊN -->
+
+    <!-- TAB 2: DANH SÁCH SINH VIÊN / NHÂN VIÊN PART-TIME -->
     <section id="viewEmployees" class="space-y-3.5 hidden">
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h2 class="text-sm sm:text-base font-bold text-slate-800">Danh sách Sinh viên làm thêm</h2>
-            <p class="text-xs text-slate-500">Thêm các bạn sinh viên, cài đặt mức lương/giờ và số giờ mỗi ca</p>
+            <p class="text-xs text-slate-500">Thêm các bạn sinh viên, cài đặt mức lương/giờ (0 - 100.000₫/giờ) và số giờ mỗi ca (4h, 8h...)</p>
           </div>
           <button id="btnOpenAddEmployee" type="button" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold flex items-center justify-center gap-1.5 shadow-sm transition">
             <span>+ Thêm nhân viên</span>
           </button>
         </div>
+
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
           <div class="sm:col-span-2">
             <input id="inputSearchEmployee" type="text" placeholder="Tìm tên sinh viên, SĐT..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -444,8 +370,11 @@
           </div>
         </div>
       </div>
-      <div id="employeeGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+
+      <div id="employeeGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      </div>
     </section>
+
     <!-- TAB 3: NHẬT KÝ BẢNG CÔNG & XIN NGHỈ CA -->
     <section id="viewTimesheet" class="space-y-3.5 hidden">
       <div class="bg-white rounded-2xl p-2 shadow-sm border border-slate-100 flex flex-wrap items-center justify-between gap-2">
@@ -461,6 +390,7 @@
             Ghi chú ca
           </button>
         </div>
+
         <div class="flex items-center gap-1.5">
           <button id="btnOpenManualLog" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">
             + Chấm công bù
@@ -470,6 +400,8 @@
           </button>
         </div>
       </div>
+
+      <!-- Sub-view 3A: Logs -->
       <div id="subViewLogs" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
         <div class="flex items-center justify-between gap-2">
           <h3 class="text-sm font-bold text-slate-800">Lịch sử vào/ra ca</h3>
@@ -481,6 +413,7 @@
             <option value="Tăng ca">Tăng ca</option>
           </select>
         </div>
+
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
@@ -493,10 +426,13 @@
                 <th class="py-2 px-2 text-right">Xóa</th>
               </tr>
             </thead>
-            <tbody id="timesheetTableBody" class="divide-y divide-slate-100 text-xs"></tbody>
+            <tbody id="timesheetTableBody" class="divide-y divide-slate-100 text-xs">
+            </tbody>
           </table>
         </div>
       </div>
+
+      <!-- Sub-view 3B: Leave Requests -->
       <div id="subViewLeaves" class="space-y-3 hidden">
         <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex items-center justify-between gap-2">
           <div>
@@ -507,8 +443,11 @@
             + Tạo đơn mới
           </button>
         </div>
-        <div id="leaveRequestsContainer" class="space-y-2"></div>
+        <div id="leaveRequestsContainer" class="space-y-2">
+        </div>
       </div>
+
+      <!-- Sub-view 3C: Shift Checklist -->
       <div id="subViewTasks" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3 hidden">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <h3 class="text-sm font-bold text-slate-800">Công việc cần làm trong ca</h3>
@@ -517,21 +456,24 @@
             <button id="btnAddShiftTask" type="button" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-semibold">+ Giao việc</button>
           </div>
         </div>
-        <div id="shiftTasksList" class="space-y-2"></div>
+        <div id="shiftTasksList" class="space-y-2">
+        </div>
       </div>
     </section>
-    <!-- TAB 4: TỔNG KẾT LƯƠNG -->
+
+    <!-- TAB 4: TỔNG KẾT LƯƠNG SINH VIÊN -->
     <section id="viewPayroll" class="space-y-3.5 hidden">
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
           <div>
             <h3 class="text-sm sm:text-base font-bold text-slate-800">Bảng Tính Lương Làm Thêm (<span id="payrollMonthTitle">Tháng 10/2026</span>)</h3>
-            <p class="text-xs text-slate-500">Lương thực nhận = Tổng tiền các ca + Phụ cấp/Thưởng - Ứng trước</p>
+            <p class="text-xs text-slate-500">Lương thực nhận = Tổng tiền các ca đã làm + Phụ cấp/Thưởng - Ứng trước</p>
           </div>
           <button id="btnExportPayrollCsv" type="button" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold">
             Xuất Bảng Lương (CSV)
           </button>
         </div>
+
         <div class="grid grid-cols-2 gap-2.5">
           <div class="p-3 rounded-xl bg-blue-50/70 border border-blue-100">
             <p class="text-xs text-blue-600 font-medium">Tổng tiền lương tháng</p>
@@ -542,6 +484,7 @@
             <p id="summaryTotalOtHours" class="text-base sm:text-lg font-extrabold text-emerald-900 mt-0.5">0 giờ</p>
           </div>
         </div>
+
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
@@ -555,53 +498,79 @@
                 <th class="py-2 px-2 text-right">Thao tác</th>
               </tr>
             </thead>
-            <tbody id="payrollTableBody" class="divide-y divide-slate-100 text-xs"></tbody>
+            <tbody id="payrollTableBody" class="divide-y divide-slate-100 text-xs">
+            </tbody>
           </table>
         </div>
       </div>
+
+      <!-- Compact Chart Box -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
         <h3 class="text-xs font-bold text-slate-700 mb-2">Biểu đồ số giờ làm trong 7 ngày</h3>
         <div class="relative h-48">
           <canvas id="attendanceChart"></canvas>
         </div>
       </div>
+
+      <div class="hidden">
+        <button id="btnOpenCashbookModal" type="button">+ Ghi Thu/Chi</button>
+        <span id="cashTotalIncome">0</span>
+        <span id="cashTotalExpense">0</span>
+        <span id="cashNetProfit">0</span>
+      </div>
     </section>
+
   </main>
+
   <!-- Bottom Navigation Bar -->
   <nav class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 shadow-lg">
     <div class="max-w-md mx-auto grid grid-cols-4 px-2 py-1.5">
       <button id="navBtnCheckin" type="button" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-blue-600 font-semibold transition">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
         <span class="text-[11px] mt-0.5">Chấm công</span>
       </button>
+
       <button id="navBtnEmployees" type="button" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
+        </svg>
         <span class="text-[11px] mt-0.5">Nhân viên</span>
       </button>
+
       <button id="navBtnTimesheet" type="button" class="relative flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+        </svg>
         <span class="text-[11px] mt-0.5">Bảng công</span>
         <span id="navBadgeRequests" class="hidden absolute top-1 right-6 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold items-center justify-center">0</span>
       </button>
+
       <button id="navBtnPayroll" type="button" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
         <span class="text-[11px] mt-0.5">Tính lương</span>
       </button>
     </div>
   </nav>
 
-  <!-- MODALS -->
+  <!-- MODAL A: CHẤM CÔNG CA LÀM THÊM THEO NGÀY (Chọn Ca Sáng/Chiều/Tối + Số giờ 4h/8h + Lương 0-100.000đ) -->
   <div id="modalDayEditor" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-3.5 my-8">
       <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
         <div>
-          <h3 id="modalDayEditorTitle" class="text-base font-bold text-slate-800">Chấm công ngày</h3>
-          <p id="modalDayEditorSub" class="text-xs text-slate-500">Chọn ca làm, số giờ và mức lương ca</p>
+          <h3 id="modalDayEditorTitle" class="text-base font-bold text-slate-800">Chấm công ngày 22/10/2026</h3>
+          <p id="modalDayEditorSub" class="text-xs text-slate-500">Chọn ca làm, số giờ (4 tiếng / 8 tiếng) và mức lương ca</p>
         </div>
         <button id="btnCloseDayEditor" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
       </div>
+
       <form id="formDayEditor" class="space-y-3">
         <input type="hidden" id="dayEditorDayNum" value="22" />
+
+        <!-- 1. Chọn Ca làm việc & Số ca -->
         <div>
           <label class="text-xs font-semibold text-slate-600 block mb-1.5">1. Chọn ca làm việc trong ngày</label>
           <div class="grid grid-cols-2 gap-2">
@@ -623,6 +592,8 @@
             </label>
           </div>
         </div>
+
+        <!-- 2. Chọn Tên Ca (Ca Sáng / Ca Chiều / Ca Tối) & Số giờ mỗi ca (4 tiếng / 8 tiếng...) -->
         <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-2.5">
           <div class="grid grid-cols-2 gap-2">
             <div>
@@ -639,28 +610,53 @@
               <input id="dayEditorShiftHoursInput" type="number" min="0.5" max="24" step="0.5" value="4" class="w-full px-2.5 py-1.5 text-xs font-bold rounded-lg border border-slate-200 bg-white" />
             </div>
           </div>
+
+          <!-- Quick Shift Hour Buttons: 4 tiếng, 5 tiếng, 6 tiếng, 8 tiếng, 12 tiếng -->
           <div class="flex items-center gap-1.5 flex-wrap">
             <span class="text-[10px] font-semibold text-slate-400">Chọn nhanh số giờ:</span>
             <button type="button" data-hour-preset="4" class="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-700 text-[11px] font-bold hover:bg-blue-200">4 tiếng</button>
+            <button type="button" data-hour-preset="5" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-semibold hover:bg-slate-100">5 tiếng</button>
             <button type="button" data-hour-preset="6" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-semibold hover:bg-slate-100">6 tiếng</button>
             <button type="button" data-hour-preset="8" class="px-2.5 py-1 rounded-lg bg-blue-100 text-blue-700 text-[11px] font-bold hover:bg-blue-200">8 tiếng</button>
             <button type="button" data-hour-preset="12" class="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-slate-700 text-[11px] font-semibold hover:bg-slate-100">12 tiếng</button>
           </div>
         </div>
+
+        <!-- 3. Mức lương chấm theo ca (0 - 100.000) & Cách tính -->
         <div class="p-3 rounded-xl bg-blue-50/60 border border-blue-200/80 space-y-2">
-          <label for="dayEditorShiftRateInput" class="text-xs font-bold text-blue-800 block">Mức lương/giờ (0 – 100.000 ₫/giờ)</label>
-          <input id="dayEditorShiftRateInput" type="number" min="0" max="100000" step="500" value="0" required class="w-full px-3 py-2 text-sm font-extrabold text-blue-900 bg-white rounded-xl border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <div class="flex items-center justify-between">
+            <label for="dayEditorShiftRateInput" class="text-xs font-bold text-blue-800">Mức lương/giờ (0 – 100.000 ₫/giờ)</label>
+            <select id="dayEditorCalcType" class="text-[11px] font-semibold bg-white border border-blue-200 text-blue-700 rounded-lg px-2 py-0.5">
+              <option value="per_hour">Tính theo Giờ (Lương/giờ × Số tiếng)</option>
+              <option value="per_shift">Tính theo Ca (Lương/ca × Số ca)</option>
+              <option value="per_hour_scale">Nhân theo chuẩn 4h/ca (8h = ×2)</option>
+            </select>
+          </div>
+          <input id="dayEditorShiftRateInput" type="number" min="0" max="100000" step="500" value="0" required placeholder="Nhập số tiền từ 0 đến 100000" class="w-full px-3 py-2 text-sm font-extrabold text-blue-900 bg-white rounded-xl border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
+
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="text-xs font-semibold text-slate-600 block mb-1">Phụ cấp / Thưởng (₫)</label>
-            <input id="dayEditorAllowanceInput" type="number" min="0" max="100000" step="1000" value="0" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200" />
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Phụ cấp / Thưởng thêm (₫)</label>
+            <input id="dayEditorAllowanceInput" type="number" min="0" max="100000" step="1000" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
           </div>
           <div>
-            <label class="text-xs font-semibold text-slate-600 block mb-1">Ứng lương (₫)</label>
-            <input id="dayEditorAdvanceInput" type="number" min="0" max="1000000" step="5000" value="0" class="w-full px-3 py-2 text-xs rounded-xl border border-slate-200" />
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ứng lương ngày này (₫)</label>
+            <input id="dayEditorAdvanceInput" type="number" min="0" max="1000000" step="5000" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
           </div>
         </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Giờ OT ngoài ca</label>
+            <input id="dayEditorOtInput" type="number" min="0" max="12" step="0.5" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ghi chú ca làm</label>
+            <input id="dayEditorNoteInput" type="text" placeholder="VD: Ca sáng 8 tiếng..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+        </div>
+
         <div class="flex items-center justify-end gap-2 pt-2">
           <button id="btnCancelDayEditor" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
           <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Lưu chấm công ngày</button>
@@ -669,6 +665,7 @@
     </div>
   </div>
 
+  <!-- MODAL 1: ADD / EDIT STUDENT EMPLOYEE (Lương ca 0 - 100.000đ) -->
   <div id="modalEmployee" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
@@ -678,12 +675,12 @@
       <form id="formEmployee" class="space-y-3">
         <input type="hidden" id="empEditId" />
         <div>
-          <label class="text-xs font-semibold text-slate-600 block mb-1">Họ tên sinh viên *</label>
-          <input id="empNameInput" type="text" required placeholder="VD: Nguyễn Văn A" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Họ tên sinh viên / Tên công việc *</label>
+          <input id="empNameInput" type="text" required placeholder="VD: Nguyễn Văn A (hoặc Quán Cafe...)" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <div class="grid grid-cols-2 gap-2.5">
           <div>
-            <label class="text-xs font-semibold text-slate-600 block mb-1">Vị trí</label>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Vị trí làm thêm</label>
             <select id="empDeptInput" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white">
               <option value="Phục vụ">Phục vụ</option>
               <option value="Pha chế">Pha chế</option>
@@ -693,8 +690,8 @@
             </select>
           </div>
           <div>
-            <label class="text-xs font-semibold text-slate-600 block mb-1">Ca đăng ký</label>
-            <input id="empRoleInput" type="text" placeholder="VD: Ca sáng 4h" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Ca đăng ký & Số tiếng</label>
+            <input id="empRoleInput" type="text" placeholder="VD: Ca sáng 4 tiếng / 8 tiếng" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
           </div>
         </div>
         <div class="grid grid-cols-2 gap-2.5">
@@ -703,8 +700,18 @@
             <input id="empPhoneInput" type="text" placeholder="09xxxxxxxx" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
           </div>
           <div>
-            <label class="text-xs font-bold text-blue-700 block mb-1">Mức lương/giờ</label>
-            <input id="empRateInput" type="number" required min="0" max="100000" step="500" value="0" class="w-full px-3 py-2 text-xs sm:text-sm font-bold text-blue-800 rounded-xl border border-blue-300" />
+            <label class="text-xs font-bold text-blue-700 block mb-1">Mức lương/giờ (0 - 100.000₫/giờ)</label>
+            <input id="empRateInput" type="number" required min="0" max="100000" step="500" value="0" placeholder="0 - 100000" class="w-full px-3 py-2 text-xs sm:text-sm font-bold text-blue-800 rounded-xl border border-blue-300" />
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Số ca ban đầu</label>
+            <input id="empBaseDaysInput" type="number" min="0" max="100" step="0.5" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+          </div>
+          <div>
+            <label class="text-xs font-semibold text-slate-600 block mb-1">Phụ cấp thêm (VNĐ)</label>
+            <input id="empAllowanceInput" type="number" min="0" step="1000" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
           </div>
         </div>
         <div class="flex items-center justify-end gap-2 pt-2">
@@ -715,10 +722,11 @@
     </div>
   </div>
 
+  <!-- MODAL 2: LEAVE / OVERTIME REQUEST -->
   <div id="modalLeave" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-base font-bold text-slate-800">Báo nghỉ ca / Đổi ca</h3>
+        <h3 id="modalLeaveTitle" class="text-base font-bold text-slate-800">Báo nghỉ ca / Đổi ca học</h3>
         <button id="btnCloseLeaveModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
       </div>
       <form id="formLeave" class="space-y-3">
@@ -737,12 +745,16 @@
           </div>
           <div>
             <label class="text-xs font-semibold text-slate-600 block mb-1">Ngày áp dụng</label>
-            <input id="leaveDateInput" type="date" required class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+            <input id="leaveDateInput" type="date" required value="2026-10-22" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
           </div>
         </div>
         <div>
-          <label class="text-xs font-semibold text-slate-600 block mb-1">Lý do *</label>
-          <textarea id="leaveReasonInput" rows="2" required placeholder="VD: Bận thi cuối kỳ..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200"></textarea>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Số giờ làm thêm (nếu có)</label>
+          <input id="leaveOtHoursInput" type="number" min="0" max="12" step="0.5" value="0" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200" />
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Ghi chú / Lý do *</label>
+          <textarea id="leaveReasonInput" rows="2" required placeholder="VD: Bận thi cuối kỳ môn Toán, nhờ bạn trực thay..." class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200"></textarea>
         </div>
         <div class="flex items-center justify-end gap-2 pt-2">
           <button id="btnCancelLeaveModal" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
@@ -752,11 +764,12 @@
     </div>
   </div>
 
+  <!-- MODAL 3: MANUAL ATTENDANCE LOG -->
   <div id="modalManualLog" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-800">Chấm công bù theo giờ</h3>
-        <button id="btnCloseManualLogModal" type="button" class="text-slate-400 text-sm font-bold px-2">✕</button>
+        <button id="btnCloseManualLogModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
       </div>
       <form id="formManualLog" class="space-y-3">
         <div>
@@ -766,7 +779,7 @@
         <div class="grid grid-cols-3 gap-2">
           <div>
             <label class="text-xs font-semibold text-slate-600 block mb-1">Ngày</label>
-            <input id="manualDateInput" type="date" required class="w-full px-2.5 py-2 text-xs rounded-xl border border-slate-200" />
+            <input id="manualDateInput" type="date" required value="2026-10-22" class="w-full px-2.5 py-2 text-xs rounded-xl border border-slate-200" />
           </div>
           <div>
             <label class="text-xs font-semibold text-slate-600 block mb-1">Giờ vào</label>
@@ -777,21 +790,31 @@
             <input id="manualOutInput" type="time" required value="22:00" class="w-full px-2.5 py-2 text-xs rounded-xl border border-slate-200" />
           </div>
         </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-600 block mb-1">Trạng thái</label>
+          <select id="manualStatusSelect" class="w-full px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-white">
+            <option value="Đúng giờ">Đúng giờ</option>
+            <option value="Đi muộn">Đi muộn</option>
+            <option value="Tăng ca">Tăng ca</option>
+          </select>
+        </div>
         <div class="flex items-center justify-end gap-2 pt-2">
           <button id="btnCancelManualLogModal" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold">Lưu chấm công</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Lưu chấm công</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- MODAL 5: PAYSLIP DETAIL -->
   <div id="modalPayslip" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-800">Phiếu Lương Sinh Viên</h3>
-        <button id="btnClosePayslipModal" type="button" class="text-slate-400 text-sm font-bold px-2">✕</button>
+        <button id="btnClosePayslipModal" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
       </div>
-      <div id="payslipContent" class="space-y-2.5 text-xs"></div>
+      <div id="payslipContent" class="space-y-2.5 text-xs">
+      </div>
       <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
         <button id="btnCopyPayslip" type="button" class="px-3.5 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-semibold">Sao chép phiếu lương</button>
         <button id="btnOkPayslipModal" type="button" class="px-4 py-2 rounded-xl bg-slate-800 text-white text-xs font-semibold">Đóng</button>
@@ -799,84 +822,162 @@
     </div>
   </div>
 
-  <!-- INTERSTITIAL SHOPEE AD MODAL -->
-  <div id="modalInterstitialAd" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-orange-200/80 my-auto">
-      <div class="shopee-gradient text-white px-3.5 py-2.5 flex items-center justify-between text-xs">
-        <div class="flex items-center gap-1.5 min-w-0">
-          <span class="px-1.5 py-0.5 rounded bg-amber-300 text-slate-950 font-extrabold text-[10px] uppercase shrink-0">Quảng cáo</span>
-          <span id="adSponsorName" class="text-white font-bold truncate">Shopee Mall • Deal Sinh Viên</span>
+  <!-- Hidden Secondary Modals kept for script compatibility -->
+  <div id="modalLocationMap" class="hidden">
+    <button id="btnCloseLocationMap" type="button">✕</button>
+    <button id="btnPunchFromMap" type="button">Xác nhận vị trí & Chấm công ngay</button>
+  </div>
+  <div id="modalWorkplace" class="hidden">
+    <button id="btnCloseWorkplaceModal" type="button">✕</button>
+    <form id="formWorkplace">
+      <input id="wpNameInput" type="text" />
+      <select id="wpTypeInput"><option value="Theo ca">Theo ca</option></select>
+      <input id="wpRateInput" type="number" min="0" max="100000" value="0" />
+      <button id="btnCancelWorkplaceModal" type="button">Hủy</button>
+      <button type="submit">Tạo công việc</button>
+    </form>
+  </div>
+  <div id="modalCashbook" class="hidden">
+    <button id="btnCloseCashbookModal" type="button">✕</button>
+    <form id="formCashbook">
+      <select id="cashTypeInput"><option value="income">Thu</option></select>
+      <input id="cashAmountInput" type="number" value="0" />
+      <input id="cashNoteInput" type="text" />
+      <button id="btnCancelCashbookModal" type="button">Đóng</button>
+      <button type="submit">Lưu sổ quỹ</button>
+    </form>
+    <div id="cashbookHistoryList"></div>
+  </div>
+  <div id="modalQrScanner" class="hidden">
+    <button id="btnCloseQrModal" type="button">✕</button>
+    <button id="btnConfirmQrPunch" type="button">Xác nhận quét QR thành công</button>
+  </div>
+
+    <!-- MODAL QUẢNG CÁO TỰ ĐỘNG (INTERSTITIAL AD MODAL) -->
+  <div id="modalInterstitialAd" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-slate-200 animate-fade-in">
+      <!-- Top Ad Bar with Countdown & Skip Button -->
+      <div class="bg-slate-900 text-white px-4 py-2.5 flex items-center justify-between text-xs">
+        <div class="flex items-center gap-1.5">
+          <span class="px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 font-extrabold text-[10px] uppercase">Quảng cáo</span>
+          <span id="adSponsorName" class="text-slate-300 font-medium truncate">Tài trợ bởi EduPass SV</span>
         </div>
-        <button id="btnSkipAd" type="button" class="px-2.5 py-1 rounded-full bg-black/25 hover:bg-black/40 text-white font-bold text-[11px] transition flex items-center gap-1 shrink-0">
+        <button id="btnSkipAd" type="button" class="px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white font-bold text-[11px] transition flex items-center gap-1">
           <span id="adCountdownText">Đóng sau 3s</span>
           <span>✕</span>
         </button>
       </div>
-      <div id="adBannerBg" class="relative bg-slate-100 border-b border-slate-100">
-        <div class="relative w-full h-56 sm:h-60 bg-white flex items-center justify-center overflow-hidden">
-          <img id="adProductImage" src="" alt="Sản phẩm ưu đãi Shopee" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-          <div class="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start">
-            <span class="px-2 py-0.5 rounded bg-[#ee4d2d] text-white text-[10px] font-extrabold shadow-xs uppercase tracking-wide">Yêu thích+</span>
-            <span id="adBadgeTag" class="px-2.5 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-xs text-amber-300 text-[10px] font-bold tracking-wide">FLASH SALE SINH VIÊN</span>
-          </div>
-          <div class="absolute top-2.5 right-2.5 bg-amber-400 text-slate-950 px-2.5 py-1 rounded-xl shadow-md border border-amber-300 text-center leading-tight flash-badge">
-            <span id="adDiscountBadge" class="text-xs font-extrabold block">-48%</span>
-            <span class="text-[9px] font-bold uppercase block">GIẢM SỐC</span>
-          </div>
+
+      <!-- Ad Visual Banner -->
+      <div id="adBannerBg" class="p-6 bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-700 text-white text-center space-y-3 relative">
+        <div id="adBadgeTag" class="inline-block px-3 py-0.5 rounded-full bg-white/20 text-[11px] font-bold tracking-wide">
+          ƯU ĐÃI ĐỘC QUYỀN SINH VIÊN
         </div>
-        <div id="adIconBox" class="hidden">🛒</div>
+        <div id="adIconBox" class="w-16 h-16 mx-auto rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center text-2xl font-extrabold shadow-inner">
+          🎓
+        </div>
+        <h3 id="adHeadline" class="text-lg font-extrabold leading-snug">
+          Học Tiếng Anh Giao Tiếp & IELTS Cho Sinh Viên — Giảm Ngay 50%!
+        </h3>
+        <p id="adDescription" class="text-xs text-blue-100 leading-relaxed">
+          Lịch học linh hoạt theo ca làm thêm, tặng kèm bộ tài liệu luyện thi và chứng chỉ quốc tế.
+        </p>
       </div>
+
+      <!-- Real Google AdSense Slot Container (Rendered when Publisher ID is configured) -->
+      <div id="realAdsenseContainer" class="hidden bg-slate-50 p-3 border-b border-slate-200 text-center">
+        <p class="text-[10px] text-slate-400 mb-1">Google AdSense Live Unit</p>
+        <div id="adsenseMountPoint" class="min-h-[120px] flex items-center justify-center text-xs text-slate-500"></div>
+      </div>
+
+      <!-- Ad Footer CTA (Real external Affiliate/Ad URL) -->
       <div class="p-4 bg-white space-y-2.5">
-        <h3 id="adHeadline" class="text-sm sm:text-[15px] font-extrabold text-slate-900 leading-snug line-clamp-2">Balo Laptop Chống Nước Đa Năng</h3>
-        <div class="p-2.5 rounded-2xl bg-gradient-to-r from-orange-50 via-amber-50/70 to-rose-50 border border-orange-200/80 flex items-center justify-between gap-2">
-          <div>
-            <div class="flex items-baseline gap-2">
-              <span id="adSalePrice" class="text-xl sm:text-2xl font-extrabold shopee-price-text tracking-tight">129.000₫</span>
-              <span id="adOldPrice" class="text-xs text-slate-400 line-through font-semibold">250.000₫</span>
-            </div>
-            <p id="adDescription" class="text-[11px] text-slate-600 mt-0.5 line-clamp-1">Bảo hành 12 tháng chính hãng.</p>
-          </div>
-          <div class="text-right shrink-0">
-            <span id="adVoucherPill" class="inline-block px-2 py-0.5 rounded-lg bg-[#ee4d2d]/10 text-[#ee4d2d] border border-[#ee4d2d]/30 text-[10px] font-extrabold">Voucher -30K</span>
-          </div>
-        </div>
-        <div>
-          <div class="flex items-center justify-between text-[10px] text-slate-400 font-semibold mb-1">
-            <span>Gợi ý 8 Deal Shopee Sinh Viên:</span>
-            <span id="adDealIndexLabel" class="text-[#ee4d2d] font-bold">Deal #1/8</span>
-          </div>
-          <div id="adProductThumbs" class="grid grid-cols-8 gap-1"></div>
-        </div>
-        <button id="btnClickAdCta" type="button" data-target-url="https://s.shopee.vn/30p1AjWxaH" data-cta-prefix="🛒 Mua Ngay Trên Shopee •" class="cta-sub w-full py-3 rounded-2xl shopee-gradient hover:opacity-95 active:scale-[0.99] text-white text-xs sm:text-sm font-extrabold shadow-lg shadow-orange-500/25 transition flex items-center justify-center">
+        <button id="btnClickAdCta" type="button" data-target-url="https://affiliate.shopee.vn/" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-extrabold shadow-md transition">
           Tìm hiểu & Nhận ưu đãi ngay →
         </button>
-        <div class="flex items-center justify-center text-[11px] text-slate-400 pt-0.5">
-          <button id="btnCloseAdBottom" type="button" class="text-slate-400 hover:text-slate-700 font-semibold underline">Đóng quảng cáo</button>
+        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+          <button id="btnConfigAdFromModal" type="button" class="text-blue-600 hover:underline font-semibold">
+            ⚙️ Cấu hình mã kiếm tiền thật
+          </button>
+          <button id="btnCloseAdBottom" type="button" class="text-slate-500 hover:text-slate-800 font-semibold underline">
+            Đóng quảng cáo
+          </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- AD MONETIZE SETTINGS MODAL -->
+  <!-- MODAL CẤU HÌNH KIẾM TIỀN QUẢNG CÁO THẬT (GOOGLE ADSENSE / ADMOB / SHOPEE AFFILIATE) -->
   <div id="modalAdMonetize" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl space-y-4 my-8">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-        <h3 class="text-base font-bold text-slate-800">💰 Cài Đặt Kiếm Tiền Quảng Cáo Thật</h3>
-        <button id="btnCloseAdMonetize" type="button" class="text-slate-400 text-sm font-bold px-2">✕</button>
-      </div>
-      <form id="formAdMonetize" class="space-y-3 text-xs">
         <div>
-          <label class="text-[11px] font-semibold text-slate-600 block mb-1">Link Affiliate Shopee cá nhân của bạn *</label>
-          <input id="inputAffiliateUrl" type="url" required placeholder="https://s.shopee.vn/..." class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+          <h3 class="text-base font-bold text-slate-800">💰 Cài Đặt Kiếm Tiền Quảng Cáo Thật</h3>
+          <p class="text-xs text-slate-500">Kết nối Google AdSense hoặc Link Affiliate thật để nhận doanh thu khi người dùng xem & bấm quảng cáo</p>
         </div>
+        <button id="btnCloseAdMonetize" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
+      </div>
+
+      <!-- Live Ad Revenue & Impression Counter -->
+      <div class="grid grid-cols-3 gap-2 text-center bg-slate-900 text-white rounded-xl p-3">
+        <div>
+          <p class="text-[10px] text-slate-400">Lượt hiển thị (Impressions)</p>
+          <p id="statAdImpressions" class="text-sm font-extrabold text-emerald-400 mt-0.5">0</p>
+        </div>
+        <div class="border-x border-slate-700">
+          <p class="text-[10px] text-slate-400">Lượt nhấp thật (Clicks)</p>
+          <p id="statAdClicks" class="text-sm font-extrabold text-amber-400 mt-0.5">0</p>
+        </div>
+        <div>
+          <p class="text-[10px] text-slate-400">Trạng thái kiếm tiền</p>
+          <p id="statAdModeBadge" class="text-xs font-bold text-blue-300 mt-1">Affiliate Direct</p>
+        </div>
+      </div>
+
+      <form id="formAdMonetize" class="space-y-3 text-xs">
+        <div class="p-3 rounded-xl bg-blue-50/70 border border-blue-200 space-y-2">
+          <p class="font-bold text-blue-900">1. Tích hợp Google AdSense thật (Web / Mobile Web)</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Google AdSense Publisher ID</label>
+              <input id="inputAdsensePubId" type="text" placeholder="VD: ca-pub-1234567890123456" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Ad Slot ID (Mã đơn vị QC)</label>
+              <input id="inputAdsenseSlotId" type="text" placeholder="VD: 9876543210" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500">Khi điền mã <code>ca-pub-...</code> của bạn, ứng dụng sẽ tự động nạp script Google AdSense chính thức vào popup mỗi lần lưu chấm công.</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-2">
+          <p class="font-bold text-emerald-900">2. Hoặc dùng Link Tiếp thị liên kết thật (Shopee Affiliate / Accesstrade)</p>
+          <div>
+            <label class="text-[11px] font-semibold text-slate-600 block mb-1">Link đích kiếm tiền khi bấm nút Quảng cáo (URL thật) *</label>
+            <input id="inputAffiliateUrl" type="url" required placeholder="https://s.shopee.vn/... hoặc link chiến dịch của bạn" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-medium text-blue-700" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Tên nhà tài trợ / Chiến dịch</label>
+              <input id="inputAffiliateSponsor" type="text" placeholder="VD: Shopee Affiliate Sinh Viên" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Tiêu đề quảng cáo hiển thị</label>
+              <input id="inputAffiliateTitle" type="text" placeholder="VD: Săn Deal Sinh Viên Giảm 50% Trên Shopee" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500">Cách này kiếm tiền được ngay lập tức trên điện thoại mà không cần chờ duyệt tên miền: mỗi lượt người dùng bấm vào nút ưu đãi sẽ mở thẳng link Affiliate của bạn để tính hoa hồng thật.</p>
+        </div>
+
         <div class="flex items-center justify-end gap-2 pt-2">
           <button id="btnCancelAdMonetize" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 font-semibold">Đóng</button>
-          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 text-white font-bold">Lưu cấu hình</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold">Lưu cấu hình kiếm tiền</button>
         </div>
       </form>
     </div>
   </div>
 
+  <!-- Toast Notification -->
   <div id="toastBox" class="fixed top-16 right-4 z-50 max-w-xs bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none translate-y-2">
     <span id="toastIcon" class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
     <span id="toastMessage">Đã cập nhật!</span>
@@ -884,216 +985,163 @@
 
   <script>
     (function () {
+      // Clear all previous mock data keys
       try {
         localStorage.removeItem('smarthr_mobile_state_v1');
         localStorage.removeItem('atwork_vinkatech_state_v2');
+        localStorage.removeItem('atwork_student_clean_v3');
       } catch (e) {}
+
       const STORAGE_KEY = 'atwork_student_clean_v4';
+
+      // Completely empty state (no Sinh viên 1, no fake logs)
       const defaultState = {
         role: 'manager',
         activeTab: 'checkin',
         activeMonth: '2026-10',
         defaultShiftHours: 4,
+        activeWorkplaceId: 'WP01',
         activeEmployeeId: '',
         selectedShift: 'Ca Sáng (4 tiếng)',
+        gpsModeIndex: 0,
+        workplaces: [],
         employees: [],
         logs: [],
         leaves: [],
         shiftTasks: [],
+        cashbook: [],
         savedMonths: []
       };
+
+      const _compatIds = ['LOG105'];
+
       let state = loadState();
       let attendanceChartInstance = null;
       let currentPayslipText = '';
       let adCountdownTimer = null;
       let adRotationIndex = 0;
 
-      const basePhotos = [
-        "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1609592424104-97d4a415951d?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80"
-      ];
-
       const sampleAds = [
         {
-          sponsor: 'Shopee Mall • Balo & Túi Sinh Viên',
-          tag: 'FLASH SALE GIẢM 48%',
-          icon: '🎒',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[0],
-          salePrice: '129.000₫',
-          oldPrice: '250.000₫',
-          discount: '-48%',
-          voucher: 'Giảm 25K',
-          sold: '⭐ 4.9 • Đã bán 14.2k+',
-          headline: 'Balo Laptop Chống Nước Đa Năng Hàn Quốc Cho Sinh Viên Đi Học & Đi Làm Thêm',
-          desc: 'Ngăn chống sốc laptop 15.6 inch, vải Oxford trượt nước bền đẹp, bảo hành 12 tháng.',
-          url: 'https://s.shopee.vn/30p1AjWxaH'
+          sponsor: 'Shopee Affiliate Việt Nam',
+          tag: 'TIẾP THỊ LIÊN KẾT THẬT (CPA/CPS)',
+          icon: '🛒',
+          bg: 'p-6 bg-gradient-to-br from-orange-500 via-rose-600 to-red-600 text-white text-center space-y-3 relative',
+          headline: 'Săn Voucher Sinh Viên Giảm 50% Đồ Đi Học & Đi Làm Thêm Trên Shopee!',
+          desc: 'Nhấp vào quảng cáo sẽ mở trang chiến dịch thật. Bạn có thể thay bằng link Affiliate của riêng mình ở mục 💰 Kiếm tiền QC.',
+          url: 'https://affiliate.shopee.vn/'
         },
         {
-          sponsor: 'Shopee Mall • Gia Dụng Tiện Ích SV',
-          tag: 'DEAL HOT ĐI LÀM CA',
-          icon: '🥤',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[1],
-          salePrice: '89.000₫',
-          oldPrice: '185.000₫',
-          discount: '-52%',
-          voucher: 'Freeship 0Đ',
-          sold: '⭐ 4.9 • Đã bán 21.8k+',
-          headline: 'Bình Giữ Nhiệt Inox 304 Cao Cấp 900ml Kèm Ống Hút Giữ Đá 24 Giờ Cho Ca Làm',
-          desc: 'Inox 304 an toàn sức khỏe, không đổ mồ hôi vỏ bình, tiện mang đi học & đi làm ca.',
-          url: 'https://s.shopee.vn/2BFuBV0Xxb'
+          sponsor: 'ACCESSTRADE Việt Nam',
+          tag: 'CHIẾN DỊCH KIẾM TIỀN ONLINE',
+          icon: '💳',
+          bg: 'p-6 bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-700 text-white text-center space-y-3 relative',
+          headline: 'Mở Tài Khoản Ngân Hàng Số Cho Sinh Viên — Nhận Thưởng Hoa Hồng Thực Tế!',
+          desc: 'Nền tảng tiếp thị liên kết ACCESSTRADE trả hoa hồng thật cho mỗi lượt đăng ký hoặc mua hàng thành công.',
+          url: 'https://accesstrade.vn/'
         },
         {
-          sponsor: 'Shopee Mall • Phụ Kiện Công Nghệ',
-          tag: 'TRỢ GIÁ SINH VIÊN',
-          icon: '🎧',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[2],
-          salePrice: '159.000₫',
-          oldPrice: '320.000₫',
-          discount: '-50%',
-          voucher: 'Hoàn 15K Xu',
-          sold: '⭐ 4.8 • Đã bán 9.6k+',
-          headline: 'Combo Tai Nghe Bluetooth Không Dây Chống Ồn & Sạc Dự Phòng Sạc Nhanh 20W',
-          desc: 'Pin trâu nghe nhạc học tiếng Anh cả ngày, sạc dự phòng nhỏ gọn bỏ túi đi làm thêm.',
-          url: 'https://s.shopee.vn/5VWM9fIBth'
-        },
-        {
-          sponsor: 'Shopee Mall • Thời Trang & Giày Dép',
-          tag: 'ÊM CHÂN ĐỨNG CA 8H',
-          icon: '👟',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[3],
-          salePrice: '145.000₫',
-          oldPrice: '290.000₫',
-          discount: '-50%',
-          voucher: 'Giảm 30K',
-          sold: '⭐ 4.9 • Đã bán 18.5k+',
-          headline: 'Giày Thể Thao Sneaker Trắng Thoáng Khí Đế Êm Chuyên Đứng Ca Phục Vụ & Pha Chế',
-          desc: 'Đế cao su non siêu nhẹ chống trượt, đứng ca 4 tiếng - 8 tiếng không đau mỏi chân.',
-          url: 'https://s.shopee.vn/80Dh8GzTDN'
-        },
-        {
-          sponsor: 'Shopee Mall • Điện Tử Thông Minh',
-          tag: 'SIÊU DEAL CÔNG NGHỆ',
-          icon: '🔋',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[4],
-          salePrice: '115.000₫',
-          oldPrice: '240.000₫',
-          discount: '-52%',
-          voucher: 'Freeship 0Đ',
-          sold: '⭐ 4.9 • Đã bán 11.3k+',
-          headline: 'Sạc Dự Phòng Mini Kèm Cáp Sạc Nhanh Đa Năng Tiện Lợi Cho Sinh Viên Làm Thêm',
-          desc: 'Thiết kế siêu nhỏ gọn, tích hợp sẵn cáp Type-C & Lightning, dung lượng chuẩn.',
-          url: 'https://s.shopee.vn/1BPbaKrMQ'
-        },
-        {
-          sponsor: 'Shopee Mall • Combo Đi Học & Đi Làm',
-          tag: 'COMBO TIẾT KIỆM 55%',
-          icon: '🎁',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[5],
-          salePrice: '179.000₫',
-          oldPrice: '399.000₫',
-          discount: '-55%',
-          voucher: 'Voucher -40K',
-          sold: '⭐ 5.0 • Đã bán 7.9k+',
-          headline: 'Combo Balo Laptop Chống Nước + Bình Giữ Nhiệt Inox 304 Cho Tân Sinh Viên',
-          desc: 'Mua theo combo tiết kiệm gấp đôi, tặng kèm túi đựng phụ kiện và mã Freeship.',
-          url: 'https://s.shopee.vn/AKbbubmUKc'
-        },
-        {
-          sponsor: 'Shopee Mall • Phụ Kiện Năng Động',
-          tag: 'DEAL XỊN GIÁ MỀM',
-          icon: '⚡',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[6],
-          salePrice: '169.000₫',
-          oldPrice: '350.000₫',
-          discount: '-52%',
-          voucher: 'Giảm 35K',
-          sold: '⭐ 4.9 • Đã bán 15.1k+',
-          headline: 'Bộ Đôi Giày Sneaker Đứng Ca Êm Chân & Tai Nghe Bluetooth Không Dây Pin Trâu',
-          desc: 'Full box chính hãng, hỗ trợ đổi size miễn phí trong 15 ngày trên toàn quốc.',
-          url: 'https://s.shopee.vn/9zylW0uuoG'
-        },
-        {
-          sponsor: 'Shopee Mall • Siêu Hội Sinh Viên',
-          tag: 'ƯU ĐÃI ĐẶC BIỆT HÔM NAY',
-          icon: '🌟',
-          bg: 'relative bg-slate-100 border-b border-slate-100',
-          image: basePhotos[7],
-          salePrice: '99.000₫',
-          oldPrice: '220.000₫',
-          discount: '-55%',
-          voucher: 'Săn Deal 99K',
-          sold: '⭐ 4.9 • Đã bán 26.4k+',
-          headline: 'Tổng Hợp Top Đồ Dùng Đi Học & Đi Làm Thêm Bán Chạy Nhất Trên Shopee Hôm Nay',
-          desc: 'Áp dụng đồng thời mã giảm giá Shopee Video, hoàn xu Xtra và miễn phí vận chuyển.',
-          url: 'https://s.shopee.vn/LoG0HIbOS'
+          sponsor: 'Google AdSense / AdMob',
+          tag: 'MẠNG QUẢNG CÁO GOOGLE',
+          icon: '💰',
+          bg: 'p-6 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white text-center space-y-3 relative',
+          headline: 'Tích Hợp Mã Google AdSense / AdMob Của Bạn Để Nhận Tiền Theo Lượt Click!',
+          desc: 'Bấm vào Cài đặt kiếm tiền QC để gắn mã Publisher ID (ca-pub-...) hoặc link Affiliate cá nhân của bạn.',
+          url: 'https://adsense.google.com/start/how-adsense-works/'
         }
       ];
 
       function ensureAdConfig() {
         if (!state.adConfig) {
-          state.adConfig = { affiliateUrl: '' };
+          state.adConfig = {
+            adsensePubId: '',
+            adsenseSlotId: '',
+            affiliateUrl: 'https://affiliate.shopee.vn/',
+            affiliateSponsor: '',
+            affiliateTitle: '',
+            impressions: 0,
+            clicks: 0
+          };
         }
         return state.adConfig;
       }
 
-      function renderAdCardByIndex(idx) {
-        const cfg = ensureAdConfig();
-        const normalizedIdx = ((idx % sampleAds.length) + sampleAds.length) % sampleAds.length;
-        const ad = sampleAds[normalizedIdx];
-        const targetUrl = cfg.affiliateUrl ? cfg.affiliateUrl : ad.url;
-        document.getElementById('adSponsorName').textContent = ad.sponsor;
-        document.getElementById('adBadgeTag').textContent = ad.tag;
-        document.getElementById('adHeadline').textContent = ad.headline;
-        document.getElementById('adDescription').textContent = ad.desc;
-        const imgEl = document.getElementById('adProductImage');
-        if (imgEl && ad.image) imgEl.src = ad.image;
-        document.getElementById('adSalePrice').textContent = ad.salePrice;
-        document.getElementById('adOldPrice').textContent = ad.oldPrice;
-        document.getElementById('adDiscountBadge').textContent = ad.discount;
-        document.getElementById('adVoucherPill').textContent = ad.voucher;
-        document.getElementById('adDealIndexLabel').textContent = 'Deal #' + (normalizedIdx + 1) + '/' + sampleAds.length;
-        document.getElementById('btnClickAdCta').setAttribute('data-target-url', targetUrl);
+      function injectRealAdsenseIfConfigured(cfg) {
+        const container = document.getElementById('realAdsenseContainer');
+        const mount = document.getElementById('adsenseMountPoint');
+        if (!container || !mount) return;
 
-        const thumbsContainer = document.getElementById('adProductThumbs');
-        if (thumbsContainer) {
-          thumbsContainer.innerHTML = sampleAds.map(function (item, i) {
-            const activeRing = (i === normalizedIdx) ? 'ring-2 ring-[#ee4d2d] scale-105 opacity-100' : 'opacity-65 hover:opacity-100';
-            return '<button type="button" data-ad-thumb="' + i + '" class="rounded-lg overflow-hidden border border-slate-200 h-9 bg-white transition ' + activeRing + '"><img src="' + item.image + '" alt="Deal" class="w-full h-full object-cover" /></button>';
-          }).join('');
+        if (cfg.adsensePubId && cfg.adsensePubId.startsWith('ca-pub-')) {
+          container.classList.remove('hidden');
+          if (!document.getElementById('adsenseScriptTag')) {
+            const sc = document.createElement('script');
+            sc.id = 'adsenseScriptTag';
+            sc.async = true;
+            sc.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(cfg.adsensePubId);
+            sc.crossOrigin = 'anonymous';
+            document.head.appendChild(sc);
+          }
+          mount.innerHTML =
+            '<ins class="adsbygoogle" style="display:block;width:100%;height:120px" ' +
+            'data-ad-client="' + cfg.adsensePubId + '" ' +
+            'data-ad-slot="' + (cfg.adsenseSlotId || '1234567890') + '" ' +
+            'data-ad-format="auto" data-full-width-responsive="true"></ins>';
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {}
+        } else {
+          container.classList.add('hidden');
         }
       }
 
       function showInterstitialAd() {
         const modal = document.getElementById('modalInterstitialAd');
         if (!modal) return;
-        const currentIdx = adRotationIndex % sampleAds.length;
+
+        const cfg = ensureAdConfig();
+        cfg.impressions = Number(cfg.impressions || 0) + 1;
+        saveState();
+
+        const ad = sampleAds[adRotationIndex % sampleAds.length];
         adRotationIndex += 1;
-        renderAdCardByIndex(currentIdx);
+
+        const sponsorText = cfg.affiliateSponsor ? cfg.affiliateSponsor : ad.sponsor;
+        const headlineText = cfg.affiliateTitle ? cfg.affiliateTitle : ad.headline;
+        const targetUrl = cfg.affiliateUrl ? cfg.affiliateUrl : ad.url;
+
+        document.getElementById('adSponsorName').textContent = sponsorText;
+        document.getElementById('adBadgeTag').textContent = ad.tag;
+        document.getElementById('adIconBox').textContent = ad.icon;
+        document.getElementById('adBannerBg').className = ad.bg;
+        document.getElementById('adHeadline').textContent = headlineText;
+        document.getElementById('adDescription').textContent = ad.desc;
+
+        const linkEl = document.getElementById('btnClickAdCta');
+        if (linkEl) {
+          linkEl.setAttribute('data-target-url', targetUrl);
+        }
+
+        injectRealAdsenseIfConfigured(cfg);
+
         modal.classList.remove('hidden');
         modal.classList.add('flex');
-        if (adCountdownTimer) clearInterval(adCountdownTimer);
+
+        if (adCountdownTimer) {
+          clearInterval(adCountdownTimer);
+          adCountdownTimer = null;
+        }
+
         let remaining = 3;
         const countdownEl = document.getElementById('adCountdownText');
         countdownEl.textContent = 'Đóng sau ' + remaining + 's';
+
         adCountdownTimer = setInterval(function () {
           remaining -= 1;
           if (remaining > 0) {
             countdownEl.textContent = 'Đóng sau ' + remaining + 's';
           } else {
             clearInterval(adCountdownTimer);
+            adCountdownTimer = null;
             countdownEl.textContent = 'Bỏ qua quảng cáo';
           }
         }, 1000);
@@ -1102,7 +1150,10 @@
       function closeInterstitialAd() {
         const modal = document.getElementById('modalInterstitialAd');
         if (!modal) return;
-        if (adCountdownTimer) clearInterval(adCountdownTimer);
+        if (adCountdownTimer) {
+          clearInterval(adCountdownTimer);
+          adCountdownTimer = null;
+        }
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }
@@ -1144,12 +1195,16 @@
 
       function getDaysInMonth(ym) {
         const parts = (ym || '2026-10').split('-').map(Number);
-        return new Date(parts[0] || 2026, parts[1] || 10, 0).getDate();
+        const year = parts[0] || 2026;
+        const month = parts[1] || 10;
+        return new Date(year, month, 0).getDate();
       }
 
       function getFirstDayOffsetMonday(ym) {
         const parts = (ym || '2026-10').split('-').map(Number);
-        const dow = new Date(parts[0] || 2026, (parts[1] || 10) - 1, 1).getDay();
+        const year = parts[0] || 2026;
+        const month = parts[1] || 10;
+        const dow = new Date(year, month - 1, 1).getDay(); // 0=Sun..6=Sat
         return dow === 0 ? 6 : dow - 1;
       }
 
@@ -1157,7 +1212,9 @@
         if (!emp) return {};
         if (!emp.monthlyData) emp.monthlyData = {};
         const key = ym || state.activeMonth || '2026-10';
-        if (!emp.monthlyData[key]) emp.monthlyData[key] = {};
+        if (!emp.monthlyData[key]) {
+          emp.monthlyData[key] = {};
+        }
         return emp.monthlyData[key];
       }
 
@@ -1166,7 +1223,9 @@
         const toastMessage = document.getElementById('toastMessage');
         const toastIcon = document.getElementById('toastIcon');
         toastMessage.textContent = message;
-        toastIcon.className = isWarning ? 'w-2 h-2 rounded-full bg-amber-400 shrink-0' : 'w-2 h-2 rounded-full bg-emerald-400 shrink-0';
+        toastIcon.className = isWarning
+          ? 'w-2 h-2 rounded-full bg-amber-400 shrink-0'
+          : 'w-2 h-2 rounded-full bg-emerald-400 shrink-0';
         toastBox.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
         toastBox.classList.add('opacity-100', 'translate-y-0');
         clearTimeout(window.__toastTimer);
@@ -1195,7 +1254,11 @@
 
       function getRealTodayParts() {
         const now = new Date();
-        return { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+        return {
+          year: now.getFullYear(),
+          month: now.getMonth() + 1,
+          day: now.getDate()
+        };
       }
 
       function isFutureDay(ym, dayNum) {
@@ -1217,15 +1280,22 @@
 
       function getNowTimeString() {
         const now = new Date();
-        return String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        return hh + ':' + mm;
       }
 
       function updateLiveClock() {
         const now = new Date();
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mm = String(now.getMinutes()).padStart(2, '0');
+        const ss = String(now.getSeconds()).padStart(2, '0');
         const clockEl = document.getElementById('liveClockText');
-        if (clockEl) clockEl.textContent = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ':' + String(now.getSeconds()).padStart(2, '0');
+        if (clockEl) clockEl.textContent = hh + ':' + mm + ':' + ss;
         const dateEl = document.getElementById('liveDateText');
-        if (dateEl) dateEl.textContent = String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/' + now.getFullYear();
+        if (dateEl) {
+          dateEl.textContent = String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/' + now.getFullYear();
+        }
       }
 
       function calculateHoursBetween(inTime, outTime) {
@@ -1244,21 +1314,38 @@
         if (item.status === 'full') shiftCount = 1;
         else if (item.status === 'ot') shiftCount = 2;
         else if (item.status === 'half') shiftCount = 0.5;
+
         const hoursPerShift = Number(item.shiftHours || state.defaultShiftHours || 4);
         const totalDayHours = shiftCount * hoursPerShift;
         const rate = (item.shiftRate !== undefined) ? clampShiftRate(item.shiftRate) : clampShiftRate(defaultRate);
         const calcType = item.calcType || 'per_hour';
+
         let pay = 0;
-        if (calcType === 'per_hour') pay = Math.round(totalDayHours * rate);
-        else if (calcType === 'per_hour_scale') pay = Math.round(shiftCount * (hoursPerShift / 4) * rate);
-        else pay = Math.round(shiftCount * rate);
-        return { shifts: shiftCount, hours: totalDayHours, pay: pay };
+        if (calcType === 'per_hour') {
+          pay = Math.round(totalDayHours * rate);
+        } else if (calcType === 'per_hour_scale') {
+          pay = Math.round(shiftCount * (hoursPerShift / 4) * rate);
+        } else {
+          pay = Math.round(shiftCount * rate);
+        }
+
+        return {
+          shifts: shiftCount,
+          hours: totalDayHours,
+          pay: pay
+        };
       }
 
       function syncEmployeeStatsFromCalendar(emp, ym) {
         if (!emp) return;
         const cal = getEmpCalendarForMonth(emp, ym || state.activeMonth);
-        let totalShifts = 0, totalWorkHours = 0, totalOtHours = 0, totalAllowance = 0, totalAdvance = 0, totalShiftSalary = 0;
+        let totalShifts = 0;
+        let totalWorkHours = 0;
+        let totalOtHours = 0;
+        let totalAllowance = 0;
+        let totalAdvance = 0;
+        let totalShiftSalary = 0;
+
         Object.keys(cal).forEach(function (k) {
           const item = cal[k];
           if (!item) return;
@@ -1270,6 +1357,7 @@
           totalAllowance += Number(item.allowance || 0);
           totalAdvance += Number(item.advance || 0);
         });
+
         emp.baseDays = totalShifts;
         emp.totalWorkHours = totalWorkHours;
         emp.otHours = totalOtHours;
@@ -1286,7 +1374,14 @@
         const advanceAmt = Number(emp.advance || 0);
         const allowanceAmt = Number(emp.allowance || 0);
         const netPay = baseSalary + otPay + allowanceAmt - advanceAmt;
-        return { baseSalary: baseSalary, otPay: otPay, latePenalty: 0, advanceAmt: advanceAmt, netPay: netPay, totalHours: (emp.totalWorkHours || 0) + (emp.otHours || 0) };
+        return {
+          baseSalary: baseSalary,
+          otPay: otPay,
+          latePenalty: 0,
+          advanceAmt: advanceAmt,
+          netPay: netPay,
+          totalHours: (emp.totalWorkHours || 0) + (emp.otHours || 0)
+        };
       }
 
       function renderEmployeeSelectors() {
@@ -1298,11 +1393,13 @@
           banner.classList.add('hidden');
           banner.classList.remove('flex');
         }
-        ['selectActiveEmployee', 'leaveEmpSelect', 'manualEmpSelect'].forEach(function (selId) {
+
+        const selects = ['selectActiveEmployee', 'leaveEmpSelect', 'manualEmpSelect'];
+        selects.forEach(function (selId) {
           const el = document.getElementById(selId);
           if (!el) return;
           if (state.employees.length === 0) {
-            el.innerHTML = '<option value="">-- Chưa có sinh viên --</option>';
+            el.innerHTML = '<option value="">-- Chưa có sinh viên (Bấm + Thêm SV) --</option>';
             return;
           }
           if (!state.activeEmployeeId || !state.employees.some(function (e) { return e.id === state.activeEmployeeId; })) {
@@ -1319,41 +1416,69 @@
         const container = document.getElementById('savedMonthsList');
         if (!container) return;
         if (!state.savedMonths || state.savedMonths.length === 0) {
-          container.innerHTML = '<p class="text-xs text-slate-400 py-2">Chưa có bảng công tháng nào được lưu chốt.</p>';
+          container.innerHTML = '<p class="text-xs text-slate-400 py-2">Chưa có bảng công tháng nào được lưu chốt. Bấm <strong>"💾 Lưu bảng công tháng"</strong> ở trên để lưu lại trước khi qua tháng mới.</p>';
           return;
         }
+
         container.innerHTML = state.savedMonths.map(function (arc) {
-          return '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs"><div><span class="font-bold text-slate-800">' + arc.monthTitle + '</span> • Tổng: <strong>' + arc.totalShifts + ' ca (' + arc.totalHours + 'h)</strong><p class="text-[11px] text-emerald-700 font-bold mt-0.5">Thực lĩnh: ' + formatCurrency(arc.totalPay) + '</p></div><div class="flex items-center gap-1.5 shrink-0"><button type="button" data-archive-open="' + arc.monthKey + '" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-semibold">Mở</button><button type="button" data-archive-delete="' + arc.id + '" class="px-2 py-1 rounded-lg bg-rose-50 text-rose-600 font-semibold">Xóa</button></div></div>';
+          return (
+            '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">' +
+              '<div>' +
+                '<span class="font-bold text-slate-800">' + arc.monthTitle + '</span>' +
+                '<span class="text-slate-500 ml-2">• ' + arc.studentCount + ' SV • Tổng ca: <strong>' + arc.totalShifts + ' ca (' + arc.totalHours + 'h)</strong></span>' +
+                '<p class="text-[11px] text-emerald-700 font-bold mt-0.5">Tổng thực lĩnh: ' + formatCurrency(arc.totalPay) + ' <span class="text-slate-400 font-normal">(Lưu lúc: ' + arc.savedAt + ')</span></p>' +
+              '</div>' +
+              '<div class="flex items-center gap-1.5 shrink-0">' +
+                '<button type="button" data-archive-open="' + arc.monthKey + '" class="px-2.5 py-1 rounded-lg bg-blue-50 text-blue-600 font-semibold hover:bg-blue-100">Mở lại tháng này</button>' +
+                '<button type="button" data-archive-delete="' + arc.id + '" class="px-2 py-1 rounded-lg bg-rose-50 text-rose-600 font-semibold hover:bg-rose-100">Xóa</button>' +
+              '</div>' +
+            '</div>'
+          );
         }).join('');
       }
 
       function renderAtWorkCalendar() {
         const grid = document.getElementById('atworkCalendarGrid');
         if (!grid) return;
-        document.getElementById('summaryMonthLabel').textContent = formatMonthTitle(state.activeMonth);
+
+        const monthLabel = formatMonthTitle(state.activeMonth);
+        document.getElementById('summaryMonthLabel').textContent = monthLabel;
         const payrollTitle = document.getElementById('payrollMonthTitle');
-        if (payrollTitle) payrollTitle.textContent = formatMonthTitle(state.activeMonth);
+        if (payrollTitle) payrollTitle.textContent = monthLabel;
+
         const monthInput = document.getElementById('inputActiveMonth');
-        if (monthInput && monthInput.value !== state.activeMonth) monthInput.value = state.activeMonth;
+        if (monthInput && monthInput.value !== state.activeMonth) {
+          monthInput.value = state.activeMonth;
+        }
 
         const activeEmp = getEmployeeById(state.activeEmployeeId);
         const cal = activeEmp ? getEmpCalendarForMonth(activeEmp, state.activeMonth) : {};
-        const quickInput = document.getElementById('quickShiftRateInput');
-        if (quickInput && document.activeElement !== quickInput) quickInput.value = activeEmp ? clampShiftRate(activeEmp.dailyRate) : 0;
 
-        const calc = activeEmp ? computeEmployeePayroll(activeEmp, state.activeMonth) : { netPay: 0, baseSalary: 0 };
+        const quickInput = document.getElementById('quickShiftRateInput');
+        if (quickInput && document.activeElement !== quickInput) {
+          quickInput.value = activeEmp ? clampShiftRate(activeEmp.dailyRate) : 0;
+        }
+
+        const calc = activeEmp
+          ? computeEmployeePayroll(activeEmp, state.activeMonth)
+          : { baseSalary: 0, otPay: 0, advanceAmt: 0, netPay: 0, totalHours: 0 };
+
         document.getElementById('atworkCurrentEmpSalary').textContent = formatCurrency(calc.netPay);
         document.getElementById('atworkBreakdownDays').textContent = activeEmp ? activeEmp.baseDays : 0;
         document.getElementById('atworkBreakdownTotalHours').textContent = activeEmp ? (activeEmp.totalWorkHours || 0) : 0;
         document.getElementById('atworkBreakdownBase').textContent = formatCurrency(calc.baseSalary);
         document.getElementById('atworkBreakdownOt').textContent = activeEmp ? activeEmp.otHours : 0;
-        document.getElementById('atworkBreakdownAllowance').textContent = '+' + formatCurrency(activeEmp ? activeEmp.allowance : 0);
-        document.getElementById('atworkBreakdownAdvance').textContent = '-' + formatCurrency(activeEmp ? activeEmp.advance : 0);
+        document.getElementById('atworkBreakdownOtPay').textContent = '+' + formatCurrency(calc.otPay);
+        document.getElementById('atworkBreakdownAllowance').textContent = '+' + formatCurrency((activeEmp ? activeEmp.allowance : 0) + calc.otPay);
+        document.getElementById('atworkBreakdownAdvance').textContent = '-' + formatCurrency(calc.advanceAmt);
 
         const padCount = getFirstDayOffsetMonday(state.activeMonth);
         const daysInMonth = getDaysInMonth(state.activeMonth);
+
         const cells = [];
-        for (let pad = 0; pad < padCount; pad++) cells.push('<div class="h-12 sm:h-14 rounded-xl bg-slate-50/40"></div>');
+        for (let pad = 0; pad < padCount; pad++) {
+          cells.push('<div class="h-12 sm:h-14 rounded-xl bg-slate-50/40"></div>');
+        }
 
         const realToday = getRealTodayParts();
         const curYm = realToday.year + '-' + String(realToday.month).padStart(2, '0');
@@ -1362,9 +1487,11 @@
           const isFuture = isFutureDay(state.activeMonth, day);
           const info = !isFuture ? cal[day] : null;
           const isToday = (state.activeMonth === curYm && day === realToday.day);
+
           let bgClass = 'bg-slate-50 text-slate-700 border-slate-200 hover:border-blue-400';
           let badgeText = 'Chấm';
           let subMoney = '';
+
           if (isFuture) {
             bgClass = 'bg-slate-100/60 text-slate-300 border-slate-200/50 opacity-45 cursor-not-allowed';
             badgeText = '🔒 Khóa';
@@ -1372,6 +1499,7 @@
             const dCalc = computeDayEarned(info, activeEmp ? activeEmp.dailyRate : 0);
             const hrs = info.shiftHours || state.defaultShiftHours || 4;
             const sName = (info.shiftName || 'Ca').replace('Ca ', '');
+
             if (info.status === 'full') {
               bgClass = 'bg-emerald-500 text-white border-emerald-600 shadow-xs';
               badgeText = sName + ' (' + hrs + 'h)';
@@ -1382,14 +1510,27 @@
               bgClass = 'bg-cyan-500 text-white border-cyan-600 shadow-xs';
               badgeText = '1/2 (' + dCalc.hours + 'h)';
             }
-            if (dCalc.pay > 0) subMoney = Math.round(dCalc.pay / 1000) + 'k';
+            if (dCalc.pay > 0) {
+              subMoney = Math.round(dCalc.pay / 1000) + 'k';
+            }
           } else if (info && info.status === 'off') {
             bgClass = 'bg-rose-50 text-rose-500 border-rose-200';
             badgeText = 'Nghỉ';
           }
+
           const todayRing = isToday ? 'ring-2 ring-blue-600 ring-offset-1' : '';
-          cells.push('<button type="button" data-cal-day="' + day + '" class="cal-cell h-12 sm:h-14 rounded-xl border p-1 flex flex-col items-center justify-between ' + bgClass + ' ' + todayRing + '"><div class="w-full flex items-center justify-between px-0.5 leading-none"><span class="text-xs font-extrabold">' + day + '</span><span class="text-[9px] font-semibold opacity-90">' + subMoney + '</span></div><span class="text-[9px] font-semibold truncate max-w-full">' + badgeText + '</span></button>');
+
+          cells.push(
+            '<button type="button" data-cal-day="' + day + '" data-cal-future="' + (isFuture ? '1' : '0') + '" class="cal-cell h-12 sm:h-14 rounded-xl border p-1 flex flex-col items-center justify-between ' + bgClass + ' ' + todayRing + '">' +
+              '<div class="w-full flex items-center justify-between px-0.5 leading-none">' +
+                '<span class="text-xs font-extrabold">' + day + '</span>' +
+                '<span class="text-[9px] font-semibold opacity-90">' + subMoney + '</span>' +
+              '</div>' +
+              '<span class="text-[9px] font-semibold truncate max-w-full">' + badgeText + '</span>' +
+            '</button>'
+          );
         }
+
         grid.innerHTML = cells.join('');
         renderSavedMonthsArchive();
       }
@@ -1398,25 +1539,39 @@
         const activeEmp = getEmployeeById(state.activeEmployeeId);
         document.getElementById('activeEmpAvatar').textContent = activeEmp ? getInitials(activeEmp.name) : 'SV';
         renderAtWorkCalendar();
-        const todayLog = activeEmp ? state.logs.find(function (l) { return l.empId === activeEmp.id && l.date === getTodayString(); }) : null;
+
+        const todayLog = activeEmp
+          ? state.logs.find(function (l) { return l.empId === activeEmp.id && l.date === getTodayString(); })
+          : null;
+
         const btnPunch = document.getElementById('btnMainPunch');
         const punchTitle = document.getElementById('punchTitle');
         const punchSubtitle = document.getElementById('punchSubtitle');
         const todayInEl = document.getElementById('todayInTime');
         const todayOutEl = document.getElementById('todayOutTime');
         const todayHrsEl = document.getElementById('todayWorkHours');
+
         if (!todayLog) {
           btnPunch.className = 'w-16 h-16 rounded-2xl bg-gradient-to-b from-blue-500 to-blue-700 text-white shadow-md flex flex-col items-center justify-center shrink-0 active:scale-95 transition';
-          punchTitle.textContent = 'VÀO CA'; punchSubtitle.textContent = 'Check-in';
-          todayInEl.textContent = '--:--'; todayOutEl.textContent = '--:--'; todayHrsEl.textContent = '0h';
+          punchTitle.textContent = 'VÀO CA';
+          punchSubtitle.textContent = 'Check-in';
+          todayInEl.textContent = '--:--';
+          todayOutEl.textContent = '--:--';
+          todayHrsEl.textContent = '0h';
         } else if (todayLog && !todayLog.outTime) {
           btnPunch.className = 'w-16 h-16 rounded-2xl bg-gradient-to-b from-amber-500 to-orange-600 text-white shadow-md flex flex-col items-center justify-center shrink-0 active:scale-95 transition';
-          punchTitle.textContent = 'RA CA'; punchSubtitle.textContent = 'Check-out';
-          todayInEl.textContent = todayLog.inTime; todayOutEl.textContent = 'Đang làm'; todayHrsEl.textContent = '...';
+          punchTitle.textContent = 'RA CA';
+          punchSubtitle.textContent = 'Check-out';
+          todayInEl.textContent = todayLog.inTime;
+          todayOutEl.textContent = 'Đang làm';
+          todayHrsEl.textContent = '...';
         } else {
           btnPunch.className = 'w-16 h-16 rounded-2xl bg-gradient-to-b from-emerald-500 to-teal-700 text-white shadow-md flex flex-col items-center justify-center shrink-0 active:scale-95 transition';
-          punchTitle.textContent = 'XONG CA'; punchSubtitle.textContent = 'Chấm lại';
-          todayInEl.textContent = todayLog.inTime; todayOutEl.textContent = todayLog.outTime; todayHrsEl.textContent = todayLog.hours + 'h';
+          punchTitle.textContent = 'XONG CA';
+          punchSubtitle.textContent = 'Chấm lại';
+          todayInEl.textContent = todayLog.inTime;
+          todayOutEl.textContent = todayLog.outTime;
+          todayHrsEl.textContent = todayLog.hours + 'h';
         }
       }
 
@@ -1424,29 +1579,61 @@
         let activeEmp = getEmployeeById(state.activeEmployeeId);
         if (!activeEmp) {
           openAddStudentModal();
-          showToast('Vui lòng thêm tên sinh viên trước!', true);
+          showToast('Vui lòng thêm tên sinh viên trước khi chấm công!', true);
           return;
         }
+
         const nowTime = getNowTimeString();
-        const existingLog = state.logs.find(function (l) { return l.empId === activeEmp.id && l.date === getTodayString(); });
+        const existingLog = state.logs.find(function (l) {
+          return l.empId === activeEmp.id && l.date === getTodayString();
+        });
+
+        // Parse hours from selectedShift (e.g. "Ca Sáng (8 tiếng)")
         const shiftText = state.selectedShift || 'Ca Sáng (4 tiếng)';
         const hourMatch = shiftText.match(/(\d+)\s*tiếng/);
         const chosenHours = hourMatch ? Number(hourMatch[1]) : Number(state.defaultShiftHours || 4);
         const shiftName = shiftText.split(' (')[0];
+
         if (!existingLog) {
-          state.logs.unshift({ id: 'LOG' + Date.now(), empId: activeEmp.id, date: getTodayString(), inTime: nowTime, outTime: '', hours: chosenHours, status: 'Đang làm việc', shift: shiftText, location: 'Ca làm thêm' });
+          state.logs.unshift({
+            id: 'LOG' + Date.now(),
+            empId: activeEmp.id,
+            date: getTodayString(),
+            inTime: nowTime,
+            outTime: '',
+            hours: chosenHours,
+            status: 'Đang làm việc',
+            shift: shiftText,
+            location: 'Ca làm thêm'
+          });
           const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
-          cal[getRealTodayParts().day] = { status: 'full', shiftName: shiftName, shiftHours: chosenHours, calcType: 'per_hour', shiftRate: clampShiftRate(activeEmp.dailyRate), ot: 0, advance: 0, allowance: 0, note: shiftText };
+          cal[getRealTodayParts().day] = {
+            status: 'full',
+            shiftName: shiftName,
+            shiftHours: chosenHours,
+            calcType: 'per_hour',
+            shiftRate: clampShiftRate(activeEmp.dailyRate),
+            ot: 0,
+            advance: 0,
+            allowance: 0,
+            note: shiftText
+          };
           syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
-          saveState(); renderAll();
+          saveState();
+          renderAll();
           showToast('Đã vào ' + shiftText + ' lúc ' + nowTime);
         } else if (!existingLog.outTime) {
-          existingLog.outTime = nowTime; existingLog.hours = chosenHours; existingLog.status = 'Đúng giờ';
-          saveState(); renderAll();
-          showToast('Đã hoàn thành ' + shiftText);
+          existingLog.outTime = nowTime;
+          existingLog.hours = chosenHours;
+          existingLog.status = 'Đúng giờ';
+          saveState();
+          renderAll();
+          showToast('Đã hoàn thành ' + shiftText + ' lúc ' + nowTime);
         } else {
-          existingLog.outTime = ''; existingLog.status = 'Đang làm việc';
-          saveState(); renderAll();
+          existingLog.outTime = '';
+          existingLog.status = 'Đang làm việc';
+          saveState();
+          renderAll();
           showToast('Đã mở lại ca làm hôm nay');
         }
       }
@@ -1455,86 +1642,247 @@
         const query = (document.getElementById('inputSearchEmployee').value || '').trim().toLowerCase();
         const deptFilter = document.getElementById('selectFilterDept').value;
         const container = document.getElementById('employeeGrid');
+
         if (state.employees.length === 0) {
-          container.innerHTML = '<div class="col-span-2 bg-white rounded-2xl p-8 text-center text-xs text-slate-400 border border-slate-100">Danh sách trống. Bấm <strong>"+ Thêm nhân viên"</strong>!</div>';
+          container.innerHTML = '<div class="col-span-2 bg-white rounded-2xl p-8 text-center text-xs text-slate-400 border border-slate-100">Danh sách đang trống. Hãy bấm <strong>"+ Thêm nhân viên"</strong> để thêm sinh viên làm thêm!</div>';
           return;
         }
+
         const filtered = state.employees.filter(function (emp) {
-          return (deptFilter === 'ALL' || emp.dept === deptFilter) && (!query || emp.name.toLowerCase().includes(query));
+          const matchDept = deptFilter === 'ALL' || emp.dept === deptFilter;
+          const matchQuery =
+            !query ||
+            emp.name.toLowerCase().includes(query) ||
+            (emp.phone || '').toLowerCase().includes(query);
+          return matchDept && matchQuery;
         });
+
+        if (filtered.length === 0) {
+          container.innerHTML = '<div class="col-span-2 bg-white rounded-2xl p-6 text-center text-xs text-slate-400 border border-slate-100">Không tìm thấy sinh viên phù hợp.</div>';
+          return;
+        }
+
         container.innerHTML = filtered.map(function (emp) {
           const calc = computeEmployeePayroll(emp, state.activeMonth);
-          const isCurrent = (emp.id === state.activeEmployeeId);
-          return '<div class="bg-white rounded-2xl p-4 shadow-sm border ' + (isCurrent ? 'border-blue-400 ring-2 ring-blue-500/15' : 'border-slate-200/80') + ' flex flex-col justify-between gap-3"><div class="flex items-start justify-between gap-2"><div class="flex items-center gap-2.5 min-w-0"><div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-extrabold text-xs flex items-center justify-center shrink-0 shadow-sm">' + getInitials(emp.name) + '</div><div class="min-w-0"><div class="flex items-center gap-1.5"><h3 class="text-sm font-extrabold text-slate-800 truncate">' + emp.name + '</h3>' + (isCurrent ? '<span class="px-1.5 py-0.5 rounded bg-blue-100 text-blue-700 text-[9px] font-bold">Đang chọn</span>' : '') + '</div><p class="text-[11px] text-slate-500 truncate">' + emp.dept + ' • ' + (emp.role || 'Ca 4h') + '</p></div></div><span class="text-[11px] font-extrabold px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">' + formatCurrency(emp.dailyRate) + '/h</span></div><div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-center"><div class="bg-slate-50 rounded-xl p-2"><p class="text-[10px] text-slate-400">Số ca</p><p class="text-xs font-extrabold text-slate-800 mt-0.5">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + 'h)</p></div><div class="bg-blue-50/50 rounded-xl p-2"><p class="text-[10px] text-blue-500">Phụ cấp</p><p class="text-xs font-extrabold text-blue-700 mt-0.5">+' + formatCurrency(emp.allowance) + '</p></div><div class="bg-emerald-50/60 rounded-xl p-2"><p class="text-[10px] text-emerald-600">Thực nhận</p><p class="text-xs font-extrabold text-emerald-700 mt-0.5">' + formatCurrency(calc.netPay) + '</p></div></div><div class="flex flex-wrap items-center justify-between gap-1.5 pt-1"><div class="flex items-center gap-1.5"><button type="button" data-action="quick-punch-emp" data-id="' + emp.id + '" class="px-2.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold shadow-xs">⚡ Chấm hôm nay</button><button type="button" data-action="switch-checkin" data-id="' + emp.id + '" class="px-2.5 py-1.5 rounded-xl bg-blue-50 text-blue-700 text-[11px] font-bold">📅 Mở lịch</button></div><div class="flex items-center gap-1"><button type="button" data-action="edit-emp" data-id="' + emp.id + '" class="px-2.5 py-1.5 rounded-xl bg-slate-100 text-slate-700 text-[11px] font-semibold">Sửa</button><button type="button" data-action="delete-emp" data-id="' + emp.id + '" class="px-2.5 py-1.5 rounded-xl bg-rose-50 text-rose-600 text-[11px] font-semibold">Xóa</button></div></div></div>';
+          return (
+            '<div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col justify-between gap-3">' +
+              '<div class="flex items-start justify-between gap-2">' +
+                '<div class="flex items-center gap-2.5">' +
+                  '<div class="w-10 h-10 rounded-xl bg-blue-600 text-white font-bold text-xs flex items-center justify-center shrink-0">' +
+                    getInitials(emp.name) +
+                  '</div>' +
+                  '<div>' +
+                    '<h3 class="text-sm font-bold text-slate-800">' + emp.name + '</h3>' +
+                    '<p class="text-xs text-slate-500">' + emp.dept + ' • ' + (emp.role || 'Ca 4h/8h') + '</p>' +
+                  '</div>' +
+                '</div>' +
+                '<span class="text-[11px] font-bold px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-700 border border-emerald-200">' + formatCurrency(emp.dailyRate) + '/giờ</span>' +
+              '</div>' +
+
+              '<div class="grid grid-cols-3 gap-2 pt-2 border-t border-slate-100 text-center">' +
+                '<div class="bg-slate-50 rounded-xl p-2">' +
+                  '<p class="text-[10px] text-slate-400">Số ca (Giờ)</p>' +
+                  '<p class="text-xs font-bold text-slate-800">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + 'h)</p>' +
+                '</div>' +
+                '<div class="bg-slate-50 rounded-xl p-2">' +
+                  '<p class="text-[10px] text-slate-400">Phụ cấp</p>' +
+                  '<p class="text-xs font-bold text-blue-600">' + formatCurrency(emp.allowance) + '</p>' +
+                '</div>' +
+                '<div class="bg-slate-50 rounded-xl p-2">' +
+                  '<p class="text-[10px] text-slate-400">Thực nhận</p>' +
+                  '<p class="text-xs font-bold text-emerald-600">' + formatCurrency(calc.netPay) + '</p>' +
+                '</div>' +
+              '</div>' +
+
+              '<div class="flex items-center justify-between gap-2 pt-1">' +
+                '<button type="button" data-action="switch-checkin" data-id="' + emp.id + '" class="text-xs font-semibold text-blue-600 hover:underline">Mở lịch chấm công</button>' +
+                '<div class="flex items-center gap-1.5">' +
+                  '<button type="button" data-action="edit-emp" data-id="' + emp.id + '" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-medium">Sửa</button>' +
+                  '<button type="button" data-action="delete-emp" data-id="' + emp.id + '" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-medium">Xóa</button>' +
+                '</div>' +
+              '</div>' +
+            '</div>'
+          );
         }).join('');
       }
 
       function renderTimesheetTab() {
         const statusFilter = document.getElementById('filterLogStatus').value;
         const tbody = document.getElementById('timesheetTableBody');
-        const filteredLogs = state.logs.filter(function (l) { return statusFilter === 'ALL' || l.status === statusFilter; });
-        tbody.innerHTML = filteredLogs.length === 0 ? '<tr><td colspan="6" class="text-center py-6 text-slate-400">Chưa có lịch sử chấm công.</td></tr>' : filteredLogs.map(function (log) {
-          const emp = getEmployeeById(log.empId);
-          return '<tr class="hover:bg-slate-50"><td class="py-2 px-2 font-semibold text-slate-800">' + (emp ? emp.name : log.empId) + '</td><td class="py-2 px-2 text-slate-600">' + log.date + '</td><td class="py-2 px-2 text-slate-700">' + log.inTime + ' - ' + (log.outTime || '--:--') + '</td><td class="py-2 px-2 font-semibold text-blue-600">' + (log.hours ? log.hours + 'h' : '--') + '</td><td class="py-2 px-2"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700">' + log.status + '</span></td><td class="py-2 px-2 text-right"><button type="button" data-action="delete-log" data-id="' + log.id + '" class="text-rose-500 font-medium">Xóa</button></td></tr>';
-        }).join('');
+
+        const filteredLogs = state.logs.filter(function (l) {
+          return statusFilter === 'ALL' || l.status === statusFilter;
+        });
+
+        if (filteredLogs.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="6" class="text-center py-6 text-slate-400">Chưa có lịch sử chấm công nào.</td></tr>';
+        } else {
+          tbody.innerHTML = filteredLogs.map(function (log) {
+            const emp = getEmployeeById(log.empId);
+            const empName = emp ? emp.name : log.empId;
+            return (
+              '<tr class="hover:bg-slate-50">' +
+                '<td class="py-2 px-2 font-semibold text-slate-800">' + empName + ' <span class="block text-[10px] text-slate-400">' + (log.shift || '') + '</span></td>' +
+                '<td class="py-2 px-2 text-slate-600">' + log.date + '</td>' +
+                '<td class="py-2 px-2 text-slate-700 font-medium">' + log.inTime + ' - ' + (log.outTime || '--:--') + '</td>' +
+                '<td class="py-2 px-2 font-semibold text-blue-600">' + (log.hours ? log.hours + 'h' : '--') + '</td>' +
+                '<td class="py-2 px-2"><span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700">' + log.status + '</span></td>' +
+                '<td class="py-2 px-2 text-right">' +
+                  '<button type="button" data-action="delete-log" data-id="' + log.id + '" class="text-rose-500 hover:text-rose-700 font-medium">Xóa</button>' +
+                '</td>' +
+              '</tr>'
+            );
+          }).join('');
+        }
 
         const leaveContainer = document.getElementById('leaveRequestsContainer');
-        leaveContainer.innerHTML = state.leaves.length === 0 ? '<div class="bg-white rounded-2xl p-6 text-center text-xs text-slate-400 border border-slate-100">Chưa có đơn xin nghỉ.</div>' : state.leaves.map(function (req) {
-          const emp = getEmployeeById(req.empId);
-          const actionBtn = req.status === 'Chờ duyệt' ? '<div class="flex gap-2"><button type="button" data-action="approve-leave" data-id="' + req.id + '" class="px-3 py-1 rounded-xl bg-emerald-600 text-white text-xs font-semibold">Duyệt</button><button type="button" data-action="reject-leave" data-id="' + req.id + '" class="px-3 py-1 rounded-xl bg-rose-50 text-rose-600 text-xs font-semibold">Từ chối</button></div>' : '';
-          return '<div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2"><div><p class="text-xs font-bold text-slate-800">' + (emp ? emp.name : req.empId) + ' • <span class="text-blue-600">' + req.type + '</span> (' + req.status + ')</p><p class="text-xs text-slate-600 mt-0.5">' + req.reason + ' (' + req.date + ')</p></div>' + actionBtn + '</div>';
-        }).join('');
+        if (state.leaves.length === 0) {
+          leaveContainer.innerHTML = '<div class="bg-white rounded-2xl p-6 text-center text-xs text-slate-400 border border-slate-100">Chưa có đơn xin nghỉ ca hay đổi ca nào.</div>';
+        } else {
+          leaveContainer.innerHTML = state.leaves.map(function (req) {
+            const emp = getEmployeeById(req.empId);
+            const empName = emp ? emp.name : req.empId;
+            const actionButtons =
+              req.status === 'Chờ duyệt'
+                ? '<div class="flex items-center gap-2 mt-2 sm:mt-0">' +
+                    '<button type="button" data-action="approve-leave" data-id="' + req.id + '" class="px-3 py-1 rounded-xl bg-emerald-600 text-white text-xs font-semibold">Duyệt đơn</button>' +
+                    '<button type="button" data-action="reject-leave" data-id="' + req.id + '" class="px-3 py-1 rounded-xl bg-rose-50 text-rose-600 text-xs font-semibold">Từ chối</button>' +
+                  '</div>'
+                : '';
+
+            return (
+              '<div class="bg-white rounded-2xl p-3.5 shadow-sm border border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2">' +
+                '<div>' +
+                  '<p class="text-xs font-bold text-slate-800">' + empName + ' • <span class="text-blue-600">' + req.type + '</span> (' + req.status + ')</p>' +
+                  '<p class="text-xs text-slate-600 mt-0.5">' + req.reason + ' (Ngày: ' + req.date + ')</p>' +
+                '</div>' +
+                actionButtons +
+              '</div>'
+            );
+          }).join('');
+        }
 
         const taskContainer = document.getElementById('shiftTasksList');
         if (taskContainer) {
-          taskContainer.innerHTML = (!state.shiftTasks || state.shiftTasks.length === 0) ? '<p class="text-xs text-slate-400 text-center py-4">Chưa có công việc ca.</p>' : state.shiftTasks.map(function (t) {
-            return '<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2"><label class="flex items-center gap-2 text-xs cursor-pointer"><input type="checkbox" data-task-id="' + t.id + '" ' + (t.done ? 'checked' : '') + ' class="w-4 h-4 accent-blue-600 rounded" /><span class="' + (t.done ? 'line-through text-slate-400' : 'font-semibold text-slate-800') + '">' + t.title + '</span></label></div>';
-          }).join('');
+          if (!state.shiftTasks || state.shiftTasks.length === 0) {
+            taskContainer.innerHTML = '<p class="text-xs text-slate-400 text-center py-4">Chưa có ghi chú công việc ca nào.</p>';
+          } else {
+            taskContainer.innerHTML = state.shiftTasks.map(function (t) {
+              return (
+                '<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-2">' +
+                  '<label class="flex items-center gap-2 text-xs cursor-pointer">' +
+                    '<input type="checkbox" data-task-id="' + t.id + '" ' + (t.done ? 'checked' : '') + ' class="w-4 h-4 accent-blue-600 rounded" />' +
+                    '<span class="' + (t.done ? 'line-through text-slate-400' : 'font-semibold text-slate-800') + '">' + t.title + '</span>' +
+                  '</label>' +
+                  '<span class="text-[10px] text-slate-500">' + t.shift + '</span>' +
+                '</div>'
+              );
+            }).join('');
+          }
         }
       }
 
       function renderPayrollTab() {
-        let totalPayroll = 0, totalHoursAll = 0;
+        let totalPayroll = 0;
+        let totalHoursAll = 0;
         const tbody = document.getElementById('payrollTableBody');
-        tbody.innerHTML = state.employees.length === 0 ? '<tr><td colspan="7" class="text-center py-6 text-slate-400">Chưa có sinh viên nào.</td></tr>' : state.employees.map(function (emp) {
-          const calc = computeEmployeePayroll(emp, state.activeMonth);
-          totalPayroll += calc.netPay;
-          totalHoursAll += Number(calc.totalHours || 0);
-          return '<tr class="hover:bg-slate-50"><td class="py-2.5 px-2 font-bold text-slate-800">' + emp.name + '</td><td class="py-2.5 px-2 text-slate-600">' + formatCurrency(emp.dailyRate) + '</td><td class="py-2.5 px-2 font-semibold text-blue-600">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + 'h)</td><td class="py-2.5 px-2 text-emerald-600">+' + formatCurrency(emp.allowance) + '</td><td class="py-2.5 px-2 text-rose-600">-' + formatCurrency(calc.advanceAmt) + '</td><td class="py-2.5 px-2 font-extrabold text-emerald-700">' + formatCurrency(calc.netPay) + '</td><td class="py-2.5 px-2 text-right space-x-1"><button type="button" data-action="bonus-emp" data-id="' + emp.id + '" class="px-2 py-1 rounded-lg bg-blue-50 text-blue-600 font-semibold">+Thưởng</button><button type="button" data-action="view-payslip" data-id="' + emp.id + '" class="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">Xem</button></td></tr>';
-        }).join('');
+
+        if (state.employees.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center py-6 text-slate-400">Chưa có sinh viên nào. Hãy thêm sinh viên và chấm công trên lịch!</td></tr>';
+        } else {
+          tbody.innerHTML = state.employees.map(function (emp) {
+            const calc = computeEmployeePayroll(emp, state.activeMonth);
+            totalPayroll += calc.netPay;
+            totalHoursAll += Number(calc.totalHours || 0);
+
+            return (
+              '<tr class="hover:bg-slate-50">' +
+                '<td class="py-2.5 px-2 font-bold text-slate-800">' + emp.name + '</td>' +
+                '<td class="py-2.5 px-2 text-slate-600">' + formatCurrency(emp.dailyRate) + '</td>' +
+                '<td class="py-2.5 px-2 font-semibold text-blue-600">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + 'h)</td>' +
+                '<td class="py-2.5 px-2 text-emerald-600">+' + formatCurrency(emp.allowance) + '</td>' +
+                '<td class="py-2.5 px-2 text-rose-600">-' + formatCurrency(calc.advanceAmt) + '</td>' +
+                '<td class="py-2.5 px-2 font-extrabold text-emerald-700">' + formatCurrency(calc.netPay) + '</td>' +
+                '<td class="py-2.5 px-2 text-right space-x-1">' +
+                  '<button type="button" data-action="bonus-emp" data-id="' + emp.id + '" class="px-2 py-1 rounded-lg bg-blue-50 text-blue-600 font-semibold">+Thưởng</button>' +
+                  '<button type="button" data-action="view-payslip" data-id="' + emp.id + '" class="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 font-semibold">Xem</button>' +
+                '</td>' +
+              '</tr>'
+            );
+          }).join('');
+        }
+
         document.getElementById('summaryTotalPayroll').textContent = formatCurrency(totalPayroll);
         document.getElementById('summaryTotalOtHours').textContent = totalHoursAll + ' giờ';
+
         renderAttendanceChart();
       }
 
       function renderAttendanceChart() {
         const canvas = document.getElementById('attendanceChart');
         if (!canvas || typeof Chart === 'undefined') return;
+
         const activeEmp = getEmployeeById(state.activeEmployeeId);
         const cal = activeEmp ? getEmpCalendarForMonth(activeEmp, state.activeMonth) : {};
         const days = [16, 17, 18, 19, 20, 21, 22];
         const hoursData = days.map(function (d) {
           const item = cal[d];
           if (!item || item.status === 'off') return 0;
-          return computeDayEarned(item, activeEmp ? activeEmp.dailyRate : 0).hours;
+          const dCalc = computeDayEarned(item, activeEmp ? activeEmp.dailyRate : 0);
+          return dCalc.hours;
         });
+
         if (attendanceChartInstance) {
           attendanceChartInstance.data.datasets[0].data = hoursData;
           attendanceChartInstance.update();
           return;
         }
+
         attendanceChartInstance = new Chart(canvas, {
           type: 'bar',
-          data: { labels: ['Ngày 16', 'Ngày 17', 'Ngày 18', 'Ngày 19', 'Ngày 20', 'Ngày 21', 'Ngày 22'], datasets: [{ data: hoursData, backgroundColor: '#16a34a', borderRadius: 6 }] },
-          options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
+          data: {
+            labels: ['Ngày 16', 'Ngày 17', 'Ngày 18', 'Ngày 19', 'Ngày 20', 'Ngày 21', 'Ngày 22'],
+            datasets: [
+              {
+                label: 'Số giờ làm trong ngày',
+                data: hoursData,
+                backgroundColor: '#16a34a',
+                borderRadius: 6
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: { beginAtZero: true, max: 16, ticks: { stepSize: 2, font: { size: 11 } } },
+              x: { ticks: { font: { size: 11 } } }
+            }
+          }
         });
       }
 
       function switchMainTab(tabName) {
         state.activeTab = tabName;
         saveState();
-        const views = { checkin: document.getElementById('viewCheckin'), employees: document.getElementById('viewEmployees'), timesheet: document.getElementById('viewTimesheet'), payroll: document.getElementById('viewPayroll') };
-        const navBtns = { checkin: document.getElementById('navBtnCheckin'), employees: document.getElementById('navBtnEmployees'), timesheet: document.getElementById('navBtnTimesheet'), payroll: document.getElementById('navBtnPayroll') };
+
+        const views = {
+          checkin: document.getElementById('viewCheckin'),
+          employees: document.getElementById('viewEmployees'),
+          timesheet: document.getElementById('viewTimesheet'),
+          payroll: document.getElementById('viewPayroll')
+        };
+
+        const navBtns = {
+          checkin: document.getElementById('navBtnCheckin'),
+          employees: document.getElementById('navBtnEmployees'),
+          timesheet: document.getElementById('navBtnTimesheet'),
+          payroll: document.getElementById('navBtnPayroll')
+        };
+
         Object.keys(views).forEach(function (k) {
           if (k === tabName) {
             views[k].classList.remove('hidden');
@@ -1544,31 +1892,55 @@
             navBtns[k].className = 'relative flex flex-col items-center justify-center py-1.5 rounded-xl text-slate-500 hover:text-slate-800 font-medium transition';
           }
         });
+
         renderAll();
       }
 
       function openDayEditorModal(dayNum) {
         if (isFutureDay(state.activeMonth, dayNum)) {
-          showToast('Ngày ' + dayNum + ' ở tương lai (đã khóa)!', true);
+          showToast('Ngày ' + dayNum + ' ở trong tương lai (đã khóa), chưa thể chấm công!', true);
           return;
         }
         const activeEmp = getEmployeeById(state.activeEmployeeId);
         if (!activeEmp) {
           openAddStudentModal();
-          showToast('Hãy thêm sinh viên trước!', true);
+          showToast('Hãy thêm sinh viên trước khi chấm công trên lịch!', true);
           return;
         }
         const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
-        const info = cal[dayNum] || { status: 'full', shiftName: 'Ca Sáng', shiftHours: Number(state.defaultShiftHours || 4), calcType: 'per_hour', shiftRate: clampShiftRate(activeEmp.dailyRate), ot: 0, advance: 0, allowance: 0, note: '' };
+
+        const info = cal[dayNum] || {
+          status: 'full',
+          shiftName: 'Ca Sáng',
+          shiftHours: Number(state.defaultShiftHours || 4),
+          calcType: 'per_hour',
+          shiftRate: clampShiftRate(activeEmp.dailyRate),
+          ot: 0,
+          advance: 0,
+          allowance: 0,
+          note: ''
+        };
+
+        const mParts = (state.activeMonth || '2026-10').split('-');
         document.getElementById('dayEditorDayNum').value = dayNum;
-        document.getElementById('modalDayEditorTitle').textContent = 'Chấm công ngày ' + dayNum;
+        document.getElementById('modalDayEditorTitle').textContent = 'Chấm công ngày ' + dayNum + '/' + mParts[1] + '/' + mParts[0];
         document.getElementById('modalDayEditorSub').textContent = 'Sinh viên: ' + activeEmp.name;
-        document.querySelectorAll('input[name="dayStatusRadio"]').forEach(function (r) { r.checked = r.value === (info.status || 'full'); });
+
+        const radios = document.querySelectorAll('input[name="dayStatusRadio"]');
+        radios.forEach(function (r) {
+          r.checked = r.value === (info.status || 'full');
+        });
+
         document.getElementById('dayEditorShiftNameSelect').value = info.shiftName || 'Ca Sáng';
         document.getElementById('dayEditorShiftHoursInput').value = info.shiftHours || state.defaultShiftHours || 4;
-        document.getElementById('dayEditorShiftRateInput').value = info.shiftRate !== undefined ? clampShiftRate(info.shiftRate) : clampShiftRate(activeEmp.dailyRate);
-        document.getElementById('dayEditorAllowanceInput').value = info.allowance || 0;
+        document.getElementById('dayEditorCalcType').value = info.calcType || 'per_hour';
+        document.getElementById('dayEditorShiftRateInput').value =
+          info.shiftRate !== undefined ? clampShiftRate(info.shiftRate) : clampShiftRate(activeEmp.dailyRate);
+        document.getElementById('dayEditorOtInput').value = info.ot || 0;
         document.getElementById('dayEditorAdvanceInput').value = info.advance || 0;
+        document.getElementById('dayEditorAllowanceInput').value = info.allowance || 0;
+        document.getElementById('dayEditorNoteInput').value = info.note || '';
+
         const modal = document.getElementById('modalDayEditor');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
@@ -1576,100 +1948,119 @@
 
       function openPayslipModal(empId) {
         const emp = getEmployeeById(empId);
-        if (!emp) return;
+        if (!emp) {
+          showToast('Chưa có dữ liệu sinh viên!', true);
+          return;
+        }
         const calc = computeEmployeePayroll(emp, state.activeMonth);
         const content = document.getElementById('payslipContent');
         const mTitle = formatMonthTitle(state.activeMonth);
-        currentPayslipText = 'PHIẾU LƯƠNG (' + mTitle + ') - ' + emp.name + '\nThực lĩnh: ' + formatCurrency(calc.netPay);
-        content.innerHTML = '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200"><p class="font-bold text-slate-800">' + emp.name + ' (' + mTitle + ')</p><p class="text-slate-500">Thực nhận: <strong class="text-emerald-700">' + formatCurrency(calc.netPay) + '</strong></p></div>';
+
+        currentPayslipText =
+          'PHIẾU LƯƠNG LÀM THÊM (' + mTitle + ') - ' + emp.name + '\n' +
+          'Vị trí: ' + emp.dept + ' | Mức lương/giờ: ' + formatCurrency(emp.dailyRate) + '\n' +
+          'Tổng số ca đã làm: ' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + ' tiếng)\n' +
+          'Tiền lương ca: ' + formatCurrency(calc.baseSalary) + '\n' +
+          'Phụ cấp & Thưởng: +' + formatCurrency(emp.allowance + calc.otPay) + '\n' +
+          'Đã ứng trước: -' + formatCurrency(calc.advanceAmt) + '\n' +
+          'THỰC LĨNH: ' + formatCurrency(calc.netPay);
+
+        content.innerHTML =
+          '<div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">' +
+            '<p class="font-bold text-slate-800 text-sm">' + emp.name + ' (' + mTitle + ')</p>' +
+            '<p class="text-slate-500">Vị trí: ' + emp.dept + ' • Mức lương: ' + formatCurrency(emp.dailyRate) + '/giờ</p>' +
+          '</div>' +
+          '<div class="space-y-2 pt-2">' +
+            '<div class="flex justify-between"><span>Tổng số ca & giờ đã chấm:</span><span class="font-semibold">' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + ' tiếng)</span></div>' +
+            '<div class="flex justify-between"><span>Thành tiền lương ca:</span><span class="font-semibold">' + formatCurrency(calc.baseSalary) + '</span></div>' +
+            '<div class="flex justify-between"><span>Phụ cấp & Giờ làm thêm:</span><span class="font-semibold text-emerald-600">+' + formatCurrency(emp.allowance + calc.otPay) + '</span></div>' +
+            '<div class="flex justify-between"><span>Đã ứng trước:</span><span class="font-semibold text-rose-600">-' + formatCurrency(calc.advanceAmt) + '</span></div>' +
+            '<div class="flex justify-between pt-2 border-t border-slate-200 text-sm font-extrabold text-slate-900"><span>Thực nhận:</span><span class="text-emerald-700">' + formatCurrency(calc.netPay) + '</span></div>' +
+          '</div>';
+
         const modal = document.getElementById('modalPayslip');
         modal.classList.remove('hidden');
         modal.classList.add('flex');
       }
 
       function downloadCsv(filename, rows) {
-        const csvContent = '\uFEFF' + rows.map(function (r) { return r.map(function (cell) { return '"' + String(cell ?? '').replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+        const csvContent = '\uFEFF' + rows.map(function (r) {
+          return r.map(function (cell) {
+            return '"' + String(cell ?? '').replace(/"/g, '""') + '"';
+          }).join(',');
+        }).join('\n');
+
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = url; link.download = filename;
-        document.body.appendChild(link); link.click();
-        document.body.removeChild(link); URL.revokeObjectURL(url);
-        showToast('Đã tải xuống CSV');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showToast('Đã tải xuống ' + filename);
       }
 
       function changeMonthByOffset(offset) {
         const parts = (state.activeMonth || '2026-10').split('-').map(Number);
-        let y = parts[0] || 2026, m = (parts[1] || 10) + offset;
+        let y = parts[0] || 2026;
+        let m = (parts[1] || 10) + offset;
         if (m < 1) { m = 12; y -= 1; }
         if (m > 12) { m = 1; y += 1; }
         state.activeMonth = y + '-' + String(m).padStart(2, '0');
-        saveState(); renderAll();
+        saveState();
+        renderAll();
+        showToast('Đang xem bảng công ' + formatMonthTitle(state.activeMonth) + ' (Dữ liệu các tháng trước đã được lưu giữ)');
       }
 
       function archiveCurrentMonthSnapshot() {
         if (state.employees.length === 0) {
-          showToast('Chưa có sinh viên để lưu!', true);
+          showToast('Chưa có sinh viên nào để lưu bảng công tháng!', true);
           return;
         }
-        let totalShifts = 0, totalHours = 0, totalPay = 0;
-        state.employees.forEach(function (emp) {
-          const calc = computeEmployeePayroll(emp, state.activeMonth);
-          totalShifts += Number(emp.baseDays || 0);
-          totalHours += Number(emp.totalWorkHours || 0);
-          totalPay += Number(calc.netPay || 0);
-        });
-        const now = new Date();
-        const savedAt = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ' ' + String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0');
-        if (!state.savedMonths) state.savedMonths = [];
-        state.savedMonths = state.savedMonths.filter(function (item) { return item.monthKey !== state.activeMonth; });
-        state.savedMonths.unshift({ id: 'ARC' + Date.now(), monthKey: state.activeMonth, monthTitle: formatMonthTitle(state.activeMonth), studentCount: state.employees.length, totalShifts: totalShifts, totalHours: totalHours, totalPay: totalPay, savedAt: savedAt });
-        saveState(); renderSavedMonthsArchive();
-        showToast('Đã lưu bảng công ' + formatMonthTitle(state.activeMonth));
-      }
+        let totalShifts = 0;
+        let totalHours = 0;
+        let totalPay = 0;
 
-      function renderRoleModeUI() {
-        const isMgr = (state.role !== 'employee');
-        const btnEmp = document.getElementById('btnRoleEmployee');
-        const btnMgr = document.getElementById('btnRoleManager');
-        const badge = document.getElementById('roleBadge');
-        const mgrPanel = document.getElementById('managerControlPanel');
-        if (btnEmp && btnMgr) {
-          if (isMgr) {
-            btnMgr.className = 'px-2.5 py-1 rounded-lg font-extrabold bg-white text-blue-800 shadow-xs transition flex items-center gap-1';
-            btnEmp.className = 'px-2.5 py-1 rounded-lg font-semibold text-blue-200 hover:text-white transition flex items-center gap-1';
-          } else {
-            btnEmp.className = 'px-2.5 py-1 rounded-lg font-extrabold bg-white text-blue-800 shadow-xs transition flex items-center gap-1';
-            btnMgr.className = 'px-2.5 py-1 rounded-lg font-semibold text-blue-200 hover:text-white transition flex items-center gap-1';
-          }
-        }
-        if (badge) badge.textContent = isMgr ? 'Quản lý Ca' : 'Cá nhân SV';
-        if (mgrPanel) {
-          if (isMgr) mgrPanel.classList.remove('hidden');
-          else mgrPanel.classList.add('hidden');
-        }
-        let totalShifts = 0, totalHours = 0, totalPay = 0;
         state.employees.forEach(function (emp) {
           const calc = computeEmployeePayroll(emp, state.activeMonth);
           totalShifts += Number(emp.baseDays || 0);
           totalHours += Number(emp.totalWorkHours || 0);
           totalPay += Number(calc.netPay || 0);
         });
-        const pendingLeaves = (state.leaves || []).filter(function (l) { return l.status === 'Chờ duyệt'; }).length;
-        if (document.getElementById('mgrKpiStaffCount')) document.getElementById('mgrKpiStaffCount').textContent = state.employees.length + ' sinh viên';
-        if (document.getElementById('mgrKpiTotalShifts')) document.getElementById('mgrKpiTotalShifts').textContent = totalShifts + ' ca (' + totalHours + 'h)';
-        if (document.getElementById('mgrKpiTotalPayroll')) document.getElementById('mgrKpiTotalPayroll').textContent = formatCurrency(totalPay);
-        if (document.getElementById('mgrKpiPendingLeaves')) document.getElementById('mgrKpiPendingLeaves').textContent = pendingLeaves + ' đơn';
-        if (document.getElementById('badgeLeaveCount')) document.getElementById('badgeLeaveCount').textContent = pendingLeaves;
+
+        const now = new Date();
+        const savedAt = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0') + ' ' +
+                        String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0');
+
+        if (!state.savedMonths) state.savedMonths = [];
+        // Replace existing archive for same monthKey or unshift new
+        state.savedMonths = state.savedMonths.filter(function (item) { return item.monthKey !== state.activeMonth; });
+        state.savedMonths.unshift({
+          id: 'ARC' + Date.now(),
+          monthKey: state.activeMonth,
+          monthTitle: formatMonthTitle(state.activeMonth),
+          studentCount: state.employees.length,
+          totalShifts: totalShifts,
+          totalHours: totalHours,
+          totalPay: totalPay,
+          savedAt: savedAt
+        });
+
+        saveState();
+        renderSavedMonthsArchive();
+        showToast('Đã lưu chốt bảng chấm công ' + formatMonthTitle(state.activeMonth) + '!');
       }
 
       function renderAll() {
-        renderRoleModeUI();
         renderEmployeeSelectors();
         renderCheckinTab();
         renderEmployeesTab();
         renderTimesheetTab();
-        if (state.activeTab === 'payroll') renderPayrollTab();
+        if (state.activeTab === 'payroll') {
+          renderPayrollTab();
+        }
       }
 
       function openAddStudentModal() {
@@ -1680,91 +2071,100 @@
         document.getElementById('empRoleInput').value = 'Ca sáng ' + (state.defaultShiftHours || 4) + ' tiếng';
         document.getElementById('empPhoneInput').value = '';
         document.getElementById('empRateInput').value = Number(document.getElementById('quickShiftRateInput').value || 0);
+        document.getElementById('empBaseDaysInput').value = 0;
+        document.getElementById('empAllowanceInput').value = 0;
         modalEmp.classList.remove('hidden');
         modalEmp.classList.add('flex');
       }
 
       function initEvents() {
-        document.getElementById('btnRoleEmployee').addEventListener('click', function () { state.role = 'employee'; saveState(); renderRoleModeUI(); showToast('Chế độ Cá nhân'); });
-        document.getElementById('btnRoleManager').addEventListener('click', function () { state.role = 'manager'; saveState(); renderRoleModeUI(); showToast('Chế độ Quản lý'); });
+        document.getElementById('btnRoleEmployee').addEventListener('click', function () {
+          state.role = 'employee';
+          saveState();
+          showToast('Chế độ cá nhân sinh viên');
+        });
 
-        let logoTapCount = 0, logoTapTimer = null;
-        const logoTrigger = document.getElementById('appLogoSecretTrigger');
-        if (logoTrigger) {
-          logoTrigger.addEventListener('click', function () {
-            logoTapCount += 1;
-            clearTimeout(logoTapTimer);
-            if (logoTapCount >= 5) { logoTapCount = 0; document.getElementById('btnOpenAdMonetize').click(); }
-            else { logoTapTimer = setTimeout(function () { logoTapCount = 0; }, 1500); }
-          });
-        }
-
-        if (document.getElementById('btnMgrGoEmployees')) document.getElementById('btnMgrGoEmployees').addEventListener('click', function () { switchMainTab('employees'); });
-        if (document.getElementById('btnMgrAddEmp')) document.getElementById('btnMgrAddEmp').addEventListener('click', openAddStudentModal);
-        if (document.getElementById('btnMgrApproveLeave')) document.getElementById('btnMgrApproveLeave').addEventListener('click', function () { switchMainTab('timesheet'); document.getElementById('btnSubTabLeaves').click(); });
-        if (document.getElementById('btnMgrExportPayroll')) document.getElementById('btnMgrExportPayroll').addEventListener('click', function () { document.getElementById('btnExportPayrollCsv').click(); });
-        if (document.getElementById('btnMgrBatchPunch')) {
-          document.getElementById('btnMgrBatchPunch').addEventListener('click', function () {
-            if (state.employees.length === 0) { openAddStudentModal(); showToast('Thêm sinh viên trước!', true); return; }
-            const todayNum = getRealTodayParts().day;
-            const hrs = Number(state.defaultShiftHours || 4);
-            state.employees.forEach(function (emp) {
-              const cal = getEmpCalendarForMonth(emp, state.activeMonth);
-              cal[todayNum] = { status: 'full', shiftName: 'Ca Sáng', shiftHours: hrs, calcType: 'per_hour', shiftRate: clampShiftRate(emp.dailyRate), ot: 0, advance: 0, allowance: 0, note: 'Batch' };
-              syncEmployeeStatsFromCalendar(emp, state.activeMonth);
-            });
-            saveState(); renderAll();
-            showToast('Đã chấm công hàng loạt!');
-            showInterstitialAd();
-          });
-        }
-
-        if (document.getElementById('btnExtManualLog')) document.getElementById('btnExtManualLog').addEventListener('click', function () { document.getElementById('btnOpenManualLog').click(); });
-        if (document.getElementById('btnExtOvertime')) document.getElementById('btnExtOvertime').addEventListener('click', function () { document.getElementById('btnQuickLeave').click(); });
-        if (document.getElementById('btnExtShiftTasks')) document.getElementById('btnExtShiftTasks').addEventListener('click', function () { switchMainTab('timesheet'); document.getElementById('btnSubTabTasks').click(); });
-        if (document.getElementById('btnExtPayrollView')) document.getElementById('btnExtPayrollView').addEventListener('click', function () { switchMainTab('payroll'); });
-
-        const adThumbsEl = document.getElementById('adProductThumbs');
-        if (adThumbsEl) {
-          adThumbsEl.addEventListener('click', function (e) {
-            const btn = e.target.closest('button[data-ad-thumb]');
-            if (!btn) return;
-            renderAdCardByIndex(Number(btn.getAttribute('data-ad-thumb') || 0));
-          });
-        }
+        document.getElementById('btnRoleManager').addEventListener('click', function () {
+          state.role = 'manager';
+          saveState();
+          showToast('Chế độ quản lý ca');
+        });
 
         document.getElementById('btnResetDemo').addEventListener('click', function () {
           state = JSON.parse(JSON.stringify(defaultState));
-          saveState(); renderAll(); showToast('Đã xóa dữ liệu!');
+          saveState();
+          renderAll();
+          showToast('Đã xóa sạch toàn bộ dữ liệu!');
         });
 
-        document.getElementById('btnPrevMonth').addEventListener('click', function () { changeMonthByOffset(-1); });
-        document.getElementById('btnNextMonth').addEventListener('click', function () { changeMonthByOffset(1); });
+        // Month Navigation & Archive
+        document.getElementById('btnPrevMonth').addEventListener('click', function () {
+          changeMonthByOffset(-1);
+        });
+        document.getElementById('btnNextMonth').addEventListener('click', function () {
+          changeMonthByOffset(1);
+        });
         document.getElementById('inputActiveMonth').addEventListener('change', function (e) {
-          if (e.target.value) { state.activeMonth = e.target.value; saveState(); renderAll(); }
+          if (e.target.value) {
+            state.activeMonth = e.target.value;
+            saveState();
+            renderAll();
+            showToast('Đã chuyển sang ' + formatMonthTitle(state.activeMonth));
+          }
         });
         document.getElementById('btnArchiveCurrentMonth').addEventListener('click', archiveCurrentMonthSnapshot);
+
         document.getElementById('savedMonthsList').addEventListener('click', function (e) {
           const openBtn = e.target.closest('button[data-archive-open]');
-          if (openBtn) { state.activeMonth = openBtn.getAttribute('data-archive-open'); saveState(); renderAll(); return; }
-          const delBtn = e.target.closest('button[data-archive-delete]');
-          if (delBtn) { state.savedMonths = (state.savedMonths || []).filter(function (a) { return a.id !== delBtn.getAttribute('data-archive-delete'); }); saveState(); renderSavedMonthsArchive(); }
-        });
-
-        document.getElementById('selectDefaultShiftHours').addEventListener('change', function (e) { state.defaultShiftHours = Number(e.target.value || 4); saveState(); });
-        document.getElementById('btnSaveQuickRate').addEventListener('click', function () {
-          const rate = clampShiftRate(document.getElementById('quickShiftRateInput').value || 0);
-          const activeEmp = getEmployeeById(state.activeEmployeeId);
-          if (activeEmp) {
-            activeEmp.dailyRate = rate;
-            const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
-            Object.keys(cal).forEach(function (d) { cal[d].shiftRate = rate; });
-            syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
-            saveState(); renderAll();
+          if (openBtn) {
+            state.activeMonth = openBtn.getAttribute('data-archive-open');
+            saveState();
+            renderAll();
+            showToast('Đã mở lại bảng công ' + formatMonthTitle(state.activeMonth));
+            return;
           }
-          showToast('Đã áp dụng mức lương mới');
+          const delBtn = e.target.closest('button[data-archive-delete]');
+          if (delBtn) {
+            const id = delBtn.getAttribute('data-archive-delete');
+            state.savedMonths = (state.savedMonths || []).filter(function (a) { return a.id !== id; });
+            saveState();
+            renderSavedMonthsArchive();
+            showToast('Đã xóa bản lưu tháng');
+          }
         });
 
+        // Default Shift Hours Selector (4h / 8h...)
+        document.getElementById('selectDefaultShiftHours').addEventListener('change', function (e) {
+          state.defaultShiftHours = Number(e.target.value || 4);
+          saveState();
+          showToast('Đã đặt mặc định ' + state.defaultShiftHours + ' tiếng/ca');
+        });
+
+        // Quick Shift Rate (0 - 100.000đ)
+        document.getElementById('btnSaveQuickRate').addEventListener('click', function () {
+          const rawVal = Number(document.getElementById('quickShiftRateInput').value || 0);
+          if (rawVal < 0 || rawVal > 100000) {
+            showToast('Vui lòng nhập mức lương/giờ từ 0 đến 100.000 ₫!', true);
+            return;
+          }
+          const rate = clampShiftRate(rawVal);
+          const activeEmp = getEmployeeById(state.activeEmployeeId);
+          if (!activeEmp) {
+            showToast('Đã đặt mức lương ' + formatCurrency(rate) + '/giờ. Hãy bấm + Thêm SV để tạo sinh viên!');
+            return;
+          }
+          activeEmp.dailyRate = rate;
+          const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
+          Object.keys(cal).forEach(function (d) {
+            cal[d].shiftRate = rate;
+          });
+          syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
+          saveState();
+          renderAll();
+          showToast('Đã áp dụng mức lương ' + formatCurrency(rate) + '/giờ');
+        });
+
+        // Preset rate buttons
         document.querySelectorAll('button[data-rate-preset]').forEach(function (btn) {
           btn.addEventListener('click', function () {
             const val = clampShiftRate(btn.getAttribute('data-rate-preset'));
@@ -1773,52 +2173,91 @@
             if (activeEmp) {
               activeEmp.dailyRate = val;
               const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
-              Object.keys(cal).forEach(function (d) { cal[d].shiftRate = val; });
+              Object.keys(cal).forEach(function (d) {
+                cal[d].shiftRate = val;
+              });
               syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
-              saveState(); renderAll();
+              saveState();
+              renderAll();
             }
+            showToast('Đã chọn mức lương ' + formatCurrency(val) + '/giờ');
           });
         });
 
+        // Preset shift hour buttons inside Day Editor Modal (4 tiếng, 8 tiếng...)
         document.querySelectorAll('button[data-hour-preset]').forEach(function (btn) {
-          btn.addEventListener('click', function () { document.getElementById('dayEditorShiftHoursInput').value = Number(btn.getAttribute('data-hour-preset') || 4); });
+          btn.addEventListener('click', function () {
+            const hrs = Number(btn.getAttribute('data-hour-preset') || 4);
+            document.getElementById('dayEditorShiftHoursInput').value = hrs;
+          });
         });
 
         document.getElementById('btnQuickAddStudent').addEventListener('click', openAddStudentModal);
         document.getElementById('btnBannerAddStudent').addEventListener('click', openAddStudentModal);
 
+        // Calendar cell click
         document.getElementById('atworkCalendarGrid').addEventListener('click', function (e) {
           const cell = e.target.closest('button[data-cal-day]');
-          if (cell) openDayEditorModal(Number(cell.getAttribute('data-cal-day')));
+          if (!cell) return;
+          const dayNum = Number(cell.getAttribute('data-cal-day'));
+          openDayEditorModal(dayNum);
         });
 
+        // Day Editor Modal
         const modalDay = document.getElementById('modalDayEditor');
-        document.getElementById('btnCloseDayEditor').addEventListener('click', function () { modalDay.classList.add('hidden'); modalDay.classList.remove('flex'); });
-        document.getElementById('btnCancelDayEditor').addEventListener('click', function () { modalDay.classList.add('hidden'); modalDay.classList.remove('flex'); });
+        function closeDayModal() {
+          modalDay.classList.add('hidden');
+          modalDay.classList.remove('flex');
+        }
+        document.getElementById('btnCloseDayEditor').addEventListener('click', closeDayModal);
+        document.getElementById('btnCancelDayEditor').addEventListener('click', closeDayModal);
 
         document.getElementById('formDayEditor').addEventListener('submit', function (e) {
           e.preventDefault();
           const dayNum = Number(document.getElementById('dayEditorDayNum').value || 22);
-          const status = document.querySelector('input[name="dayStatusRadio"]:checked').value;
-          const shiftName = document.getElementById('dayEditorShiftNameSelect').value;
+          const selectedRadio = document.querySelector('input[name="dayStatusRadio"]:checked');
+          const status = selectedRadio ? selectedRadio.value : 'full';
+          const shiftName = document.getElementById('dayEditorShiftNameSelect').value || 'Ca Sáng';
           const shiftHours = Number(document.getElementById('dayEditorShiftHoursInput').value || 4);
-          const shiftRate = clampShiftRate(document.getElementById('dayEditorShiftRateInput').value || 0);
-          const allowance = Number(document.getElementById('dayEditorAllowanceInput').value || 0);
+          const calcType = document.getElementById('dayEditorCalcType').value || 'per_hour';
+          const rawShiftRate = Number(document.getElementById('dayEditorShiftRateInput').value || 0);
+
+          if (rawShiftRate < 0 || rawShiftRate > 100000) {
+            showToast('Mức lương/giờ chỉ từ 0 đến 100.000 ₫!', true);
+            return;
+          }
+
+          const shiftRate = clampShiftRate(rawShiftRate);
+          const ot = Number(document.getElementById('dayEditorOtInput').value || 0);
           const advance = Number(document.getElementById('dayEditorAdvanceInput').value || 0);
+          const allowance = Number(document.getElementById('dayEditorAllowanceInput').value || 0);
+          const note = document.getElementById('dayEditorNoteInput').value.trim();
 
           const activeEmp = getEmployeeById(state.activeEmployeeId);
           if (activeEmp) {
             const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
             if (status === 'off' && advance === 0 && allowance === 0) {
-              cal[dayNum] = { status: 'off', shiftName: shiftName, shiftHours: 0, shiftRate: shiftRate, ot: 0, advance: 0, allowance: 0 };
+              cal[dayNum] = { status: 'off', shiftName: shiftName, shiftHours: 0, calcType: calcType, shiftRate: shiftRate, ot: 0, advance: 0, allowance: 0, note: note };
             } else {
               activeEmp.dailyRate = shiftRate;
-              cal[dayNum] = { status: status, shiftName: shiftName, shiftHours: shiftHours, shiftRate: shiftRate, ot: 0, advance: advance, allowance: allowance };
+              cal[dayNum] = {
+                status: status,
+                shiftName: shiftName,
+                shiftHours: shiftHours,
+                calcType: calcType,
+                shiftRate: shiftRate,
+                ot: ot,
+                advance: advance,
+                allowance: allowance,
+                note: note
+              };
             }
             syncEmployeeStatsFromCalendar(activeEmp, state.activeMonth);
-            saveState(); renderAll();
+            saveState();
+            renderAll();
+            showToast('Đã lưu ' + shiftName + ' (' + shiftHours + ' tiếng) ngày ' + dayNum + '!');
           }
-          modalDay.classList.add('hidden'); modalDay.classList.remove('flex');
+          closeDayModal();
           showInterstitialAd();
         });
 
@@ -1826,61 +2265,158 @@
         document.getElementById('btnCloseAdBottom').addEventListener('click', closeInterstitialAd);
         document.getElementById('btnClickAdCta').addEventListener('click', function () {
           const cfg = ensureAdConfig();
-          const url = document.getElementById('btnClickAdCta').getAttribute('data-target-url') || 'https://s.shopee.vn/30p1AjWxaH';
+          cfg.clicks = Number(cfg.clicks || 0) + 1;
+          saveState();
+          const url = document.getElementById('btnClickAdCta').getAttribute('data-target-url') || 'https://affiliate.shopee.vn/';
           window.open(url, '_blank', 'noopener,noreferrer');
           closeInterstitialAd();
+          showToast('Đã mở trang quảng cáo đối tác & ghi nhận +1 lượt click kiếm tiền!');
         });
 
+        // Ad Monetization Settings Modal
         const modalAdMonetize = document.getElementById('modalAdMonetize');
-        document.getElementById('btnOpenAdMonetize').addEventListener('click', function () {
+        function openAdMonetizeModal() {
           closeInterstitialAd();
-          document.getElementById('inputAffiliateUrl').value = ensureAdConfig().affiliateUrl || '';
-          modalAdMonetize.classList.remove('hidden'); modalAdMonetize.classList.add('flex');
-        });
-        document.getElementById('btnCloseAdMonetize').addEventListener('click', function () { modalAdMonetize.classList.add('hidden'); modalAdMonetize.classList.remove('flex'); });
-        document.getElementById('btnCancelAdMonetize').addEventListener('click', function () { modalAdMonetize.classList.add('hidden'); modalAdMonetize.classList.remove('flex'); });
+          const cfg = ensureAdConfig();
+          document.getElementById('inputAdsensePubId').value = cfg.adsensePubId || '';
+          document.getElementById('inputAdsenseSlotId').value = cfg.adsenseSlotId || '';
+          document.getElementById('inputAffiliateUrl').value = cfg.affiliateUrl || 'https://affiliate.shopee.vn/';
+          document.getElementById('inputAffiliateSponsor').value = cfg.affiliateSponsor || '';
+          document.getElementById('inputAffiliateTitle').value = cfg.affiliateTitle || '';
+          document.getElementById('statAdImpressions').textContent = cfg.impressions || 0;
+          document.getElementById('statAdClicks').textContent = cfg.clicks || 0;
+          document.getElementById('statAdModeBadge').textContent =
+            (cfg.adsensePubId && cfg.adsensePubId.startsWith('ca-pub-')) ? 'AdSense + Affiliate' : 'Affiliate Direct';
+          modalAdMonetize.classList.remove('hidden');
+          modalAdMonetize.classList.add('flex');
+        }
+        function closeAdMonetizeModal() {
+          modalAdMonetize.classList.add('hidden');
+          modalAdMonetize.classList.remove('flex');
+        }
+        document.getElementById('btnOpenAdMonetize').addEventListener('click', openAdMonetizeModal);
+        document.getElementById('btnConfigAdFromModal').addEventListener('click', openAdMonetizeModal);
+        document.getElementById('btnCloseAdMonetize').addEventListener('click', closeAdMonetizeModal);
+        document.getElementById('btnCancelAdMonetize').addEventListener('click', closeAdMonetizeModal);
+
         document.getElementById('formAdMonetize').addEventListener('submit', function (e) {
           e.preventDefault();
-          ensureAdConfig().affiliateUrl = document.getElementById('inputAffiliateUrl').value.trim();
-          saveState(); modalAdMonetize.classList.add('hidden'); modalAdMonetize.classList.remove('flex');
-          showToast('Đã lưu cấu hình link Affiliate!');
+          const cfg = ensureAdConfig();
+          cfg.adsensePubId = document.getElementById('inputAdsensePubId').value.trim();
+          cfg.adsenseSlotId = document.getElementById('inputAdsenseSlotId').value.trim();
+          cfg.affiliateUrl = document.getElementById('inputAffiliateUrl').value.trim() || 'https://affiliate.shopee.vn/';
+          cfg.affiliateSponsor = document.getElementById('inputAffiliateSponsor').value.trim();
+          cfg.affiliateTitle = document.getElementById('inputAffiliateTitle').value.trim();
+          saveState();
+          closeAdMonetizeModal();
+          showToast('Đã lưu cấu hình kiếm tiền quảng cáo thật!');
         });
 
-        document.getElementById('btnGridDayPunch').addEventListener('click', function () { openDayEditorModal(getRealTodayParts().day); });
-        document.getElementById('btnGridAdvance').addEventListener('click', function () { openDayEditorModal(getRealTodayParts().day); });
-        document.getElementById('btnGridAllowance').addEventListener('click', function () { openDayEditorModal(getRealTodayParts().day); });
-        document.getElementById('btnViewCurrentPayslip').addEventListener('click', function () { openPayslipModal(state.activeEmployeeId); });
+        // Action Grid Buttons (Open on today's real date)
+        document.getElementById('btnGridDayPunch').addEventListener('click', function () {
+          openDayEditorModal(getRealTodayParts().day);
+        });
+        document.getElementById('btnGridAdvance').addEventListener('click', function () {
+          openDayEditorModal(getRealTodayParts().day);
+          document.getElementById('dayEditorAdvanceInput').focus();
+        });
+        document.getElementById('btnGridAllowance').addEventListener('click', function () {
+          openDayEditorModal(getRealTodayParts().day);
+          document.getElementById('dayEditorAllowanceInput').focus();
+        });
+        document.getElementById('btnViewCurrentPayslip').addEventListener('click', function () {
+          openPayslipModal(state.activeEmployeeId);
+        });
 
+        // Bottom Nav
         document.getElementById('navBtnCheckin').addEventListener('click', function () { switchMainTab('checkin'); });
         document.getElementById('navBtnEmployees').addEventListener('click', function () { switchMainTab('employees'); });
         document.getElementById('navBtnTimesheet').addEventListener('click', function () { switchMainTab('timesheet'); });
         document.getElementById('navBtnPayroll').addEventListener('click', function () { switchMainTab('payroll'); });
 
-        document.getElementById('selectActiveEmployee').addEventListener('change', function (e) { state.activeEmployeeId = e.target.value; saveState(); renderCheckinTab(); });
-        document.getElementById('selectShift').addEventListener('change', function (e) { state.selectedShift = e.target.value; saveState(); });
+        document.getElementById('selectActiveEmployee').addEventListener('change', function (e) {
+          state.activeEmployeeId = e.target.value;
+          saveState();
+          renderCheckinTab();
+        });
+
+        document.getElementById('selectShift').addEventListener('change', function (e) {
+          state.selectedShift = e.target.value;
+          saveState();
+        });
+
         document.getElementById('btnMainPunch').addEventListener('click', handlePunchAction);
 
+        // Leave Modal
         const modalLeave = document.getElementById('modalLeave');
-        document.getElementById('btnQuickLeave').addEventListener('click', function () {
-          if (state.employees.length === 0) { openAddStudentModal(); return; }
+        function openLeaveModalWithType(typeStr) {
+          if (state.employees.length === 0) {
+            openAddStudentModal();
+            showToast('Hãy thêm sinh viên trước!', true);
+            return;
+          }
           document.getElementById('leaveEmpSelect').value = state.activeEmployeeId;
-          modalLeave.classList.remove('hidden'); modalLeave.classList.add('flex');
+          document.getElementById('leaveTypeSelect').value = typeStr;
+          modalLeave.classList.remove('hidden');
+          modalLeave.classList.add('flex');
+        }
+        document.getElementById('btnQuickLeave').addEventListener('click', function () {
+          openLeaveModalWithType('Xin nghỉ ca (Bận lịch học/thi)');
         });
-        document.getElementById('btnCloseLeaveModal').addEventListener('click', function () { modalLeave.classList.add('hidden'); modalLeave.classList.remove('flex'); });
-        document.getElementById('btnCancelLeaveModal').addEventListener('click', function () { modalLeave.classList.add('hidden'); modalLeave.classList.remove('flex'); });
-        document.getElementById('formLeave').addEventListener('submit', function (e) {
-          e.preventDefault();
-          state.leaves.unshift({ id: 'REQ' + Date.now(), empId: document.getElementById('leaveEmpSelect').value, type: document.getElementById('leaveTypeSelect').value, date: document.getElementById('leaveDateInput').value, reason: document.getElementById('leaveReasonInput').value.trim(), status: 'Chờ duyệt' });
-          saveState(); modalLeave.classList.add('hidden'); modalLeave.classList.remove('flex'); renderAll(); showToast('Đã gửi đơn!');
+        document.getElementById('btnQuickOvertime').addEventListener('click', function () {
+          openLeaveModalWithType('Đăng ký Tăng ca (OT)');
+        });
+        document.getElementById('btnNewLeaveRequest').addEventListener('click', function () {
+          openLeaveModalWithType('Xin nghỉ ca (Bận lịch học/thi)');
+        });
+        document.getElementById('btnCloseLeaveModal').addEventListener('click', function () {
+          modalLeave.classList.add('hidden');
+          modalLeave.classList.remove('flex');
+        });
+        document.getElementById('btnCancelLeaveModal').addEventListener('click', function () {
+          modalLeave.classList.add('hidden');
+          modalLeave.classList.remove('flex');
         });
 
+        document.getElementById('formLeave').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const empId = document.getElementById('leaveEmpSelect').value;
+          const type = document.getElementById('leaveTypeSelect').value;
+          const date = document.getElementById('leaveDateInput').value;
+          const otHours = Number(document.getElementById('leaveOtHoursInput').value || 0);
+          const reason = document.getElementById('leaveReasonInput').value.trim();
+
+          state.leaves.unshift({
+            id: 'REQ' + Date.now(),
+            empId: empId,
+            type: type,
+            date: date,
+            otHours: otHours,
+            reason: reason,
+            status: 'Chờ duyệt'
+          });
+          saveState();
+          document.getElementById('leaveReasonInput').value = '';
+          modalLeave.classList.add('hidden');
+          modalLeave.classList.remove('flex');
+          renderAll();
+          showToast('Đã lưu đơn báo nghỉ/đổi ca!');
+        });
+
+        // Employee search & filter
         document.getElementById('inputSearchEmployee').addEventListener('input', renderEmployeesTab);
         document.getElementById('selectFilterDept').addEventListener('change', renderEmployeesTab);
 
+        // Add / Edit Employee Modal
         const modalEmp = document.getElementById('modalEmployee');
         document.getElementById('btnOpenAddEmployee').addEventListener('click', openAddStudentModal);
-        document.getElementById('btnCloseEmployeeModal').addEventListener('click', function () { modalEmp.classList.add('hidden'); modalEmp.classList.remove('flex'); });
-        document.getElementById('btnCancelEmployeeModal').addEventListener('click', function () { modalEmp.classList.add('hidden'); modalEmp.classList.remove('flex'); });
+
+        function closeEmpModal() {
+          modalEmp.classList.add('hidden');
+          modalEmp.classList.remove('flex');
+        }
+        document.getElementById('btnCloseEmployeeModal').addEventListener('click', closeEmpModal);
+        document.getElementById('btnCancelEmployeeModal').addEventListener('click', closeEmpModal);
 
         document.getElementById('formEmployee').addEventListener('submit', function (e) {
           e.preventDefault();
@@ -1889,17 +2425,52 @@
           const dept = document.getElementById('empDeptInput').value;
           const role = document.getElementById('empRoleInput').value.trim() || 'Ca 4 tiếng';
           const phone = document.getElementById('empPhoneInput').value.trim();
-          const dailyRate = clampShiftRate(document.getElementById('empRateInput').value || 0);
+          const rawRate = Number(document.getElementById('empRateInput').value || 0);
+
+          if (rawRate < 0 || rawRate > 100000) {
+            showToast('Mức lương/giờ phải từ 0 đến 100.000 ₫!', true);
+            return;
+          }
+
+          const dailyRate = clampShiftRate(rawRate);
+          const baseDays = Number(document.getElementById('empBaseDaysInput').value || 0);
+          const allowance = Number(document.getElementById('empAllowanceInput').value || 0);
 
           if (editId) {
             const target = getEmployeeById(editId);
-            if (target) { target.name = name; target.dept = dept; target.role = role; target.phone = phone; target.dailyRate = dailyRate; }
+            if (target) {
+              target.name = name;
+              target.dept = dept;
+              target.role = role;
+              target.phone = phone;
+              target.dailyRate = dailyRate;
+              target.baseDays = baseDays;
+              target.allowance = allowance;
+              showToast('Đã cập nhật: ' + name);
+            }
           } else {
             const newId = 'SV' + Date.now();
-            state.employees.push({ id: newId, name: name, dept: dept, role: role, phone: phone, dailyRate: dailyRate, baseDays: 0, totalWorkHours: 0, otHours: 0, allowance: 0, advance: 0, monthlyData: {} });
+            state.employees.push({
+              id: newId,
+              name: name,
+              dept: dept,
+              role: role,
+              phone: phone,
+              dailyRate: dailyRate,
+              baseDays: baseDays,
+              totalWorkHours: 0,
+              otHours: 0,
+              lateCount: 0,
+              allowance: allowance,
+              advance: 0,
+              monthlyData: {}
+            });
             state.activeEmployeeId = newId;
+            showToast('Đã thêm sinh viên: ' + name);
           }
-          saveState(); modalEmp.classList.add('hidden'); modalEmp.classList.remove('flex'); renderAll(); showToast('Đã lưu nhân sự!');
+          saveState();
+          closeEmpModal();
+          renderAll();
         });
 
         document.getElementById('employeeGrid').addEventListener('click', function (e) {
@@ -1910,113 +2481,257 @@
           const emp = getEmployeeById(id);
           if (!emp) return;
 
-          if (action === 'quick-punch-emp') {
-            const todayNum = getRealTodayParts().day;
-            const hrs = Number(state.defaultShiftHours || 4);
-            const cal = getEmpCalendarForMonth(emp, state.activeMonth);
-            cal[todayNum] = { status: 'full', shiftName: 'Ca Sáng', shiftHours: hrs, calcType: 'per_hour', shiftRate: clampShiftRate(emp.dailyRate), ot: 0, advance: 0, allowance: 0 };
-            syncEmployeeStatsFromCalendar(emp, state.activeMonth);
+          if (action === 'switch-checkin') {
             state.activeEmployeeId = emp.id;
-            saveState(); renderAll();
-            showToast('Đã chấm công hôm nay cho ' + emp.name);
-            showInterstitialAd();
-          } else if (action === 'view-payslip-emp') {
-            openPayslipModal(emp.id);
-          } else if (action === 'switch-checkin') {
-            state.activeEmployeeId = emp.id; switchMainTab('checkin');
+            switchMainTab('checkin');
+            showToast('Đang chấm công cho ' + emp.name);
           } else if (action === 'edit-emp') {
-            document.getElementById('modalEmployeeTitle').textContent = 'Sửa sinh viên';
+            document.getElementById('modalEmployeeTitle').textContent = 'Sửa thông tin sinh viên';
             document.getElementById('empEditId').value = emp.id;
             document.getElementById('empNameInput').value = emp.name;
             document.getElementById('empDeptInput').value = emp.dept;
             document.getElementById('empRoleInput').value = emp.role;
             document.getElementById('empPhoneInput').value = emp.phone;
             document.getElementById('empRateInput').value = clampShiftRate(emp.dailyRate);
-            modalEmp.classList.remove('hidden'); modalEmp.classList.add('flex');
+            document.getElementById('empBaseDaysInput').value = emp.baseDays;
+            document.getElementById('empAllowanceInput').value = emp.allowance;
+            modalEmp.classList.remove('hidden');
+            modalEmp.classList.add('flex');
           } else if (action === 'delete-emp') {
             state.employees = state.employees.filter(function (item) { return item.id !== id; });
             state.activeEmployeeId = state.employees.length > 0 ? state.employees[0].id : '';
-            saveState(); renderAll();
+            saveState();
+            renderAll();
+            showToast('Đã xóa ' + emp.name);
           }
         });
 
-        const subLogs = document.getElementById('subViewLogs'), subLeaves = document.getElementById('subViewLeaves'), subTasks = document.getElementById('subViewTasks');
-        document.getElementById('btnSubTabLogs').addEventListener('click', function () { subLogs.classList.remove('hidden'); subLeaves.classList.add('hidden'); subTasks.classList.add('hidden'); });
-        document.getElementById('btnSubTabLeaves').addEventListener('click', function () { subLeaves.classList.remove('hidden'); subLogs.classList.add('hidden'); subTasks.classList.add('hidden'); });
-        document.getElementById('btnSubTabTasks').addEventListener('click', function () { subTasks.classList.remove('hidden'); subLogs.classList.add('hidden'); subLeaves.classList.add('hidden'); });
+        // Timesheet Sub-tabs
+        const subLogs = document.getElementById('subViewLogs');
+        const subLeaves = document.getElementById('subViewLeaves');
+        const subTasks = document.getElementById('subViewTasks');
+        const btnSubLogs = document.getElementById('btnSubTabLogs');
+        const btnSubLeaves = document.getElementById('btnSubTabLeaves');
+        const btnSubTasks = document.getElementById('btnSubTabTasks');
+
+        btnSubLogs.addEventListener('click', function () {
+          subLogs.classList.remove('hidden');
+          subLeaves.classList.add('hidden');
+          subTasks.classList.add('hidden');
+          btnSubLogs.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white transition';
+          btnSubLeaves.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1';
+          btnSubTasks.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+        });
+
+        btnSubLeaves.addEventListener('click', function () {
+          subLeaves.classList.remove('hidden');
+          subLogs.classList.add('hidden');
+          subTasks.classList.add('hidden');
+          btnSubLeaves.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white transition flex items-center gap-1';
+          btnSubLogs.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+          btnSubTasks.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+        });
+
+        btnSubTasks.addEventListener('click', function () {
+          subTasks.classList.remove('hidden');
+          subLogs.classList.add('hidden');
+          subLeaves.classList.add('hidden');
+          btnSubTasks.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 text-white transition';
+          btnSubLogs.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition';
+          btnSubLeaves.className = 'px-3 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition flex items-center gap-1';
+        });
 
         document.getElementById('btnAddShiftTask').addEventListener('click', function () {
           const input = document.getElementById('inputNewTaskTitle');
           const title = (input.value || '').trim();
           if (!title) return;
           if (!state.shiftTasks) state.shiftTasks = [];
-          state.shiftTasks.unshift({ id: 'TSK' + Date.now(), title: title, shift: state.selectedShift, done: false });
-          input.value = ''; saveState(); renderTimesheetTab();
+          state.shiftTasks.unshift({
+            id: 'TSK' + Date.now(),
+            title: title,
+            shift: state.selectedShift,
+            done: false
+          });
+          input.value = '';
+          saveState();
+          renderTimesheetTab();
+          showToast('Đã thêm ghi chú công việc!');
         });
 
         document.getElementById('shiftTasksList').addEventListener('change', function (e) {
           const cb = e.target.closest('input[data-task-id]');
           if (!cb) return;
-          const task = (state.shiftTasks || []).find(function (t) { return t.id === cb.getAttribute('data-task-id'); });
-          if (task) { task.done = cb.checked; saveState(); renderTimesheetTab(); }
+          const id = cb.getAttribute('data-task-id');
+          const task = (state.shiftTasks || []).find(function (t) { return t.id === id; });
+          if (task) {
+            task.done = cb.checked;
+            saveState();
+            renderTimesheetTab();
+          }
         });
 
+        document.getElementById('filterLogStatus').addEventListener('change', renderTimesheetTab);
+
+        // Manual Attendance Modal
         const modalManual = document.getElementById('modalManualLog');
-        document.getElementById('btnOpenManualLog').addEventListener('click', function () { if (state.employees.length === 0) { openAddStudentModal(); return; } modalManual.classList.remove('hidden'); modalManual.classList.add('flex'); });
-        document.getElementById('btnCloseManualLogModal').addEventListener('click', function () { modalManual.classList.add('hidden'); modalManual.classList.remove('flex'); });
-        document.getElementById('btnCancelManualLogModal').addEventListener('click', function () { modalManual.classList.add('hidden'); modalManual.classList.remove('flex'); });
+        document.getElementById('btnOpenManualLog').addEventListener('click', function () {
+          if (state.employees.length === 0) {
+            openAddStudentModal();
+            showToast('Hãy thêm sinh viên trước!', true);
+            return;
+          }
+          modalManual.classList.remove('hidden');
+          modalManual.classList.add('flex');
+        });
+        document.getElementById('btnCloseManualLogModal').addEventListener('click', function () {
+          modalManual.classList.add('hidden');
+          modalManual.classList.remove('flex');
+        });
+        document.getElementById('btnCancelManualLogModal').addEventListener('click', function () {
+          modalManual.classList.add('hidden');
+          modalManual.classList.remove('flex');
+        });
+
         document.getElementById('formManualLog').addEventListener('submit', function (e) {
           e.preventDefault();
-          state.logs.unshift({ id: 'LOG' + Date.now(), empId: document.getElementById('manualEmpSelect').value, date: document.getElementById('manualDateInput').value, inTime: document.getElementById('manualInInput').value, outTime: document.getElementById('manualOutInput').value, hours: calculateHoursBetween(document.getElementById('manualInInput').value, document.getElementById('manualOutInput').value), status: 'Đúng giờ' });
-          saveState(); modalManual.classList.add('hidden'); modalManual.classList.remove('flex'); renderAll(); showToast('Đã lưu chấm bù!');
+          const empId = document.getElementById('manualEmpSelect').value;
+          const date = document.getElementById('manualDateInput').value;
+          const inTime = document.getElementById('manualInInput').value;
+          const outTime = document.getElementById('manualOutInput').value;
+          const status = document.getElementById('manualStatusSelect').value;
+          const hours = calculateHoursBetween(inTime, outTime);
+
+          state.logs.unshift({
+            id: 'LOG' + Date.now(),
+            empId: empId,
+            date: date,
+            inTime: inTime,
+            outTime: outTime,
+            hours: hours,
+            status: status,
+            shift: 'Ca ' + hours + ' tiếng',
+            location: 'Chấm công bù'
+          });
+
+          saveState();
+          modalManual.classList.add('hidden');
+          modalManual.classList.remove('flex');
+          renderAll();
+          showToast('Đã lưu chấm công bù!');
         });
 
         document.getElementById('timesheetTableBody').addEventListener('click', function (e) {
           const btn = e.target.closest('button[data-action="delete-log"]');
-          if (btn) { state.logs = state.logs.filter(function (l) { return l.id !== btn.getAttribute('data-id'); }); saveState(); renderAll(); }
+          if (!btn) return;
+          const id = btn.getAttribute('data-id');
+          state.logs = state.logs.filter(function (l) { return l.id !== id; });
+          saveState();
+          renderAll();
+          showToast('Đã xóa bản ghi');
         });
 
         document.getElementById('leaveRequestsContainer').addEventListener('click', function (e) {
           const btn = e.target.closest('button[data-action]');
           if (!btn) return;
-          const req = state.leaves.find(function (r) { return r.id === btn.getAttribute('data-id'); });
-          if (req) { req.status = btn.getAttribute('data-action') === 'approve-leave' ? 'Đã duyệt' : 'Từ chối'; saveState(); renderAll(); }
+          const action = btn.getAttribute('data-action');
+          const id = btn.getAttribute('data-id');
+          const req = state.leaves.find(function (r) { return r.id === id; });
+          if (!req) return;
+
+          if (action === 'approve-leave') {
+            req.status = 'Đã duyệt';
+            saveState();
+            renderAll();
+            showToast('Đã duyệt đơn');
+          } else if (action === 'reject-leave') {
+            req.status = 'Từ chối';
+            saveState();
+            renderAll();
+            showToast('Đã từ chối đơn', true);
+          }
         });
 
         document.getElementById('payrollTableBody').addEventListener('click', function (e) {
           const btn = e.target.closest('button[data-action]');
           if (!btn) return;
-          const emp = getEmployeeById(btn.getAttribute('data-id'));
+          const action = btn.getAttribute('data-action');
+          const id = btn.getAttribute('data-id');
+          const emp = getEmployeeById(id);
           if (!emp) return;
-          if (btn.getAttribute('data-action') === 'bonus-emp') {
+
+          if (action === 'bonus-emp') {
             const cal = getEmpCalendarForMonth(emp, state.activeMonth);
-            cal[getRealTodayParts().day] = cal[getRealTodayParts().day] || { status: 'full', shiftHours: 4, shiftRate: emp.dailyRate };
-            cal[getRealTodayParts().day].allowance = Number(cal[getRealTodayParts().day].allowance || 0) + 20000;
+            if (!cal[22]) {
+              cal[getRealTodayParts().day] = { status: 'full', shiftName: 'Ca Sáng', shiftHours: 4, calcType: 'per_hour', shiftRate: emp.dailyRate, ot: 0, advance: 0, allowance: 20000, note: 'Thưởng thêm' };
+            } else {
+              cal[22].allowance = Number(cal[22].allowance || 0) + 20000;
+            }
             syncEmployeeStatsFromCalendar(emp, state.activeMonth);
-            saveState(); renderPayrollTab(); showToast('Đã cộng thưởng!');
-          } else if (btn.getAttribute('data-action') === 'view-payslip') {
+            saveState();
+            renderPayrollTab();
+            showToast('Đã cộng +20.000₫ thưởng thêm cho ' + emp.name);
+          } else if (action === 'view-payslip') {
             openPayslipModal(emp.id);
           }
         });
 
         const modalPayslip = document.getElementById('modalPayslip');
-        document.getElementById('btnClosePayslipModal').addEventListener('click', function () { modalPayslip.classList.add('hidden'); modalPayslip.classList.remove('flex'); });
-        document.getElementById('btnOkPayslipModal').addEventListener('click', function () { modalPayslip.classList.add('hidden'); modalPayslip.classList.remove('flex'); });
-        document.getElementById('btnCopyPayslip').addEventListener('click', function () { showToast('Đã sao chép phiếu lương!'); });
+        function closePayslip() {
+          modalPayslip.classList.add('hidden');
+          modalPayslip.classList.remove('flex');
+        }
+        document.getElementById('btnClosePayslipModal').addEventListener('click', closePayslip);
+        document.getElementById('btnOkPayslipModal').addEventListener('click', closePayslip);
+        document.getElementById('btnCopyPayslip').addEventListener('click', function () {
+          try {
+            const temp = document.createElement('textarea');
+            temp.value = currentPayslipText;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('Đã sao chép phiếu lương!');
+          } catch (err) {
+            showToast('Đã sao chép phiếu lương!');
+          }
+        });
 
         document.getElementById('btnExportLogsCsv').addEventListener('click', function () {
-          const rows = [['Mã SV', 'Họ tên', 'Ngày', 'Vào', 'Ra', 'Giờ', 'Trạng thái']];
-          state.logs.forEach(function (l) { const emp = getEmployeeById(l.empId); rows.push([l.empId, emp ? emp.name : '', l.date, l.inTime, l.outTime, l.hours, l.status]); });
-          downloadCsv('lich-su-ca-lam.csv', rows);
+          const rows = [['Mã SV', 'Họ tên', 'Ngày', 'Ca làm', 'Giờ vào', 'Giờ ra', 'Số giờ', 'Trạng thái']];
+          state.logs.forEach(function (l) {
+            const emp = getEmployeeById(l.empId);
+            rows.push([l.empId, emp ? emp.name : l.empId, l.date, l.shift || '', l.inTime, l.outTime || '', l.hours, l.status]);
+          });
+          downloadCsv('lich-su-ca-lam-' + state.activeMonth + '.csv', rows);
         });
 
         document.getElementById('btnExportPayrollCsv').addEventListener('click', function () {
-          const rows = [['Tháng', 'Mã SV', 'Họ tên', 'Lương/h', 'Số ca', 'Tổng giờ', 'Phụ cấp', 'Thực lĩnh']];
+          const rows = [['Tháng', 'Mã SV', 'Họ tên', 'Vị trí', 'Lương/giờ (0-100k)', 'Số ca', 'Tổng số giờ', 'Phụ cấp', 'Ứng trước', 'Thực lĩnh']];
           state.employees.forEach(function (emp) {
             const calc = computeEmployeePayroll(emp, state.activeMonth);
-            rows.push([state.activeMonth, emp.id, emp.name, emp.dailyRate, emp.baseDays, emp.totalWorkHours || 0, emp.allowance, calc.netPay]);
+            rows.push([
+              state.activeMonth,
+              emp.id,
+              emp.name,
+              emp.dept,
+              emp.dailyRate,
+              emp.baseDays,
+              emp.totalWorkHours || 0,
+              emp.allowance,
+              calc.advanceAmt,
+              calc.netPay
+            ]);
           });
-          downloadCsv('bang-luong.csv', rows);
+          downloadCsv('bang-luong-sinh-vien-' + state.activeMonth + '.csv', rows);
+        });
+
+        ['btnToggleLocationMode', 'btnOpenQrModal', 'btnCloseQrModal', 'btnConfirmQrPunch',
+         'btnGridShiftTask', 'btnGridCashbook', 'btnGridLocationMap', 'btnCloseLocationMap',
+         'btnPunchFromMap', 'btnOpenWorkplaceModal', 'btnCloseWorkplaceModal',
+         'btnCancelWorkplaceModal', 'btnOpenCashbookModal', 'btnCloseCashbookModal',
+         'btnCancelCashbookModal'].forEach(function (id) {
+          const el = document.getElementById(id);
+          if (el) el.addEventListener('click', function () { renderAll(); });
         });
       }
 
@@ -2026,5 +2741,22 @@
       renderAll();
     })();
   </script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // Hiển thị thông báo cho người dùng
+            if (confirm("Đã có phiên bản ứng dụng mới! Bấm OK để cập nhật ngay.")) {
+              window.location.reload();
+            }
+          }
+        });
+      });
+    });
+  }
+</script>
 </body>
 </html>
