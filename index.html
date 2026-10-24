@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="manifest.json" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#2563eb" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Chấm Công SV" />
+  <meta name="application-name" content="Chấm Công SV" />
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" />
   <title>Chấm Công Làm Thêm Sinh Viên - Quản Lý Ca & Lương</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,10 +22,17 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-tap-highlight-color: transparent;
     }
-    body {
+    html, body {
       background-color: #f1f5f9;
       color: #0f172a;
       overflow-x: hidden;
+      overscroll-behavior-y: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    input, textarea, select {
+      -webkit-user-select: text;
+      user-select: text;
     }
     .pulse-ring {
       animation: pulseRing 2s infinite;
@@ -64,7 +78,7 @@
           <button id="btnRoleEmployee" type="button" class="px-2 py-1 rounded-lg font-medium text-blue-100">Cá nhân</button>
           <button id="btnRoleManager" type="button" class="px-2 py-1 rounded-lg font-semibold bg-white text-blue-700">Quản lý</button>
         </div>
-        <button id="btnOpenAdMonetize" type="button" title="Cài đặt kiếm tiền Quảng cáo thật (AdSense / Affiliate)" class="px-2.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold flex items-center gap-1 shadow-xs transition">
+        <button id="btnOpenAdMonetize" type="button" title="Cài đặt kiếm tiền Quảng cáo thật (AdSense / Affiliate)" class="hidden px-2.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold items-center gap-1 shadow-xs transition">
           <span>💰 Kiếm tiền QC</span>
         </button>
         <button id="btnResetDemo" type="button" title="Xóa sạch toàn bộ dữ liệu" class="px-2.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold flex items-center gap-1 transition">
@@ -892,11 +906,11 @@
 
       <!-- Ad Footer CTA (Real external Affiliate/Ad URL) -->
       <div class="p-4 bg-white space-y-2.5">
-        <button id="btnClickAdCta" type="button" data-target-url="https://affiliate.shopee.vn/" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-extrabold shadow-md transition">
+        <button id="btnClickAdCta" type="button" data-target-url="https://s.shopee.vn/30p1AjWxaH" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-extrabold shadow-md transition">
           Tìm hiểu & Nhận ưu đãi ngay →
         </button>
-        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
-          <button id="btnConfigAdFromModal" type="button" class="text-blue-600 hover:underline font-semibold">
+        <div class="flex items-center justify-center text-[11px] text-slate-400 pt-1">
+          <button id="btnConfigAdFromModal" type="button" class="hidden text-blue-600 hover:underline font-semibold">
             ⚙️ Cấu hình mã kiếm tiền thật
           </button>
           <button id="btnCloseAdBottom" type="button" class="text-slate-500 hover:text-slate-800 font-semibold underline">
@@ -1021,33 +1035,83 @@
       let adCountdownTimer = null;
       let adRotationIndex = 0;
 
+      // ============================================================================
+      // DANH SÁCH 8 LINK SHOPEE AFFILIATE CHÍNH CHỦ XOAY VÒNG TỰ ĐỘNG
+      // Mỗi lần người dùng bấm "Lưu chấm công ngày", ứng dụng tự động xoay vòng
+      // lần lượt qua 8 đường link tiếp thị liên kết của bạn bên dưới:
+      // ============================================================================
       const sampleAds = [
         {
-          sponsor: 'Shopee Affiliate Việt Nam',
-          tag: 'TIẾP THỊ LIÊN KẾT THẬT (CPA/CPS)',
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #1',
+          tag: 'DEAL HOT GIẢM SÂU HÔM NAY',
           icon: '🛒',
           bg: 'p-6 bg-gradient-to-br from-orange-500 via-rose-600 to-red-600 text-white text-center space-y-3 relative',
-          headline: 'Săn Voucher Sinh Viên Giảm 50% Đồ Đi Học & Đi Làm Thêm Trên Shopee!',
-          desc: 'Nhấp vào quảng cáo sẽ mở trang chiến dịch thật. Bạn có thể thay bằng link Affiliate của riêng mình ở mục 💰 Kiếm tiền QC.',
-          url: 'https://affiliate.shopee.vn/'
+          headline: 'Săn Deal Giá Hời & Freeship 0Đ Dành Cho Sinh Viên Làm Thêm!',
+          desc: 'Ưu đãi chính hãng trên Shopee — áp dụng ngay mã giảm giá và miễn phí vận chuyển toàn quốc.',
+          url: 'https://s.shopee.vn/30p1AjWxaH'
         },
         {
-          sponsor: 'ACCESSTRADE Việt Nam',
-          tag: 'CHIẾN DỊCH KIẾM TIỀN ONLINE',
-          icon: '💳',
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #2',
+          tag: 'FLASH SALE SINH VIÊN',
+          icon: '🎁',
           bg: 'p-6 bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-700 text-white text-center space-y-3 relative',
-          headline: 'Mở Tài Khoản Ngân Hàng Số Cho Sinh Viên — Nhận Thưởng Hoa Hồng Thực Tế!',
-          desc: 'Nền tảng tiếp thị liên kết ACCESSTRADE trả hoa hồng thật cho mỗi lượt đăng ký hoặc mua hàng thành công.',
-          url: 'https://accesstrade.vn/'
+          headline: 'Top Sản Phẩm Bán Chạy Giá Sinh Viên — Giảm Tới 50% Hôm Nay!',
+          desc: 'Đặt hàng nhanh trên Shopee với mức giá ưu đãi đặc biệt dành cho học sinh, sinh viên.',
+          url: 'https://s.shopee.vn/2BFuBV0Xxb'
         },
         {
-          sponsor: 'Google AdSense / AdMob',
-          tag: 'MẠNG QUẢNG CÁO GOOGLE',
-          icon: '💰',
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #3',
+          tag: 'COMBO TIẾT KIỆM ĐI HỌC & ĐI LÀM',
+          icon: '🎒',
           bg: 'p-6 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white text-center space-y-3 relative',
-          headline: 'Tích Hợp Mã Google AdSense / AdMob Của Bạn Để Nhận Tiền Theo Lượt Click!',
-          desc: 'Bấm vào Cài đặt kiếm tiền QC để gắn mã Publisher ID (ca-pub-...) hoặc link Affiliate cá nhân của bạn.',
-          url: 'https://adsense.google.com/start/how-adsense-works/'
+          headline: 'Sắm Đồ Dùng Đi Học & Đi Làm Ca Giá Siêu Rẻ Trên Shopee!',
+          desc: 'Chất lượng đảm bảo, nhiều lượt đánh giá 5 sao, hỗ trợ đổi trả dễ dàng.',
+          url: 'https://s.shopee.vn/5VWM9fIBth'
+        },
+        {
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #4',
+          tag: 'VOUCHER ĐỘC QUYỀN HÔM NAY',
+          icon: '⚡',
+          bg: 'p-6 bg-gradient-to-br from-pink-600 via-rose-600 to-orange-500 text-white text-center space-y-3 relative',
+          headline: 'Deal Chớp Nhoáng Khung Giờ Vàng — Săn Ngay Kẻo Lỡ!',
+          desc: 'Số lượng voucher có hạn trong ngày, bấm vào xem chi tiết và lưu mã giảm giá ngay.',
+          url: 'https://s.shopee.vn/80Dh8GzTDN'
+        },
+        {
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #5',
+          tag: 'SIÊU HỘI MUA SẮM SHOPEE',
+          icon: '🔥',
+          bg: 'p-6 bg-gradient-to-br from-blue-600 via-indigo-700 to-slate-800 text-white text-center space-y-3 relative',
+          headline: 'Phụ Kiện & Đồ Cá Nhân Tiện Ích Cho Sinh Viên Giá Chỉ Từ Vài Chục Nghìn!',
+          desc: 'Trợ giá trực tiếp từ Shopee kèm ưu đãi hoàn xu và miễn phí giao hàng tận nơi.',
+          url: 'https://s.shopee.vn/1BPbaKrMQ'
+        },
+        {
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #6',
+          tag: 'GỢI Ý MUA SẮM THÔNG MINH',
+          icon: '✨',
+          bg: 'p-6 bg-gradient-to-br from-amber-500 via-orange-600 to-red-600 text-white text-center space-y-3 relative',
+          headline: 'Lương Làm Thêm Về Rồi — Tự Thưởng Món Đồ Yêu Thích Giá Sale Sốc!',
+          desc: 'Cam kết hàng chuẩn, giao nhanh trong 24h - 48h cùng loạt mã giảm giá cộng dồn.',
+          url: 'https://s.shopee.vn/AKbbubmUKc'
+        },
+        {
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #7',
+          tag: 'DEAL XỊN GIÁ MỀM',
+          icon: '💎',
+          bg: 'p-6 bg-gradient-to-br from-violet-600 via-purple-600 to-fuchsia-600 text-white text-center space-y-3 relative',
+          headline: 'Khám Phá Gian Hàng Chính Hãng Ưu Đãi Lớn Nhất Tuần Này!',
+          desc: 'Mua sắm tiết kiệm tối đa chi phí sinh hoạt và học tập cho sinh viên.',
+          url: 'https://s.shopee.vn/9zylW0uuoG'
+        },
+        {
+          sponsor: 'Shopee Ưu Đãi Sinh Viên #8',
+          tag: 'ƯU ĐÃI ĐẶC BIỆT CUỐI NGÀY',
+          icon: '🌟',
+          bg: 'p-6 bg-gradient-to-br from-teal-600 via-emerald-600 to-green-700 text-white text-center space-y-3 relative',
+          headline: 'Nhận Ngay Ưu Đãi & Quà Tặng Hấp Dẫn Khi Đặt Hàng Qua Shopee!',
+          desc: 'Bấm vào nút bên dưới để mở ứng dụng Shopee và áp dụng voucher giảm giá ngay.',
+          url: 'https://s.shopee.vn/LoG0HIbOS'
         }
       ];
 
@@ -1056,12 +1120,15 @@
           state.adConfig = {
             adsensePubId: '',
             adsenseSlotId: '',
-            affiliateUrl: 'https://affiliate.shopee.vn/',
+            affiliateUrl: '',
             affiliateSponsor: '',
             affiliateTitle: '',
             impressions: 0,
             clicks: 0
           };
+        }
+        if (state.adConfig.affiliateUrl === 'https://affiliate.shopee.vn/') {
+          state.adConfig.affiliateUrl = '';
         }
         return state.adConfig;
       }
@@ -1107,7 +1174,7 @@
 
         const sponsorText = cfg.affiliateSponsor ? cfg.affiliateSponsor : ad.sponsor;
         const headlineText = cfg.affiliateTitle ? cfg.affiliateTitle : ad.headline;
-        const targetUrl = cfg.affiliateUrl ? cfg.affiliateUrl : ad.url;
+        const targetUrl = (cfg.affiliateUrl && cfg.affiliateUrl !== 'https://affiliate.shopee.vn/') ? cfg.affiliateUrl : ad.url;
 
         document.getElementById('adSponsorName').textContent = sponsorText;
         document.getElementById('adBadgeTag').textContent = ad.tag;
@@ -2267,7 +2334,7 @@
           const cfg = ensureAdConfig();
           cfg.clicks = Number(cfg.clicks || 0) + 1;
           saveState();
-          const url = document.getElementById('btnClickAdCta').getAttribute('data-target-url') || 'https://affiliate.shopee.vn/';
+          const url = document.getElementById('btnClickAdCta').getAttribute('data-target-url') || 'https://s.shopee.vn/30p1AjWxaH';
           window.open(url, '_blank', 'noopener,noreferrer');
           closeInterstitialAd();
           showToast('Đã mở trang quảng cáo đối tác & ghi nhận +1 lượt click kiếm tiền!');
@@ -2743,19 +2810,26 @@
   </script>
   <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').then(reg => {
-      reg.addEventListener('updatefound', () => {
+    navigator.serviceWorker.register('./sw.js').then(function (reg) {
+      reg.addEventListener('updatefound', function () {
         const newWorker = reg.installing;
-        newWorker.addEventListener('statechange', () => {
+        if (!newWorker) return;
+        newWorker.addEventListener('statechange', function () {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            // Hiển thị thông báo cho người dùng
-            if (confirm("Đã có phiên bản ứng dụng mới! Bấm OK để cập nhật ngay.")) {
-              window.location.reload();
+            const toastBox = document.getElementById('toastBox');
+            const toastMessage = document.getElementById('toastMessage');
+            if (toastBox && toastMessage) {
+              toastMessage.textContent = 'Đã cập nhật phiên bản mới! Đang tải lại...';
+              toastBox.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+              toastBox.classList.add('opacity-100', 'translate-y-0');
             }
+            setTimeout(function () {
+              window.location.reload();
+            }, 1200);
           }
         });
       });
-    });
+    }).catch(function () {});
   }
 </script>
 </body>
