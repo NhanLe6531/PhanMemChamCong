@@ -64,6 +64,9 @@
           <button id="btnRoleEmployee" type="button" class="px-2 py-1 rounded-lg font-medium text-blue-100">Cá nhân</button>
           <button id="btnRoleManager" type="button" class="px-2 py-1 rounded-lg font-semibold bg-white text-blue-700">Quản lý</button>
         </div>
+        <button id="btnOpenAdMonetize" type="button" title="Cài đặt kiếm tiền Quảng cáo thật (AdSense / Affiliate)" class="px-2.5 py-1.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold flex items-center gap-1 shadow-xs transition">
+          <span>💰 Kiếm tiền QC</span>
+        </button>
         <button id="btnResetDemo" type="button" title="Xóa sạch toàn bộ dữ liệu" class="px-2.5 py-1.5 rounded-xl bg-white/15 hover:bg-white/25 text-white text-xs font-semibold flex items-center gap-1 transition">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
@@ -850,6 +853,130 @@
     <button id="btnConfirmQrPunch" type="button">Xác nhận quét QR thành công</button>
   </div>
 
+    <!-- MODAL QUẢNG CÁO TỰ ĐỘNG (INTERSTITIAL AD MODAL) -->
+  <div id="modalInterstitialAd" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-slate-200 animate-fade-in">
+      <!-- Top Ad Bar with Countdown & Skip Button -->
+      <div class="bg-slate-900 text-white px-4 py-2.5 flex items-center justify-between text-xs">
+        <div class="flex items-center gap-1.5">
+          <span class="px-1.5 py-0.5 rounded bg-amber-400 text-slate-950 font-extrabold text-[10px] uppercase">Quảng cáo</span>
+          <span id="adSponsorName" class="text-slate-300 font-medium truncate">Tài trợ bởi EduPass SV</span>
+        </div>
+        <button id="btnSkipAd" type="button" class="px-2.5 py-1 rounded-full bg-white/15 hover:bg-white/25 text-white font-bold text-[11px] transition flex items-center gap-1">
+          <span id="adCountdownText">Đóng sau 3s</span>
+          <span>✕</span>
+        </button>
+      </div>
+
+      <!-- Ad Visual Banner -->
+      <div id="adBannerBg" class="p-6 bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-700 text-white text-center space-y-3 relative">
+        <div id="adBadgeTag" class="inline-block px-3 py-0.5 rounded-full bg-white/20 text-[11px] font-bold tracking-wide">
+          ƯU ĐÃI ĐỘC QUYỀN SINH VIÊN
+        </div>
+        <div id="adIconBox" class="w-16 h-16 mx-auto rounded-2xl bg-white/15 backdrop-blur flex items-center justify-center text-2xl font-extrabold shadow-inner">
+          🎓
+        </div>
+        <h3 id="adHeadline" class="text-lg font-extrabold leading-snug">
+          Học Tiếng Anh Giao Tiếp & IELTS Cho Sinh Viên — Giảm Ngay 50%!
+        </h3>
+        <p id="adDescription" class="text-xs text-blue-100 leading-relaxed">
+          Lịch học linh hoạt theo ca làm thêm, tặng kèm bộ tài liệu luyện thi và chứng chỉ quốc tế.
+        </p>
+      </div>
+
+      <!-- Real Google AdSense Slot Container (Rendered when Publisher ID is configured) -->
+      <div id="realAdsenseContainer" class="hidden bg-slate-50 p-3 border-b border-slate-200 text-center">
+        <p class="text-[10px] text-slate-400 mb-1">Google AdSense Live Unit</p>
+        <div id="adsenseMountPoint" class="min-h-[120px] flex items-center justify-center text-xs text-slate-500"></div>
+      </div>
+
+      <!-- Ad Footer CTA (Real external Affiliate/Ad URL) -->
+      <div class="p-4 bg-white space-y-2.5">
+        <button id="btnClickAdCta" type="button" data-target-url="https://affiliate.shopee.vn/" class="w-full py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs font-extrabold shadow-md transition">
+          Tìm hiểu & Nhận ưu đãi ngay →
+        </button>
+        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1">
+          <button id="btnConfigAdFromModal" type="button" class="text-blue-600 hover:underline font-semibold">
+            ⚙️ Cấu hình mã kiếm tiền thật
+          </button>
+          <button id="btnCloseAdBottom" type="button" class="text-slate-500 hover:text-slate-800 font-semibold underline">
+            Đóng quảng cáo
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CẤU HÌNH KIẾM TIỀN QUẢNG CÁO THẬT (GOOGLE ADSENSE / ADMOB / SHOPEE AFFILIATE) -->
+  <div id="modalAdMonetize" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl space-y-4 my-8">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-800">💰 Cài Đặt Kiếm Tiền Quảng Cáo Thật</h3>
+          <p class="text-xs text-slate-500">Kết nối Google AdSense hoặc Link Affiliate thật để nhận doanh thu khi người dùng xem & bấm quảng cáo</p>
+        </div>
+        <button id="btnCloseAdMonetize" type="button" class="text-slate-400 hover:text-slate-600 text-sm font-bold px-2">✕</button>
+      </div>
+
+      <!-- Live Ad Revenue & Impression Counter -->
+      <div class="grid grid-cols-3 gap-2 text-center bg-slate-900 text-white rounded-xl p-3">
+        <div>
+          <p class="text-[10px] text-slate-400">Lượt hiển thị (Impressions)</p>
+          <p id="statAdImpressions" class="text-sm font-extrabold text-emerald-400 mt-0.5">0</p>
+        </div>
+        <div class="border-x border-slate-700">
+          <p class="text-[10px] text-slate-400">Lượt nhấp thật (Clicks)</p>
+          <p id="statAdClicks" class="text-sm font-extrabold text-amber-400 mt-0.5">0</p>
+        </div>
+        <div>
+          <p class="text-[10px] text-slate-400">Trạng thái kiếm tiền</p>
+          <p id="statAdModeBadge" class="text-xs font-bold text-blue-300 mt-1">Affiliate Direct</p>
+        </div>
+      </div>
+
+      <form id="formAdMonetize" class="space-y-3 text-xs">
+        <div class="p-3 rounded-xl bg-blue-50/70 border border-blue-200 space-y-2">
+          <p class="font-bold text-blue-900">1. Tích hợp Google AdSense thật (Web / Mobile Web)</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Google AdSense Publisher ID</label>
+              <input id="inputAdsensePubId" type="text" placeholder="VD: ca-pub-1234567890123456" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Ad Slot ID (Mã đơn vị QC)</label>
+              <input id="inputAdsenseSlotId" type="text" placeholder="VD: 9876543210" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500">Khi điền mã <code>ca-pub-...</code> của bạn, ứng dụng sẽ tự động nạp script Google AdSense chính thức vào popup mỗi lần lưu chấm công.</p>
+        </div>
+
+        <div class="p-3 rounded-xl bg-emerald-50/70 border border-emerald-200 space-y-2">
+          <p class="font-bold text-emerald-900">2. Hoặc dùng Link Tiếp thị liên kết thật (Shopee Affiliate / Accesstrade)</p>
+          <div>
+            <label class="text-[11px] font-semibold text-slate-600 block mb-1">Link đích kiếm tiền khi bấm nút Quảng cáo (URL thật) *</label>
+            <input id="inputAffiliateUrl" type="url" required placeholder="https://s.shopee.vn/... hoặc link chiến dịch của bạn" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white font-medium text-blue-700" />
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Tên nhà tài trợ / Chiến dịch</label>
+              <input id="inputAffiliateSponsor" type="text" placeholder="VD: Shopee Affiliate Sinh Viên" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+            <div>
+              <label class="text-[11px] font-semibold text-slate-600 block mb-1">Tiêu đề quảng cáo hiển thị</label>
+              <input id="inputAffiliateTitle" type="text" placeholder="VD: Săn Deal Sinh Viên Giảm 50% Trên Shopee" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+            </div>
+          </div>
+          <p class="text-[10px] text-slate-500">Cách này kiếm tiền được ngay lập tức trên điện thoại mà không cần chờ duyệt tên miền: mỗi lượt người dùng bấm vào nút ưu đãi sẽ mở thẳng link Affiliate của bạn để tính hoa hồng thật.</p>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2">
+          <button id="btnCancelAdMonetize" type="button" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-600 font-semibold">Đóng</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold">Lưu cấu hình kiếm tiền</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Toast Notification -->
   <div id="toastBox" class="fixed top-16 right-4 z-50 max-w-xs bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg text-xs font-medium flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none translate-y-2">
     <span id="toastIcon" class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
@@ -891,6 +1018,145 @@
       let state = loadState();
       let attendanceChartInstance = null;
       let currentPayslipText = '';
+      let adCountdownTimer = null;
+      let adRotationIndex = 0;
+
+      const sampleAds = [
+        {
+          sponsor: 'Shopee Affiliate Việt Nam',
+          tag: 'TIẾP THỊ LIÊN KẾT THẬT (CPA/CPS)',
+          icon: '🛒',
+          bg: 'p-6 bg-gradient-to-br from-orange-500 via-rose-600 to-red-600 text-white text-center space-y-3 relative',
+          headline: 'Săn Voucher Sinh Viên Giảm 50% Đồ Đi Học & Đi Làm Thêm Trên Shopee!',
+          desc: 'Nhấp vào quảng cáo sẽ mở trang chiến dịch thật. Bạn có thể thay bằng link Affiliate của riêng mình ở mục 💰 Kiếm tiền QC.',
+          url: 'https://affiliate.shopee.vn/'
+        },
+        {
+          sponsor: 'ACCESSTRADE Việt Nam',
+          tag: 'CHIẾN DỊCH KIẾM TIỀN ONLINE',
+          icon: '💳',
+          bg: 'p-6 bg-gradient-to-br from-indigo-600 via-blue-600 to-purple-700 text-white text-center space-y-3 relative',
+          headline: 'Mở Tài Khoản Ngân Hàng Số Cho Sinh Viên — Nhận Thưởng Hoa Hồng Thực Tế!',
+          desc: 'Nền tảng tiếp thị liên kết ACCESSTRADE trả hoa hồng thật cho mỗi lượt đăng ký hoặc mua hàng thành công.',
+          url: 'https://accesstrade.vn/'
+        },
+        {
+          sponsor: 'Google AdSense / AdMob',
+          tag: 'MẠNG QUẢNG CÁO GOOGLE',
+          icon: '💰',
+          bg: 'p-6 bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-700 text-white text-center space-y-3 relative',
+          headline: 'Tích Hợp Mã Google AdSense / AdMob Của Bạn Để Nhận Tiền Theo Lượt Click!',
+          desc: 'Bấm vào Cài đặt kiếm tiền QC để gắn mã Publisher ID (ca-pub-...) hoặc link Affiliate cá nhân của bạn.',
+          url: 'https://adsense.google.com/start/how-adsense-works/'
+        }
+      ];
+
+      function ensureAdConfig() {
+        if (!state.adConfig) {
+          state.adConfig = {
+            adsensePubId: '',
+            adsenseSlotId: '',
+            affiliateUrl: 'https://affiliate.shopee.vn/',
+            affiliateSponsor: '',
+            affiliateTitle: '',
+            impressions: 0,
+            clicks: 0
+          };
+        }
+        return state.adConfig;
+      }
+
+      function injectRealAdsenseIfConfigured(cfg) {
+        const container = document.getElementById('realAdsenseContainer');
+        const mount = document.getElementById('adsenseMountPoint');
+        if (!container || !mount) return;
+
+        if (cfg.adsensePubId && cfg.adsensePubId.startsWith('ca-pub-')) {
+          container.classList.remove('hidden');
+          if (!document.getElementById('adsenseScriptTag')) {
+            const sc = document.createElement('script');
+            sc.id = 'adsenseScriptTag';
+            sc.async = true;
+            sc.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + encodeURIComponent(cfg.adsensePubId);
+            sc.crossOrigin = 'anonymous';
+            document.head.appendChild(sc);
+          }
+          mount.innerHTML =
+            '<ins class="adsbygoogle" style="display:block;width:100%;height:120px" ' +
+            'data-ad-client="' + cfg.adsensePubId + '" ' +
+            'data-ad-slot="' + (cfg.adsenseSlotId || '1234567890') + '" ' +
+            'data-ad-format="auto" data-full-width-responsive="true"></ins>';
+          try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {}
+        } else {
+          container.classList.add('hidden');
+        }
+      }
+
+      function showInterstitialAd() {
+        const modal = document.getElementById('modalInterstitialAd');
+        if (!modal) return;
+
+        const cfg = ensureAdConfig();
+        cfg.impressions = Number(cfg.impressions || 0) + 1;
+        saveState();
+
+        const ad = sampleAds[adRotationIndex % sampleAds.length];
+        adRotationIndex += 1;
+
+        const sponsorText = cfg.affiliateSponsor ? cfg.affiliateSponsor : ad.sponsor;
+        const headlineText = cfg.affiliateTitle ? cfg.affiliateTitle : ad.headline;
+        const targetUrl = cfg.affiliateUrl ? cfg.affiliateUrl : ad.url;
+
+        document.getElementById('adSponsorName').textContent = sponsorText;
+        document.getElementById('adBadgeTag').textContent = ad.tag;
+        document.getElementById('adIconBox').textContent = ad.icon;
+        document.getElementById('adBannerBg').className = ad.bg;
+        document.getElementById('adHeadline').textContent = headlineText;
+        document.getElementById('adDescription').textContent = ad.desc;
+
+        const linkEl = document.getElementById('btnClickAdCta');
+        if (linkEl) {
+          linkEl.setAttribute('data-target-url', targetUrl);
+        }
+
+        injectRealAdsenseIfConfigured(cfg);
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        if (adCountdownTimer) {
+          clearInterval(adCountdownTimer);
+          adCountdownTimer = null;
+        }
+
+        let remaining = 3;
+        const countdownEl = document.getElementById('adCountdownText');
+        countdownEl.textContent = 'Đóng sau ' + remaining + 's';
+
+        adCountdownTimer = setInterval(function () {
+          remaining -= 1;
+          if (remaining > 0) {
+            countdownEl.textContent = 'Đóng sau ' + remaining + 's';
+          } else {
+            clearInterval(adCountdownTimer);
+            adCountdownTimer = null;
+            countdownEl.textContent = 'Bỏ qua quảng cáo';
+          }
+        }, 1000);
+      }
+
+      function closeInterstitialAd() {
+        const modal = document.getElementById('modalInterstitialAd');
+        if (!modal) return;
+        if (adCountdownTimer) {
+          clearInterval(adCountdownTimer);
+          adCountdownTimer = null;
+        }
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
 
       function clampShiftRate(val) {
         const n = Number(val);
@@ -986,8 +1252,30 @@
         return state.employees.find(function (e) { return e.id === empId; }) || state.employees[0];
       }
 
+      function getRealTodayParts() {
+        const now = new Date();
+        return {
+          year: now.getFullYear(),
+          month: now.getMonth() + 1,
+          day: now.getDate()
+        };
+      }
+
+      function isFutureDay(ym, dayNum) {
+        const today = getRealTodayParts();
+        const parts = (ym || '2026-10').split('-').map(Number);
+        const y = parts[0] || today.year;
+        const m = parts[1] || today.month;
+        if (y > today.year) return true;
+        if (y < today.year) return false;
+        if (m > today.month) return true;
+        if (m < today.month) return false;
+        return Number(dayNum) > today.day;
+      }
+
       function getTodayString() {
-        return (state.activeMonth || '2026-10') + '-22';
+        const t = getRealTodayParts();
+        return t.year + '-' + String(t.month).padStart(2, '0') + '-' + String(t.day).padStart(2, '0');
       }
 
       function getNowTimeString() {
@@ -1004,6 +1292,10 @@
         const ss = String(now.getSeconds()).padStart(2, '0');
         const clockEl = document.getElementById('liveClockText');
         if (clockEl) clockEl.textContent = hh + ':' + mm + ':' + ss;
+        const dateEl = document.getElementById('liveDateText');
+        if (dateEl) {
+          dateEl.textContent = String(now.getDate()).padStart(2, '0') + '/' + String(now.getMonth() + 1).padStart(2, '0') + '/' + now.getFullYear();
+        }
       }
 
       function calculateHoursBetween(inTime, outTime) {
@@ -1188,15 +1480,22 @@
           cells.push('<div class="h-12 sm:h-14 rounded-xl bg-slate-50/40"></div>');
         }
 
+        const realToday = getRealTodayParts();
+        const curYm = realToday.year + '-' + String(realToday.month).padStart(2, '0');
+
         for (let day = 1; day <= daysInMonth; day++) {
-          const info = cal[day];
-          const isToday = (state.activeMonth === '2026-10' && day === 22);
+          const isFuture = isFutureDay(state.activeMonth, day);
+          const info = !isFuture ? cal[day] : null;
+          const isToday = (state.activeMonth === curYm && day === realToday.day);
 
           let bgClass = 'bg-slate-50 text-slate-700 border-slate-200 hover:border-blue-400';
           let badgeText = 'Chấm';
           let subMoney = '';
 
-          if (info && info.status !== 'off') {
+          if (isFuture) {
+            bgClass = 'bg-slate-100/60 text-slate-300 border-slate-200/50 opacity-45 cursor-not-allowed';
+            badgeText = '🔒 Khóa';
+          } else if (info && info.status !== 'off') {
             const dCalc = computeDayEarned(info, activeEmp ? activeEmp.dailyRate : 0);
             const hrs = info.shiftHours || state.defaultShiftHours || 4;
             const sName = (info.shiftName || 'Ca').replace('Ca ', '');
@@ -1222,7 +1521,7 @@
           const todayRing = isToday ? 'ring-2 ring-blue-600 ring-offset-1' : '';
 
           cells.push(
-            '<button type="button" data-cal-day="' + day + '" class="cal-cell h-12 sm:h-14 rounded-xl border p-1 flex flex-col items-center justify-between ' + bgClass + ' ' + todayRing + '">' +
+            '<button type="button" data-cal-day="' + day + '" data-cal-future="' + (isFuture ? '1' : '0') + '" class="cal-cell h-12 sm:h-14 rounded-xl border p-1 flex flex-col items-center justify-between ' + bgClass + ' ' + todayRing + '">' +
               '<div class="w-full flex items-center justify-between px-0.5 leading-none">' +
                 '<span class="text-xs font-extrabold">' + day + '</span>' +
                 '<span class="text-[9px] font-semibold opacity-90">' + subMoney + '</span>' +
@@ -1308,7 +1607,7 @@
             location: 'Ca làm thêm'
           });
           const cal = getEmpCalendarForMonth(activeEmp, state.activeMonth);
-          cal[22] = {
+          cal[getRealTodayParts().day] = {
             status: 'full',
             shiftName: shiftName,
             shiftHours: chosenHours,
@@ -1598,6 +1897,10 @@
       }
 
       function openDayEditorModal(dayNum) {
+        if (isFutureDay(state.activeMonth, dayNum)) {
+          showToast('Ngày ' + dayNum + ' ở trong tương lai (đã khóa), chưa thể chấm công!', true);
+          return;
+        }
         const activeEmp = getEmployeeById(state.activeEmployeeId);
         if (!activeEmp) {
           openAddStudentModal();
@@ -1955,18 +2258,70 @@
             showToast('Đã lưu ' + shiftName + ' (' + shiftHours + ' tiếng) ngày ' + dayNum + '!');
           }
           closeDayModal();
+          showInterstitialAd();
         });
 
-        // Action Grid Buttons
+        document.getElementById('btnSkipAd').addEventListener('click', closeInterstitialAd);
+        document.getElementById('btnCloseAdBottom').addEventListener('click', closeInterstitialAd);
+        document.getElementById('btnClickAdCta').addEventListener('click', function () {
+          const cfg = ensureAdConfig();
+          cfg.clicks = Number(cfg.clicks || 0) + 1;
+          saveState();
+          const url = document.getElementById('btnClickAdCta').getAttribute('data-target-url') || 'https://affiliate.shopee.vn/';
+          window.open(url, '_blank', 'noopener,noreferrer');
+          closeInterstitialAd();
+          showToast('Đã mở trang quảng cáo đối tác & ghi nhận +1 lượt click kiếm tiền!');
+        });
+
+        // Ad Monetization Settings Modal
+        const modalAdMonetize = document.getElementById('modalAdMonetize');
+        function openAdMonetizeModal() {
+          closeInterstitialAd();
+          const cfg = ensureAdConfig();
+          document.getElementById('inputAdsensePubId').value = cfg.adsensePubId || '';
+          document.getElementById('inputAdsenseSlotId').value = cfg.adsenseSlotId || '';
+          document.getElementById('inputAffiliateUrl').value = cfg.affiliateUrl || 'https://affiliate.shopee.vn/';
+          document.getElementById('inputAffiliateSponsor').value = cfg.affiliateSponsor || '';
+          document.getElementById('inputAffiliateTitle').value = cfg.affiliateTitle || '';
+          document.getElementById('statAdImpressions').textContent = cfg.impressions || 0;
+          document.getElementById('statAdClicks').textContent = cfg.clicks || 0;
+          document.getElementById('statAdModeBadge').textContent =
+            (cfg.adsensePubId && cfg.adsensePubId.startsWith('ca-pub-')) ? 'AdSense + Affiliate' : 'Affiliate Direct';
+          modalAdMonetize.classList.remove('hidden');
+          modalAdMonetize.classList.add('flex');
+        }
+        function closeAdMonetizeModal() {
+          modalAdMonetize.classList.add('hidden');
+          modalAdMonetize.classList.remove('flex');
+        }
+        document.getElementById('btnOpenAdMonetize').addEventListener('click', openAdMonetizeModal);
+        document.getElementById('btnConfigAdFromModal').addEventListener('click', openAdMonetizeModal);
+        document.getElementById('btnCloseAdMonetize').addEventListener('click', closeAdMonetizeModal);
+        document.getElementById('btnCancelAdMonetize').addEventListener('click', closeAdMonetizeModal);
+
+        document.getElementById('formAdMonetize').addEventListener('submit', function (e) {
+          e.preventDefault();
+          const cfg = ensureAdConfig();
+          cfg.adsensePubId = document.getElementById('inputAdsensePubId').value.trim();
+          cfg.adsenseSlotId = document.getElementById('inputAdsenseSlotId').value.trim();
+          cfg.affiliateUrl = document.getElementById('inputAffiliateUrl').value.trim() || 'https://affiliate.shopee.vn/';
+          cfg.affiliateSponsor = document.getElementById('inputAffiliateSponsor').value.trim();
+          cfg.affiliateTitle = document.getElementById('inputAffiliateTitle').value.trim();
+          saveState();
+          closeAdMonetizeModal();
+          showToast('Đã lưu cấu hình kiếm tiền quảng cáo thật!');
+        });
+
+        // Action Grid Buttons (Open on today's real date)
         document.getElementById('btnGridDayPunch').addEventListener('click', function () {
-          openDayEditorModal(22);
+          openDayEditorModal(getRealTodayParts().day);
         });
         document.getElementById('btnGridAdvance').addEventListener('click', function () {
-          openDayEditorModal(22);
+          openDayEditorModal(getRealTodayParts().day);
           document.getElementById('dayEditorAdvanceInput').focus();
         });
         document.getElementById('btnGridAllowance').addEventListener('click', function () {
-          openDayEditorModal(22);
+          openDayEditorModal(getRealTodayParts().day);
           document.getElementById('dayEditorAllowanceInput').focus();
         });
         document.getElementById('btnViewCurrentPayslip').addEventListener('click', function () {
@@ -2307,7 +2662,7 @@
           if (action === 'bonus-emp') {
             const cal = getEmpCalendarForMonth(emp, state.activeMonth);
             if (!cal[22]) {
-              cal[22] = { status: 'full', shiftName: 'Ca Sáng', shiftHours: 4, calcType: 'per_hour', shiftRate: emp.dailyRate, ot: 0, advance: 0, allowance: 20000, note: 'Thưởng thêm' };
+              cal[getRealTodayParts().day] = { status: 'full', shiftName: 'Ca Sáng', shiftHours: 4, calcType: 'per_hour', shiftRate: emp.dailyRate, ot: 0, advance: 0, allowance: 20000, note: 'Thưởng thêm' };
             } else {
               cal[22].allowance = Number(cal[22].allowance || 0) + 20000;
             }
