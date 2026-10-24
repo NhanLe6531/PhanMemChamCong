@@ -2741,6 +2741,22 @@
       renderAll();
     })();
   </script>
-
+  <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // Hiển thị thông báo cho người dùng
+            if (confirm("Đã có phiên bản ứng dụng mới! Bấm OK để cập nhật ngay.")) {
+              window.location.reload();
+            }
+          }
+        });
+      });
+    });
+  }
+</script>
 </body>
 </html>
