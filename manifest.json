@@ -2,30 +2,20 @@
   "id": "./index.html",
   "name": "Chấm Công Làm Thêm Sinh Viên",
   "short_name": "Chấm Công SV",
-  "description": "Ứng dụng chấm công theo ca (4h/8h) và tính lương làm thêm cho sinh viên",
   "start_url": "./index.html",
-  "scope": "./",
   "display": "standalone",
   "display_override": [
     "fullscreen",
     "standalone",
     "minimal-ui"
   ],
-  "orientation": "portrait",
   "background_color": "#f1f5f9",
   "theme_color": "#2563eb",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3652/3652191.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "https://cdn-icons-png.flaticon.com/512/3652/3652191.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
   ]
 }
