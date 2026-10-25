@@ -3,7 +3,7 @@
 <head>
   <link rel="manifest" href="manifest.json" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#2563eb" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -21,20 +21,40 @@
     * {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       -webkit-tap-highlight-color: transparent;
-      touch-action: pan-y; /* Cho phép lướt cuộn dọc mượt mà bằng 1 ngón tay trên di động */
-
+      box-sizing: border-box;
     }
-    html, body {
+    html {
+      height: auto;
+      min-height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y pan-x;
+    }
+    body {
+      min-height: 100vh;
       background-color: #f1f5f9;
       color: #0f172a;
       overflow-x: hidden;
-      overscroll-behavior-y: none;
-      -webkit-user-select: none;
-      user-select: none;
+      overflow-y: visible;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y pan-x;
     }
-    input, textarea, select {
-      -webkit-user-select: text;
-      user-select: text;
+    /* Ensure 1-finger vertical scroll works even when finger starts on buttons, calendar cells, or cards */
+    button, a, label, input, select, textarea, .cal-cell, .fn-card, main, section, div {
+      touch-action: pan-y pan-x manipulation;
+    }
+    .modal-overlay-scroll {
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
+    }
+    .modal-box-scroll {
+      max-height: 88vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
+      touch-action: pan-y;
     }
     .pulse-ring {
       animation: pulseRing 2s infinite;
@@ -688,8 +708,8 @@
     </div>
   </nav>
   <!-- MODAL A: CHẤM CÔNG ĐA CA TÙY BIẾN CAO (Gộp Ca A 6h + Ca C 5h, Tùy chỉnh giờ từng ca) -->
-  <div id="modalDayEditor" class="fixed inset-0 z-50 bg-slate-950/65 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-4 sm:p-5 shadow-2xl border border-slate-200 space-y-3.5 my-6 max-h-[94vh] overflow-y-auto">
+  <div id="modalDayEditor" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-950/65 backdrop-blur-xs hidden items-start sm:items-center justify-center p-2.5 sm:p-4">
+    <div class="modal-box-scroll bg-white rounded-3xl max-w-lg w-full p-4 sm:p-5 shadow-2xl border border-slate-200 space-y-3.5 my-3 sm:my-6">
       <!-- Modal Header -->
       <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
         <div>
@@ -851,7 +871,7 @@
     </div>
   </div>
   <!-- MODAL 1: ADD / EDIT STUDENT EMPLOYEE (Lương ca 0 - 100.000đ) -->
-  <div id="modalEmployee" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+  <div id="modalEmployee" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-start sm:items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 id="modalEmployeeTitle" class="text-base font-bold text-slate-800">Thêm sinh viên làm thêm</h3>
@@ -907,7 +927,7 @@
     </div>
   </div>
   <!-- MODAL 2: LEAVE / OVERTIME REQUEST -->
-  <div id="modalLeave" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+  <div id="modalLeave" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-start sm:items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 id="modalLeaveTitle" class="text-base font-bold text-slate-800">Báo nghỉ ca / Đổi ca học</h3>
@@ -948,7 +968,7 @@
     </div>
   </div>
   <!-- MODAL 3: MANUAL ATTENDANCE LOG -->
-  <div id="modalManualLog" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+  <div id="modalManualLog" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-start sm:items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-800">Chấm công bù theo giờ</h3>
@@ -989,7 +1009,7 @@
     </div>
   </div>
   <!-- MODAL 5: PAYSLIP DETAIL -->
-  <div id="modalPayslip" class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+  <div id="modalPayslip" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-start sm:items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-xl space-y-4">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <h3 class="text-base font-bold text-slate-800">Phiếu Lương Sinh Viên</h3>
@@ -1034,7 +1054,7 @@
     <button id="btnConfirmQrPunch" type="button">Xác nhận quét QR thành công</button>
   </div>
     <!-- MODAL QUẢNG CÁO SẢN PHẨM SHOPEE TỰ ĐỘNG (INTERSTITIAL PRODUCT CARD MODAL) -->
-  <div id="modalInterstitialAd" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+  <div id="modalInterstitialAd" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-start sm:items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-orange-200/80 my-auto">
       <!-- Top Shopee Flash Sale Header Bar -->
       <div class="shopee-gradient text-white px-3.5 py-2.5 flex items-center justify-between text-xs">
@@ -1136,7 +1156,7 @@
     </div>
   </div>
   <!-- MODAL CẤU HÌNH KIẾM TIỀN QUẢNG CÁO THẬT (GOOGLE ADSENSE / ADMOB / SHOPEE AFFILIATE) -->
-  <div id="modalAdMonetize" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-center justify-center p-4 overflow-y-auto">
+  <div id="modalAdMonetize" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden items-start sm:items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-2xl max-w-lg w-full p-5 shadow-xl space-y-4 my-8">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
