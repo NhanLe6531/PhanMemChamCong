@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.nhanle.chamcongsv",
+    "sha256_cert_fingerprints": [
+      "0E:6A:A8:B1:38:20:E9:33:1A:88:C9:EF:4A:B6:78:69:A3:1D:FB:AE:0E:B5:23:50:E6:4B:8B:DD:7F:57:3C:52"
+    ]
+  }
+}]
