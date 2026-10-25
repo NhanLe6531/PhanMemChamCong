@@ -1513,36 +1513,56 @@
           }).join('');
         }
       }
+     <!-- THOI GIAN HIEN THI QUANG CAO NAM O DAY NE FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF -->
       function showInterstitialAd() {
-        const modal = document.getElementById('modalInterstitialAd');
-        if (!modal) return;
-        const cfg = ensureAdConfig();
-        cfg.impressions = Number(cfg.impressions || 0) + 1;
-        saveState();
-        const currentIdx = adRotationIndex % sampleAds.length;
-        adRotationIndex += 1;
-        renderAdCardByIndex(currentIdx);
-        injectRealAdsenseIfConfigured(cfg);
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        if (adCountdownTimer) {
-          clearInterval(adCountdownTimer);
-          adCountdownTimer = null;
-        }
-        let remaining = 3;
-        const countdownEl = document.getElementById('adCountdownText');
-        countdownEl.textContent = 'Đóng sau ' + remaining + 's';
-        adCountdownTimer = setInterval(function () {
-          remaining -= 1;
-          if (remaining > 0) {
+    const COOL_DOWN_TIME = 5 * 60 * 1000; // 5 phút tính bằng mili-giây
+    const lastAdTime = Number(localStorage.getItem('last_ad_shown_time') || 0);
+    const now = Date.now();
+
+    // Nếu chưa đủ 5 phút kể từ lần hiện quảng cáo gần nhất thì bỏ qua, không hiện popup
+    if (now - lastAdTime < COOL_DOWN_TIME) {
+        return; 
+    }
+
+    const modal = document.getElementById('modalInterstitialAd');
+    if (!modal) return;
+    
+    // Lưu lại mốc thời gian hiện tại cho lần hiển thị này
+    localStorage.setItem('last_ad_shown_time', now);
+
+    const cfg = ensureAdConfig();
+    cfg.impressions = Number(cfg.impressions || 0) + 1;
+    saveState();
+    
+    const currentIdx = adRotationIndex % sampleAds.length;
+    adRotationIndex += 1;
+    renderAdCardByIndex(currentIdx);
+    injectRealAdsenseIfConfigured(cfg);
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    
+    if (adCountdownTimer) {
+        clearInterval(adCountdownTimer);
+        adCountdownTimer = null;
+    }
+     <!-- THOI GIAN HIEN THI QUANG CAO NAM O DAY NE FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF -->
+    let remaining = 10; // Đã tăng thời gian đếm ngược lên 10 giây theo ý bạn
+    const countdownEl = document.getElementById('adCountdownText');
+    countdownEl.textContent = 'Đóng sau ' + remaining + 's';
+    
+    adCountdownTimer = setInterval(function () {
+        remaining -= 1;
+        if (remaining > 0) {
             countdownEl.textContent = 'Đóng sau ' + remaining + 's';
-          } else {
+        } else {
             clearInterval(adCountdownTimer);
             adCountdownTimer = null;
             countdownEl.textContent = 'Bỏ qua quảng cáo';
-          }
-        }, 1000);
-      }
+        }
+    }, 1000);
+}
+       
       function closeInterstitialAd() {
         const modal = document.getElementById('modalInterstitialAd');
         if (!modal) return;
