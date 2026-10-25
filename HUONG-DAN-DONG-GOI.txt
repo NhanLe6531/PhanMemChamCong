@@ -1,0 +1,11 @@
+HƯỚNG DẪN TRIỂN KHAI & XÁC MINH GOOGLE ADSENSE (ca-pub-9850195364132050)
+========================================================================
+1. Các file trong gói phần mềm:
+   - index.html: Đã gắn sẵn thẻ <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9850195364132050" crossorigin="anonymous"></script> ngay trong <head> và kích hoạt sẵn khung AdSense trong Popup + 8 link Shopee Affiliate.
+   - ads.txt: Chứa dòng xác thực chính chủ của bạn:
+     google.com, pub-9850195364132050, DIRECT, f08c47fec0942fa0
+   - manifest.json & sw.js: Cấu hình PWA giúp cài đặt lên màn hình chính điện thoại full-screen (ẩn thanh địa chỉ).
+
+2. Cách hoàn tất xác minh trên trang Google AdSense:
+   - Bước 1: Giải nén toàn bộ 5 file này và tải (upload/push) lên thư mục gốc trang web của bạn (GitHub Pages / Vercel / Netlify / Hosting).
+   - Bước 2: Quay lại màn hình Google AdSense, tích chọn ô "Tôi đã đặt mã" (I've placed the code) -> Bấm "Xác minh" (Verify) -> Bấm "Yêu cầu xem xét" (Request review).

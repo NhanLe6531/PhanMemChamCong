@@ -105,6 +105,9 @@
       animation: flashPulse 1.8s infinite ease-in-out;
     }
   </style>
+  <!-- Google AdSense Verification & Auto Ads (ca-pub-9850195364132050) -->
+  <script id="adsenseScriptTag" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9850195364132050"
+     crossorigin="anonymous"></script>
 </head>
 <body class="min-h-screen pb-24">
   <!-- Top Header -->
@@ -1186,7 +1189,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
             <div>
               <label class="text-[11px] font-semibold text-slate-600 block mb-1">Google AdSense Publisher ID</label>
-              <input id="inputAdsensePubId" type="text" placeholder="VD: ca-pub-1234567890123456" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
+              <input id="inputAdsensePubId" type="text" value="ca-pub-9850195364132050" placeholder="ca-pub-9850195364132050" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white" />
             </div>
             <div>
               <label class="text-[11px] font-semibold text-slate-600 block mb-1">Ad Slot ID (Mã đơn vị QC)</label>
@@ -1390,7 +1393,7 @@
       function ensureAdConfig() {
         if (!state.adConfig) {
           state.adConfig = {
-            adsensePubId: '',
+            adsensePubId: 'ca-pub-9850195364132050',
             adsenseSlotId: '',
             affiliateUrl: '',
             affiliateSponsor: '',
@@ -1398,6 +1401,9 @@
             impressions: 0,
             clicks: 0
           };
+        }
+        if (!state.adConfig.adsensePubId) {
+          state.adConfig.adsensePubId = 'ca-pub-9850195364132050';
         }
         if (state.adConfig.affiliateUrl === 'https://affiliate.shopee.vn/') {
           state.adConfig.affiliateUrl = '';
