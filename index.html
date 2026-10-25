@@ -1514,7 +1514,7 @@
         }
       }
     //THOI GIAN HIEN THI QUANG CAO NAM O DAY NE FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-      function showInterstitialAd() {
+    function showInterstitialAd() {
     const COOL_DOWN_TIME = 5 * 60 * 1000; // 5 phút tính bằng mili-giây
     const lastAdTime = Number(localStorage.getItem('last_ad_shown_time') || 0);
     const now = Date.now();
@@ -1549,6 +1549,12 @@
     //THOI GIAN HIEN THI QUANG CAO NAM O DAY NE FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     let remaining = 10; // Đã tăng thời gian đếm ngược lên 10 giây theo ý bạn
     const countdownEl = document.getElementById('adCountdownText');
+    const skipBtn = document.getElementById('btnSkipAd'); // Lấy element của nút đóng
+    // Khóa nút, giảm độ mờ và đổi con trỏ chuột
+    if (skipBtn) {
+        skipBtn.disabled = true;
+        skipBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    }
     countdownEl.textContent = 'Đóng sau ' + remaining + 's';
     
     adCountdownTimer = setInterval(function () {
@@ -1558,12 +1564,21 @@
         } else {
             clearInterval(adCountdownTimer);
             adCountdownTimer = null;
-            countdownEl.textContent = 'Bỏ qua quảng cáo';
-        }
-    }, 1000);
-}
+            countdownEl.textContent = 'Bỏ qua quảng cáo ✕';
+          // Hết giờ -> Mở khóa nút cho phép người dùng bấm để tắt
+                if (skipBtn) {
+                    skipBtn.disabled = false;
+                    skipBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+            }
+        }, 1000);
+    }
        
       function closeInterstitialAd() {
+        const skipBtn = document.getElementById('btnSkipAd');
+        // Nếu nút vẫn đang bị khóa (chưa đếm xong) thì không cho đóng popup
+        if (skipBtn && skipBtn.disabled) return;
+          
         const modal = document.getElementById('modalInterstitialAd');
         if (!modal) return;
         if (adCountdownTimer) {
