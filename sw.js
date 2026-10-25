@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cham-cong-sv-v1';
+const CACHE_NAME = 'cham-cong-sv-v2';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {
