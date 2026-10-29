@@ -3,7 +3,52 @@
 <head>
     <link rel="manifest" href="manifest.json" />
     <meta charset="UTF-8" />
-    <meta name="google-adsense-account" content="ca-pub-9850195364132050">
+    <meta name="google-adsense-account" content="ca-pub-9850195364132050" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="description" content="Phần mềm Chấm Công Làm Thêm Sinh Viên & Quản Lý Lương Part-time miễn phí. Hỗ trợ gộp ca linh hoạt (Ca A 6h, Ca B 6h, Ca C 5h), tính lương theo giờ, quản lý tạm ứng, phụ cấp, xuất phiếu lương CSV và cẩm nang lao động bán thời gian cho sinh viên Việt Nam." />
+    <meta name="keywords" content="chấm công sinh viên, tính lương làm thêm, bảng chấm công part time, quản lý ca làm việc, tính lương theo giờ, phần mềm chấm công miễn phí" />
+    <meta name="author" content="Chấm Công Sinh Viên Pro" />
+    <script id="adsenseScriptTag" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9850195364132050" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Chấm Công Làm Thêm Sinh Viên - Quản Lý Ca & Lương Part-Time",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web, Android, iOS",
+          "description": "Ứng dụng quản lý lịch làm thêm, chấm công đa ca (4h, 5h, 6h, 8h) và tự động tính lương theo giờ dành cho sinh viên và cửa hàng F&B, bán lẻ.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "VND"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Cách tính lương làm thêm theo giờ khi làm gộp nhiều ca có số giờ khác nhau như thế nào?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Tiền lương ngày được tính bằng Tổng số giờ thực tế của các ca đã làm nhân với Đơn giá lương/giờ, cộng phụ cấp ăn ca hoặc thưởng tăng ca (OT) và trừ đi khoản đã tạm ứng trước."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Dữ liệu bảng chấm công của sinh viên được lưu trữ ở đâu?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Toàn bộ dữ liệu chấm công, danh sách nhân sự và lịch sử các tháng được lưu trữ an toàn ngay trên bộ nhớ trình duyệt (LocalStorage) của thiết bị và có thể xuất ra file Excel/CSV bất cứ lúc nào."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="theme-color" content="#2563eb" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -709,6 +754,166 @@
         <span id="cashNetProfit">0</span>
       </div>
     </section>
+    <!-- CẨM NANG KIẾN THỨC, BẢNG LƯƠNG THAM KHẢO, FAQ & CHÍNH SÁCH PHÁP LÝ (CHUẨN GOOGLE ADSENSE E-E-A-T) -->
+    <section id="adsenseEditorialSection" class="space-y-3.5 pt-2">
+      <!-- 1. Bài viết hướng dẫn chuyên sâu & Công thức tính lương làm thêm -->
+      <article class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-100 space-y-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+        <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+          <div>
+            <span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-[10px] font-extrabold uppercase tracking-wide">Cẩm nang Sinh viên & Quản lý nhân sự</span>
+            <h2 class="text-sm sm:text-base font-extrabold text-slate-900 mt-1">
+              Hướng Dẫn Cách Tính Lương Làm Thêm Theo Giờ & Quản Lý Ca Làm Việc Part-Time Chuẩn Nhất 2026
+            </h2>
+          </div>
+        </div>
+
+        <p>
+          Đối với sinh viên đại học, cao đẳng đi làm thêm bán thời gian (part-time) cũng như các chủ quán cà phê, trà sữa, nhà hàng F&amp;B và cửa hàng tiện lợi, việc ghi chép chính xác số giờ làm việc của từng ca là yếu tố quan trọng nhất để đảm bảo minh bạch thu nhập cuối tháng. Trong thực tế vận hành, nhiều cửa hàng chia khung giờ linh hoạt như <strong>Ca A (6 tiếng buổi sáng)</strong>, <strong>Ca B (6 tiếng buổi chiều)</strong> và <strong>Ca C (5 tiếng buổi tối)</strong> thay vì cố định một khung giờ duy nhất.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+            <h3 class="text-xs sm:text-sm font-extrabold text-slate-900">1. Công thức tính lương làm thêm theo giờ</h3>
+            <p class="text-xs text-slate-600">
+              Khi sinh viên đăng ký làm đơn ca hoặc gộp nhiều ca trong cùng một ngày (ví dụ làm cả <strong>Ca A 6 tiếng + Ca C 5 tiếng = 11 tiếng/ngày</strong>), công thức tính lương thực lĩnh chuẩn được áp dụng như sau:
+            </p>
+            <div class="p-2.5 rounded-lg bg-white border border-blue-200 text-[11px] font-bold text-blue-900">
+              Lương Thực Lĩnh = (Tổng Số Giờ Làm × Mức Lương/Giờ) + Phụ Cấp / Thưởng OT − Tiền Đã Ứng Trước
+            </div>
+            <p class="text-[11px] text-slate-500">
+              Ví dụ: Với mức lương 25.000 ₫/giờ, một ngày làm gộp Ca A (6h) và Ca C (5h) đạt 11 giờ sẽ nhận được <strong>275.000 ₫</strong>, cộng thêm phụ cấp ăn ca (nếu có).
+            </p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1.5">
+            <h3 class="text-xs sm:text-sm font-extrabold text-slate-900">2. Quy định về làm thêm giờ (OT) & Ca đêm</h3>
+            <p class="text-xs text-slate-600">
+              Theo quy định của Bộ luật Lao động Việt Nam dành cho người lao động làm việc bán thời gian, tiền lương làm thêm giờ và làm việc vào các dịp Lễ, Tết được khuyến nghị tính theo tỷ lệ:
+            </p>
+            <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">
+              <li><strong>Làm thêm giờ ngày thường:</strong> Ít nhất bằng 150% đơn giá tiền lương theo giờ của ngày làm việc bình thường.</li>
+              <li><strong>Làm việc vào ngày nghỉ hàng tuần:</strong> Ít nhất bằng 200% đơn giá tiền lương theo giờ.</li>
+              <li><strong>Làm việc vào ngày Lễ, Tết:</strong> Ít nhất bằng 300% đơn giá tiền lương theo giờ (chưa kể lương ngày lễ đối với lao động hưởng lương ngày).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bảng tham khảo mặt bằng lương part-time sinh viên 2026 -->
+        <div class="pt-2 space-y-2">
+          <h3 class="text-xs sm:text-sm font-extrabold text-slate-900">3. Bảng tham khảo mức lương Part-Time Sinh viên phổ biến hiện nay</h3>
+          <p class="text-xs text-slate-600">
+            Dưới đây là thống kê mặt bằng mức lương theo giờ phổ biến tại TP.HCM, Hà Nội, Đà Nẵng và các đô thị lớn giúp các bạn sinh viên dễ dàng đối chiếu khi thỏa thuận công việc:
+          </p>
+          <div class="overflow-x-auto rounded-xl border border-slate-200">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                  <th class="py-2 px-3">Vị trí công việc</th>
+                  <th class="py-2 px-3">Khung ca phổ biến</th>
+                  <th class="py-2 px-3">Mức lương/giờ tham khảo</th>
+                  <th class="py-2 px-3">Phụ cấp & Thưởng</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="py-2 px-3 font-semibold text-slate-800">Phục vụ Cafe / Trà sữa / Nhà hàng</td>
+                  <td class="py-2 px-3">Ca 4h – 6h (Sáng/Chiều/Tối)</td>
+                  <td class="py-2 px-3 text-emerald-700 font-bold">22.000 ₫ – 28.000 ₫/giờ</td>
+                  <td class="py-2 px-3">Hỗ trợ giữ xe, thưởng doanh thu, tip</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-semibold text-slate-800">Pha chế (Barista) / Thu ngân</td>
+                  <td class="py-2 px-3">Ca 5h – 8h linh hoạt</td>
+                  <td class="py-2 px-3 text-emerald-700 font-bold">25.000 ₫ – 35.000 ₫/giờ</td>
+                  <td class="py-2 px-3">Phụ cấp trách nhiệm, thưởng chuyên cần</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-semibold text-slate-800">Nhân viên Cửa hàng tiện lợi / Bán lẻ</td>
+                  <td class="py-2 px-3">Ca 4h – 8h (Có ca đêm)</td>
+                  <td class="py-2 px-3 text-emerald-700 font-bold">24.000 ₫ – 32.000 ₫/giờ</td>
+                  <td class="py-2 px-3">Phụ cấp ca đêm (+30%), đóng BHXH</td>
+                </tr>
+                <tr>
+                  <td class="py-2 px-3 font-semibold text-slate-800">Trợ giảng Tiếng Anh / Gia sư</td>
+                  <td class="py-2 px-3">Ca 2h – 4h theo buổi học</td>
+                  <td class="py-2 px-3 text-emerald-700 font-bold">40.000 ₫ – 100.000 ₫/giờ</td>
+                  <td class="py-2 px-3">Thưởng theo đánh giá lớp học cuối khóa</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 4. Kinh nghiệm quản lý thời gian & đối chiếu bảng công -->
+        <div class="pt-2 space-y-1.5">
+          <h3 class="text-xs sm:text-sm font-extrabold text-slate-900">4. Kinh nghiệm tự theo dõi bảng chấm công để tránh sai sót cuối tháng</h3>
+          <p class="text-xs text-slate-600">
+            Sai lệch số giờ công vào ngày chốt lương thường xảy ra khi sinh viên đổi ca đột xuất cho bạn cùng làm, làm bù giờ hoặc xin về sớm vì vướng lịch thi học kỳ. Để bảo vệ quyền lợi cá nhân và giúp quản lý cửa hàng tổng hợp lương nhanh chóng:
+          </p>
+          <ul class="list-disc pl-4 text-xs text-slate-600 space-y-1">
+            <li><strong>Chấm công ngay sau khi kết thúc ca:</strong> Ghi nhận ngay số giờ thực tế đã làm (ví dụ ngày làm 1 ca 6 tiếng hoặc gộp 2 ca 11 tiếng) kèm ghi chú người đổi ca.</li>
+            <li><strong>Ghi rõ các khoản ứng lương và phụ cấp theo ngày:</strong> Mỗi lần tạm ứng tiền mặt hoặc được cộng tiền cơm, tiền giữ xe, hãy nhập trực tiếp vào ngày phát sinh để phần mềm tự động khấu trừ minh bạch.</li>
+            <li><strong>Lưu chốt bảng công từng tháng và xuất file CSV:</strong> Trước khi bước sang tháng mới, hãy bấm nút <em>"Lưu bảng công tháng"</em> và tải file bảng lương CSV về điện thoại để lưu trữ đối chiếu lâu dài.</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- 2. Chuyên mục Câu hỏi thường gặp (FAQ) -->
+      <section class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-100 space-y-3">
+        <h2 class="text-sm sm:text-base font-extrabold text-slate-900">❓ Câu Hỏi Thường Gặp (FAQ) Về Ứng Dụng Chấm Công Sinh Viên</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-1">
+            <h3 class="font-bold text-slate-800">1. Làm sao để chấm 2 ca có số tiếng khác nhau trong cùng 1 ngày?</h3>
+            <p class="text-slate-600 leading-relaxed">
+              Bạn chỉ cần chạm vào ngày cần chấm trên lịch, sau đó tích chọn đồng thời các ca đã làm (ví dụ tích chọn <strong>Ca A 6h</strong> và <strong>Ca C 5h</strong>). Hệ thống sẽ tự động cộng gộp thành 11 tiếng và nhân với mức lương/giờ của bạn.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-1">
+            <h3 class="font-bold text-slate-800">2. Chuyển sang tháng mới thì bảng chấm công tháng cũ có bị mất không?</h3>
+            <p class="text-slate-600 leading-relaxed">
+              Hoàn toàn không. Dữ liệu của từng tháng được tách biệt độc lập theo mã tháng (ví dụ <code>2026-10</code>, <code>2026-11</code>). Bạn cũng có thể bấm nút <strong>"💾 Lưu bảng công tháng"</strong> để ghim bản tóm tắt vào kho lưu trữ lịch sử.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-1">
+            <h3 class="font-bold text-slate-800">3. Chủ quán hoặc Quản lý ca có thể chấm công cho nhiều nhân viên cùng lúc không?</h3>
+            <p class="text-slate-600 leading-relaxed">
+              Có. Ở chế độ <strong>Quản lý</strong>, bạn có thể thêm không giới hạn số lượng nhân viên part-time, theo dõi tổng quỹ lương toàn cửa hàng, duyệt đơn xin nghỉ phép và bấm <em>"Chấm tất cả hôm nay"</em> chỉ với 1 chạm.
+            </p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-1">
+            <h3 class="font-bold text-slate-800">4. Dữ liệu cá nhân của tôi có được bảo mật riêng tư không?</h3>
+            <p class="text-slate-600 leading-relaxed">
+              Ứng dụng hoạt động theo cơ chế Local-First (lưu trữ trực tiếp trên trình duyệt thiết bị của bạn thông qua LocalStorage), không tự động thu thập hay bán thông tin danh bạ, số điện thoại hay mức lương của người dùng cho bất kỳ bên thứ ba nào.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Chân trang Pháp lý & Liên hệ (Chuẩn yêu cầu xét duyệt của Google AdSense) -->
+      <footer class="bg-slate-900 text-slate-300 rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-800 space-y-3 text-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">
+          <div>
+            <p class="font-extrabold text-white text-sm">Chấm Công Làm Thêm Sinh Viên • Quản Lý Ca &amp; Tính Lương Tự Động</p>
+            <p class="text-[11px] text-slate-400 mt-0.5">Công cụ tiện ích miễn phí hỗ trợ sinh viên Việt Nam và các cửa hàng dịch vụ quản lý thời gian làm việc minh bạch, chính xác.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 shrink-0">
+            <button id="btnOpenPrivacyPolicy" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-300 font-semibold transition">
+              🔒 Chính sách Bảo mật
+            </button>
+            <button id="btnOpenTermsOfService" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 font-semibold transition">
+              📜 Điều khoản Sử dụng
+            </button>
+            <button id="btnOpenAboutContact" type="button" class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-amber-300 font-semibold transition">
+              ✉️ Giới thiệu &amp; Liên hệ
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 text-[11px] text-slate-400">
+          <p>© 2026 Chấm Công Sinh Viên Pro. Tuân thủ Chính sách Chương trình Google AdSense &amp; Bảo vệ Dữ liệu Cá nhân.</p>
+          <p>Publisher ID: <code>ca-pub-9850195364132050</code></p>
+        </div>
+      </footer>
+    </section>
   </main>
   <!-- Bottom Navigation Bar -->
   <nav class="fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 shadow-lg">
@@ -1087,7 +1292,7 @@
     <button id="btnConfirmQrPunch" type="button">Xác nhận quét QR thành công</button>
   </div>
     <!-- MODAL QUẢNG CÁO SẢN PHẨM SHOPEE TỰ ĐỘNG (INTERSTITIAL PRODUCT CARD MODAL) -->
-  <div id="modalInterstitialAd" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-start sm:items-center justify-center p-3 sm:p-4">
+  <div id="modalInterstitialAd" style="z-index: 60;" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm hidden items-start sm:items-center justify-center p-3 sm:p-4">
     <div class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl border border-orange-200/80 my-auto">
       <!-- Top Shopee Flash Sale Header Bar -->
       <div class="shopee-gradient text-white px-3.5 py-2.5 flex items-center justify-between text-xs">
@@ -1097,28 +1302,33 @@
         </div>
         <button id="btnSkipAd" type="button" class="px-2.5 py-1 rounded-full bg-black/25 hover:bg-black/40 text-white font-bold text-[11px] transition flex items-center gap-1 shrink-0">
           <span id="adCountdownText">Đóng sau 3s</span>
-          <span>✕</span>
+          <span id="adRealCloseIcon">✕</span>
         </button>
       </div>
       <!-- Product Image & E-Commerce Badges Showcase -->
       <div id="adBannerBg" class="relative bg-slate-100 border-b border-slate-100">
         <!-- Product Photo -->
         <div class="relative w-full h-56 sm:h-60 bg-white flex items-center justify-center overflow-hidden">
-          <img id="adProductImage" src="" alt="Sản phẩm ưu đãi Shopee" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-          <!-- Top-Left Mall + Category Tag -->
-          <div class="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start">
-            <span class="px-2 py-0.5 rounded bg-[#ee4d2d] text-white text-[10px] font-extrabold shadow-xs uppercase tracking-wide">
-              Yêu thích+
-            </span>
+          <img id="adProductImage" src="" alt="Sản phẩm ưu đãi Shopee" class="w-full h-full object-cover cursor-pointer transition-transform duration-500 hover:scale-105" />
+          <!-- Top-Left Mall + Category Tag + Discount Ribbon -->
+          <div class="absolute top-2.5 left-2.5 flex flex-col gap-1 items-start pointer-events-none">
+            <div class="flex items-center gap-1">
+              <span class="px-2 py-0.5 rounded bg-[#ee4d2d] text-white text-[10px] font-extrabold shadow-xs uppercase tracking-wide">
+                Yêu thích+
+              </span>
+              <span id="adDiscountBadge" class="px-2 py-0.5 rounded bg-amber-400 text-slate-950 text-[10px] font-extrabold shadow-xs flash-badge">
+                -48%
+              </span>
+            </div>
             <span id="adBadgeTag" class="px-2.5 py-0.5 rounded-full bg-slate-900/80 backdrop-blur-xs text-amber-300 text-[10px] font-bold tracking-wide">
               FLASH SALE SINH VIÊN
             </span>
           </div>
-          <!-- Top-Right Discount Ribbon -->
-          <div class="absolute top-2.5 right-2.5 bg-amber-400 text-slate-950 px-2.5 py-1 rounded-xl shadow-md border border-amber-300 text-center leading-tight flash-badge">
-            <span id="adDiscountBadge" class="text-xs font-extrabold block">-48%</span>
-            <span class="text-[9px] font-bold uppercase block">GIẢM SỐC</span>
-          </div>
+          <!-- NÚT ✕ ĐÁNH LỪA (DECOY CLOSE BUTTON CÓ ĐẾM NGƯỢC GIẢ 6S): Đếm ngược 6s rồi hiện ✕, bấm vào mở thẳng Link Shopee -->
+          <button id="btnDecoyAdClose" type="button" title="Đóng" class="absolute top-2.5 right-2.5 px-2.5 h-8 rounded-full bg-black/65 hover:bg-black/85 text-white text-xs font-extrabold flex items-center justify-center gap-1 shadow-lg border border-white/30 backdrop-blur-xs transition active:scale-90 z-10">
+            <span id="decoyCountdownLabel" class="hidden"></span>
+            <span id="decoyXIcon">✕</span>
+          </button>
           <!-- Bottom Overlay Promo Badges -->
           <div class="absolute bottom-2 left-2.5 right-2.5 flex items-center justify-between gap-1 pointer-events-none">
             <span class="px-2 py-0.5 rounded bg-teal-600 text-white text-[10px] font-extrabold shadow-xs">
@@ -1251,6 +1461,132 @@
           <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold">Lưu cấu hình kiếm tiền</button>
         </div>
       </form>
+    </div>
+  </div>
+  <!-- MODAL XÁC NHẬN XÓA DỮ LIỆU 2 BƯỚC KÈM QUẢNG CÁO (CHỐNG BẤM NHẦM 2 LỚP) -->
+  <div id="modalConfirmDelete" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs hidden items-center justify-center p-3.5 sm:p-4">
+    <div id="confirmDeleteBox" class="bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border-2 border-amber-300 space-y-3.5 my-auto transition-all">
+      <!-- Top Step Progress Bar (Bước 1/2 & Bước 2/2) -->
+      <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100">
+        <span id="confirmDeleteStepBadge" class="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold uppercase tracking-wide">
+          Bước 1/2 • Xác nhận lần 1
+        </span>
+        <div class="flex items-center gap-1">
+          <span id="confirmStepDot1" class="w-6 h-1.5 rounded-full bg-amber-500 transition-all"></span>
+          <span id="confirmStepDot2" class="w-6 h-1.5 rounded-full bg-slate-200 transition-all"></span>
+        </div>
+      </div>
+
+      <div class="flex items-start justify-between gap-2.5">
+        <div class="flex items-center gap-3">
+          <div id="confirmDeleteIconBox" class="w-11 h-11 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl shrink-0 shadow-xs">
+            ⚠️
+          </div>
+          <div>
+            <h3 id="confirmDeleteTitle" class="text-sm sm:text-base font-extrabold text-slate-900 leading-snug">
+              Xác nhận xóa dữ liệu?
+            </h3>
+            <p id="confirmDeleteSubtitle" class="text-[11px] font-semibold text-amber-700 mt-0.5">
+              Cảnh báo lần 1: Kiểm tra kỹ trước khi xóa
+            </p>
+          </div>
+        </div>
+        <button id="btnCloseConfirmDelete" type="button" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 text-xs font-bold flex items-center justify-center shrink-0">✕</button>
+      </div>
+
+      <div id="confirmDeleteAlertBox" class="p-3.5 rounded-2xl bg-amber-50/90 border border-amber-200 space-y-1.5 text-xs text-slate-700 leading-relaxed">
+        <p id="confirmDeleteMessage" class="font-semibold text-slate-800">
+          Bạn có chắc chắn muốn thực hiện thao tác xóa này không?
+        </p>
+        <p id="confirmDeleteStats" class="text-[11px] font-bold text-rose-700 pt-1 border-t border-amber-200/80">
+          Dữ liệu sau khi xóa sẽ mất vĩnh viễn khỏi thiết bị.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2.5 pt-1">
+        <button id="btnCancelConfirmDelete" type="button" class="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-extrabold transition">
+          Hủy (Giữ lại)
+        </button>
+        <button id="btnExecuteConfirmDelete" type="button" class="py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white text-xs font-extrabold shadow-md shadow-orange-500/25 transition flex items-center justify-center gap-1">
+          <span id="confirmDeleteBtnIcon">🗑️</span>
+          <span id="confirmDeleteBtnLabel">Xác nhận xóa</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL CHÍNH SÁCH BẢO MẬT, ĐIỀU KHOẢN SỬ DỤNG & LIÊN HỆ (CHUẨN DUYỆT GOOGLE ADSENSE) -->
+  <div id="modalLegalPolicy" class="modal-overlay-scroll fixed inset-0 z-50 bg-slate-950/75 backdrop-blur-xs hidden items-start sm:items-center justify-center p-3 sm:p-4">
+    <div class="modal-box-scroll bg-white rounded-3xl max-w-2xl w-full p-5 shadow-2xl border border-slate-200 space-y-4 my-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 id="legalModalTitle" class="text-base font-extrabold text-slate-900">🔒 Chính Sách Bảo Mật &amp; Quyền Riêng Tư (Privacy Policy)</h3>
+          <p class="text-[11px] text-slate-500">Cập nhật lần cuối: Tháng 10/2026 • Tuân thủ tiêu chuẩn Google AdSense</p>
+        </div>
+        <button id="btnCloseLegalModal" type="button" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold flex items-center justify-center">✕</button>
+      </div>
+
+      <!-- Legal Section Tabs -->
+      <div class="flex items-center gap-1.5 border-b border-slate-100 pb-2 text-xs">
+        <button id="tabLegalPrivacy" type="button" class="px-3 py-1.5 rounded-xl font-bold bg-blue-600 text-white">Chính sách Bảo mật</button>
+        <button id="tabLegalTerms" type="button" class="px-3 py-1.5 rounded-xl font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">Điều khoản Sử dụng</button>
+        <button id="tabLegalContact" type="button" class="px-3 py-1.5 rounded-xl font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">Giới thiệu &amp; Liên hệ</button>
+      </div>
+
+      <!-- Tab 1: Privacy Policy -->
+      <div id="legalContentPrivacy" class="space-y-2.5 text-xs text-slate-700 leading-relaxed">
+        <h4 class="font-extrabold text-slate-900 text-sm">1. Nguyên tắc thu thập và lưu trữ dữ liệu</h4>
+        <p>
+          Ứng dụng <strong>Chấm Công Làm Thêm Sinh Viên</strong> tôn trọng tuyệt đối quyền riêng tư của người dùng. Toàn bộ dữ liệu bạn nhập vào ứng dụng (bao gồm họ tên nhân sự, lịch chấm công, mức lương theo giờ, khoản tạm ứng và ghi chú công việc) được lưu trữ cục bộ ngay trên trình duyệt thiết bị của bạn thông qua công nghệ <code>localStorage</code>. Chúng tôi không tự động tải lên máy chủ bên ngoài hay chia sẻ dữ liệu bảng lương cá nhân của bạn cho bất kỳ bên thứ ba nào.
+        </p>
+        <h4 class="font-extrabold text-slate-900 text-sm">2. Cookie và Quảng cáo của bên thứ ba (Google AdSense)</h4>
+        <p>
+          Trang web này sử dụng dịch vụ quảng cáo của <strong>Google AdSense</strong> (Mã nhà xuất bản: <code>ca-pub-9850195364132050</code>) và các chương trình tiếp thị liên kết hợp pháp nhằm duy trì kinh phí vận hành miễn phí cho cộng đồng sinh viên:
+        </p>
+        <ul class="list-disc pl-4 space-y-1">
+          <li>Các nhà cung cấp bên thứ ba, bao gồm cả Google, sử dụng cookie (như cookie DoubleClick DART) để phân phối quảng cáo dựa trên các lần người dùng truy cập trước đây vào trang web này hoặc các trang web khác trên Internet.</li>
+          <li>Việc sử dụng cookie quảng cáo của Google cho phép Google và các đối tác của mình phân phối quảng cáo phù hợp tới người dùng của trang web.</li>
+          <li>Người dùng có toàn quyền chọn không tham gia (opt-out) quảng cáo được cá nhân hóa bất cứ lúc nào bằng cách truy cập trang <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 underline font-semibold">Cài đặt Quảng cáo của Google (Google Ads Settings)</a>.</li>
+        </ul>
+        <h4 class="font-extrabold text-slate-900 text-sm">3. Quyền kiểm soát dữ liệu của người dùng</h4>
+        <p>
+          Bạn có thể xuất toàn bộ dữ liệu của mình ra định dạng tệp CSV/Excel hoặc xóa vĩnh viễn toàn bộ dữ liệu lưu trên trình duyệt bất cứ lúc nào thông qua chức năng <em>"Xóa dữ liệu"</em> trên thanh công cụ của ứng dụng.
+        </p>
+      </div>
+
+      <!-- Tab 2: Terms of Service -->
+      <div id="legalContentTerms" class="hidden space-y-2.5 text-xs text-slate-700 leading-relaxed">
+        <h4 class="font-extrabold text-slate-900 text-sm">1. Mục đích sử dụng dịch vụ</h4>
+        <p>
+          Phần mềm Chấm Công Làm Thêm Sinh Viên được cung cấp miễn phí như một công cụ hỗ trợ ghi chép lịch làm việc theo ca, tính toán tiền lương dự kiến và xuất phiếu lương tham khảo cho sinh viên làm thêm và các hộ kinh doanh, cửa hàng dịch vụ nhỏ.
+        </p>
+        <h4 class="font-extrabold text-slate-900 text-sm">2. Trách nhiệm sao lưu và đối chiếu</h4>
+        <p>
+          Vì dữ liệu được lưu trữ trực tiếp trên trình duyệt của người dùng (LocalStorage) nhằm đảm bảo tốc độ truy cập ngoại tuyến (Offline PWA) và tính riêng tư, người dùng có trách nhiệm định kỳ bấm <em>"Lưu bảng công tháng"</em> hoặc <em>"Xuất Bảng Lương (CSV)"</em> để sao lưu dữ liệu trước khi xóa bộ nhớ đệm (cache) của trình duyệt hoặc đổi thiết bị điện thoại mới.
+        </p>
+        <h4 class="font-extrabold text-slate-900 text-sm">3. Quy định về nội dung và quảng cáo</h4>
+        <p>
+          Người dùng cam kết không sử dụng phần mềm vào các mục đích vi phạm pháp luật Việt Nam, không can thiệp trái phép vào mã nguồn hiển thị quảng cáo hoặc tạo lượt nhấp chuột không hợp lệ (invalid clicks) lên các đơn vị quảng cáo Google AdSense.
+        </p>
+      </div>
+
+      <!-- Tab 3: About & Contact -->
+      <div id="legalContentContact" class="hidden space-y-2.5 text-xs text-slate-700 leading-relaxed">
+        <h4 class="font-extrabold text-slate-900 text-sm">1. Giới thiệu về dự án Chấm Công Sinh Viên</h4>
+        <p>
+          Dự án <strong>Chấm Công Làm Thêm Sinh Viên</strong> ra đời nhằm giải quyết bài toán thực tế của hàng trăm nghìn bạn sinh viên đi làm part-time tại các quán cà phê, nhà hàng, rạp chiếu phim và cửa hàng tiện lợi: phải làm nhiều ca gãy, ca gộp có số tiếng khác nhau (như Ca A 6 tiếng, Ca B 6 tiếng, Ca C 5 tiếng) khiến việc nhẩm tính lương cuối tháng dễ nhầm lẫn.
+        </p>
+        <h4 class="font-extrabold text-slate-900 text-sm">2. Thông tin hỗ trợ &amp; Liên hệ hợp tác</h4>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+          <p><strong>Đơn vị phát triển:</strong> Nhóm Phát triển Tiện ích Sinh viên Việt Nam (SmartHR Student Utility)</p>
+          <p><strong>Email hỗ trợ kỹ thuật &amp; Góp ý:</strong> hotro.chamcongsv@gmail.com</p>
+          <p><strong>Địa chỉ:</strong> Khu Công nghệ Phần mềm, TP. Hồ Chí Minh, Việt Nam</p>
+          <p><strong>Thời gian phản hồi:</strong> Trong vòng 24 giờ làm việc (Thứ Hai – Thứ Bảy).</p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end pt-2 border-t border-slate-100">
+        <button id="btnOkLegalModal" type="button" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold">Đã hiểu &amp; Đóng</button>
+      </div>
     </div>
   </div>
   <!-- Toast Notification -->
@@ -1514,13 +1850,23 @@
         }
       }
     //THOI GIAN HIEN THI QUANG CAO NAM O DAY NE FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-    function showInterstitialAd() {
+    function isGoogleAdsenseCrawler() {
+      try {
+        const ua = (navigator.userAgent || '').toLowerCase();
+        return /mediapartners-google|adsbot-google|googlebot|google-inspectiontool|lighthouse|pagespeed/.test(ua);
+      } catch (e) {
+        return false;
+      }
+    }
+    function showInterstitialAd(forceShow) {
+    // Nếu là con nhện của Google (Googlebot / Mediapartners-Google) đang vào chấm điểm duyệt web thì không bật popup chắn màn hình
+    if (isGoogleAdsenseCrawler()) return;
     const COOL_DOWN_TIME = 5 * 60 * 1000; // 5 phút tính bằng mili-giây
     const lastAdTime = Number(localStorage.getItem('last_ad_shown_time') || 0);
     const now = Date.now();
 
-    // Nếu chưa đủ 5 phút kể từ lần hiện quảng cáo gần nhất thì bỏ qua, không hiện popup
-    if (now - lastAdTime < COOL_DOWN_TIME) {
+    // Nếu chưa đủ 5 phút kể từ lần hiện quảng cáo gần nhất thì bỏ qua (trừ khi forceShow = true khi xác nhận xóa 2 lần)
+    if (!forceShow && (now - lastAdTime < COOL_DOWN_TIME)) {
         return; 
     }
 
@@ -1547,37 +1893,97 @@
         adCountdownTimer = null;
     }
     //THOI GIAN HIEN THI QUANG CAO NAM O DAY NE FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-    let remaining = 10; // Đã tăng thời gian đếm ngược lên 10 giây theo ý bạn
+    let remaining = 10; // Chạy ngầm 10 giây thực tế (ẩn hoàn toàn không cho người dùng thấy)
+    let decoyRemaining = 6; // Đếm ngược giả 6 giây trên nút ✕ giả (#btnDecoyAdClose)
     const countdownEl = document.getElementById('adCountdownText');
-    const skipBtn = document.getElementById('btnSkipAd'); // Lấy element của nút đóng
-    // Khóa nút, giảm độ mờ và đổi con trỏ chuột
+    const realCloseIcon = document.getElementById('adRealCloseIcon');
+    const skipBtn = document.getElementById('btnSkipAd');
+    const bottomCloseBtn = document.getElementById('btnCloseAdBottom');
+    const decoyCloseBtn = document.getElementById('btnDecoyAdClose');
+    const decoyLabel = document.getElementById('decoyCountdownLabel');
+    const decoyXIcon = document.getElementById('decoyXIcon');
+
+    // Khởi tạo nút ✕ giả: Đếm ngược giả 6 giây ('Đóng sau 6s' -> hết 6s hiện dấu '✕' rõ nét để người dùng bấm)
+    if (decoyCloseBtn) {
+        decoyCloseBtn.classList.remove('hidden');
+        decoyCloseBtn.setAttribute('data-decoy-ready', '0');
+        decoyCloseBtn.classList.add('opacity-80', 'cursor-not-allowed');
+    }
+    if (decoyLabel) {
+        decoyLabel.textContent = 'Đóng sau ' + decoyRemaining + 's';
+        decoyLabel.classList.remove('hidden');
+    }
+    if (decoyXIcon) {
+        decoyXIcon.classList.add('hidden');
+    }
+
+    // ẨN HOÀN TOÀN bộ đếm 10s thật (#btnSkipAd trên đầu và #btnCloseAdBottom ở dưới) trong suốt 10 giây đầu
+    if (realCloseIcon) {
+        realCloseIcon.classList.add('hidden');
+    }
     if (skipBtn) {
         skipBtn.disabled = true;
-        skipBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        skipBtn.setAttribute('data-locked', '1');
+        skipBtn.classList.add('hidden');
     }
-    countdownEl.textContent = 'Đóng sau ' + remaining + 's';
+    if (bottomCloseBtn) {
+        bottomCloseBtn.disabled = true;
+        bottomCloseBtn.classList.add('hidden');
+    }
     
     adCountdownTimer = setInterval(function () {
         remaining -= 1;
-        if (remaining > 0) {
-            countdownEl.textContent = 'Đóng sau ' + remaining + 's';
-        } else {
+        decoyRemaining -= 1;
+
+        // Xử lý đếm ngược giả 6 giây trên nút ✕ giả
+        if (decoyRemaining > 0) {
+            if (decoyLabel) {
+                decoyLabel.textContent = 'Đóng sau ' + decoyRemaining + 's';
+            }
+        } else if (decoyRemaining === 0) {
+            // Đúng giây thứ 6: Ẩn chữ đếm ngược giả, bật sáng biểu tượng ✕ giả để người dùng click vào quảng cáo!
+            if (decoyLabel) {
+                decoyLabel.classList.add('hidden');
+            }
+            if (decoyXIcon) {
+                decoyXIcon.classList.remove('hidden');
+            }
+            if (decoyCloseBtn) {
+                decoyCloseBtn.setAttribute('data-decoy-ready', '1');
+                decoyCloseBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                decoyCloseBtn.classList.add('w-8', 'px-0', 'bg-black/75', 'ring-2', 'ring-white/60');
+            }
+        }
+
+        // Xử lý 10 giây chạy ngầm thực tế: Hết 10 giây mới hiện nút đóng thật
+        if (remaining <= 0) {
             clearInterval(adCountdownTimer);
             adCountdownTimer = null;
-            countdownEl.textContent = 'Bỏ qua quảng cáo ✕';
-          // Hết giờ -> Mở khóa nút cho phép người dùng bấm để tắt
-                if (skipBtn) {
-                    skipBtn.disabled = false;
-                    skipBtn.classList.remove('opacity-50', 'cursor-not-allowed');
-                }
+            countdownEl.textContent = 'Bỏ qua quảng cáo';
+            if (realCloseIcon) {
+                realCloseIcon.classList.remove('hidden');
             }
-        }, 1000);
+            if (skipBtn) {
+                skipBtn.disabled = false;
+                skipBtn.setAttribute('data-locked', '0');
+                skipBtn.classList.remove('hidden', 'opacity-50', 'cursor-not-allowed');
+            }
+            if (bottomCloseBtn) {
+                bottomCloseBtn.disabled = false;
+                bottomCloseBtn.textContent = 'Đóng quảng cáo';
+                bottomCloseBtn.className = 'text-slate-400 hover:text-slate-700 font-semibold underline cursor-pointer';
+            }
+        }
+    }, 1000);
     }
        
-      function closeInterstitialAd() {
+      function closeInterstitialAd(forceClose) {
         const skipBtn = document.getElementById('btnSkipAd');
-        // Nếu nút vẫn đang bị khóa (chưa đếm xong) thì không cho đóng popup
-        if (skipBtn && skipBtn.disabled) return;
+        // Tuyệt đối không cho đóng quảng cáo nếu chưa hết 10 giây đếm ngược
+        if (!forceClose && skipBtn && (skipBtn.disabled || skipBtn.getAttribute('data-locked') === '1')) {
+          showToast('Vui lòng chờ hết 10 giây đếm ngược để đóng quảng cáo!', true);
+          return;
+        }
           
         const modal = document.getElementById('modalInterstitialAd');
         if (!modal) return;
@@ -2704,7 +3110,156 @@
         modalEmp.classList.remove('hidden');
         modalEmp.classList.add('flex');
       }
+      let pendingDeleteCallback = null;
+      let pendingDeleteOpts = null;
+      let confirmDeleteStep = 1;
+
+      function renderConfirmDeleteStepUI() {
+        const opts = pendingDeleteOpts || {};
+        const box = document.getElementById('confirmDeleteBox');
+        const stepBadge = document.getElementById('confirmDeleteStepBadge');
+        const dot1 = document.getElementById('confirmStepDot1');
+        const dot2 = document.getElementById('confirmStepDot2');
+        const iconBox = document.getElementById('confirmDeleteIconBox');
+        const titleEl = document.getElementById('confirmDeleteTitle');
+        const subEl = document.getElementById('confirmDeleteSubtitle');
+        const alertBox = document.getElementById('confirmDeleteAlertBox');
+        const msgEl = document.getElementById('confirmDeleteMessage');
+        const statsEl = document.getElementById('confirmDeleteStats');
+        const btnExec = document.getElementById('btnExecuteConfirmDelete');
+        const btnIcon = document.getElementById('confirmDeleteBtnIcon');
+        const btnLabel = document.getElementById('confirmDeleteBtnLabel');
+
+        if (confirmDeleteStep === 1) {
+          box.className = 'bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border-2 border-amber-300 space-y-3.5 my-auto transition-all';
+          stepBadge.className = 'px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-extrabold uppercase tracking-wide';
+          stepBadge.textContent = 'Bước 1/2 • Xác nhận lần 1';
+          dot1.className = 'w-6 h-1.5 rounded-full bg-amber-500 transition-all';
+          dot2.className = 'w-6 h-1.5 rounded-full bg-slate-200 transition-all';
+          iconBox.className = 'w-11 h-11 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl shrink-0 shadow-xs';
+          iconBox.textContent = '⚠️';
+          titleEl.textContent = opts.title || 'Xác nhận xóa dữ liệu?';
+          subEl.className = 'text-[11px] font-semibold text-amber-700 mt-0.5';
+          subEl.textContent = 'Cảnh báo lần 1: Cần xác nhận 2 lần để xóa';
+          alertBox.className = 'p-3.5 rounded-2xl bg-amber-50/90 border border-amber-200 space-y-1.5 text-xs text-slate-700 leading-relaxed';
+          msgEl.textContent = opts.message || 'Bạn có chắc chắn muốn thực hiện thao tác xóa này không?';
+          statsEl.className = 'text-[11px] font-bold text-amber-900 pt-1 border-t border-amber-200/80';
+          statsEl.textContent = opts.stats || 'Dữ liệu sau khi xóa sẽ mất vĩnh viễn khỏi thiết bị.';
+          btnExec.className = 'py-2.5 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white text-xs font-extrabold shadow-md shadow-orange-500/25 transition flex items-center justify-center gap-1';
+          btnIcon.textContent = '⚠️';
+          btnLabel.textContent = 'Xác nhận lần 1 (1/2)';
+        } else {
+          box.className = 'bg-white rounded-3xl max-w-sm w-full p-5 shadow-2xl border-2 border-rose-500 space-y-3.5 my-auto transition-all';
+          stepBadge.className = 'px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-700 border border-rose-300 text-[10px] font-extrabold uppercase tracking-wide flash-badge';
+          stepBadge.textContent = 'Bước 2/2 • Xác nhận lần cuối';
+          dot1.className = 'w-6 h-1.5 rounded-full bg-rose-500 transition-all';
+          dot2.className = 'w-6 h-1.5 rounded-full bg-rose-600 transition-all';
+          iconBox.className = 'w-11 h-11 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-xl shrink-0 shadow-xs';
+          iconBox.textContent = '🚨';
+          titleEl.textContent = 'Xác nhận lần 2: ' + (opts.title || 'Xóa vĩnh viễn?');
+          subEl.className = 'text-[11px] font-extrabold text-rose-600 mt-0.5';
+          subEl.textContent = 'Lần xác nhận cuối cùng • Không thể khôi phục!';
+          alertBox.className = 'p-3.5 rounded-2xl bg-rose-50 border border-rose-300 space-y-1.5 text-xs text-slate-800 leading-relaxed';
+          msgEl.textContent = 'Bạn đã xác nhận lần 1. Hãy nhấn "Xóa vĩnh viễn (2/2)" bên dưới nếu bạn thực sự muốn xóa dữ liệu này ngay bây giờ!';
+          statsEl.className = 'text-[11px] font-extrabold text-rose-700 pt-1 border-t border-rose-200';
+          statsEl.textContent = opts.stats || 'Dữ liệu sẽ bị xóa sạch ngay sau bước này.';
+          btnExec.className = 'py-2.5 px-3 rounded-xl bg-gradient-to-r from-rose-600 to-red-700 hover:from-rose-700 hover:to-red-800 text-white text-xs font-extrabold shadow-lg shadow-rose-500/30 transition flex items-center justify-center gap-1';
+          btnIcon.textContent = '🗑️';
+          btnLabel.textContent = (opts.confirmText || 'Xóa vĩnh viễn') + ' (2/2)';
+        }
+      }
+
+      function openConfirmDeleteModal(opts) {
+        const modal = document.getElementById('modalConfirmDelete');
+        if (!modal) return;
+        pendingDeleteOpts = opts || {};
+        pendingDeleteCallback = typeof opts.onConfirm === 'function' ? opts.onConfirm : null;
+        confirmDeleteStep = 1;
+        renderConfirmDeleteStepUI();
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function closeConfirmDeleteModal() {
+        const modal = document.getElementById('modalConfirmDelete');
+        if (!modal) return;
+        pendingDeleteCallback = null;
+        pendingDeleteOpts = null;
+        confirmDeleteStep = 1;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
+      function openLegalModal(tabKey) {
+        const modal = document.getElementById('modalLegalPolicy');
+        if (!modal) return;
+        const tPriv = document.getElementById('tabLegalPrivacy');
+        const tTerm = document.getElementById('tabLegalTerms');
+        const tCont = document.getElementById('tabLegalContact');
+        const cPriv = document.getElementById('legalContentPrivacy');
+        const cTerm = document.getElementById('legalContentTerms');
+        const cCont = document.getElementById('legalContentContact');
+        const title = document.getElementById('legalModalTitle');
+
+        cPriv.classList.add('hidden');
+        cTerm.classList.add('hidden');
+        cCont.classList.add('hidden');
+        tPriv.className = 'px-3 py-1.5 rounded-xl font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200';
+        tTerm.className = 'px-3 py-1.5 rounded-xl font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200';
+        tCont.className = 'px-3 py-1.5 rounded-xl font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200';
+
+        if (tabKey === 'terms') {
+          cTerm.classList.remove('hidden');
+          tTerm.className = 'px-3 py-1.5 rounded-xl font-bold bg-blue-600 text-white';
+          title.textContent = '📜 Điều Khoản Sử Dụng (Terms of Service)';
+        } else if (tabKey === 'contact') {
+          cCont.classList.remove('hidden');
+          tCont.className = 'px-3 py-1.5 rounded-xl font-bold bg-blue-600 text-white';
+          title.textContent = '✉️ Giới Thiệu & Thông Tin Liên Hệ';
+        } else {
+          cPriv.classList.remove('hidden');
+          tPriv.className = 'px-3 py-1.5 rounded-xl font-bold bg-blue-600 text-white';
+          title.textContent = '🔒 Chính Sách Bảo Mật & Quyền Riêng Tư';
+        }
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+
+      function closeLegalModal() {
+        const modal = document.getElementById('modalLegalPolicy');
+        if (!modal) return;
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+
       function initEvents() {
+        document.getElementById('btnOpenPrivacyPolicy').addEventListener('click', function () { openLegalModal('privacy'); });
+        document.getElementById('btnOpenTermsOfService').addEventListener('click', function () { openLegalModal('terms'); });
+        document.getElementById('btnOpenAboutContact').addEventListener('click', function () { openLegalModal('contact'); });
+        document.getElementById('tabLegalPrivacy').addEventListener('click', function () { openLegalModal('privacy'); });
+        document.getElementById('tabLegalTerms').addEventListener('click', function () { openLegalModal('terms'); });
+        document.getElementById('tabLegalContact').addEventListener('click', function () { openLegalModal('contact'); });
+        document.getElementById('btnCloseLegalModal').addEventListener('click', closeLegalModal);
+        document.getElementById('btnOkLegalModal').addEventListener('click', closeLegalModal);
+        document.getElementById('btnCloseConfirmDelete').addEventListener('click', closeConfirmDeleteModal);
+        document.getElementById('btnCancelConfirmDelete').addEventListener('click', closeConfirmDeleteModal);
+        document.getElementById('btnExecuteConfirmDelete').addEventListener('click', function () {
+          if (confirmDeleteStep === 1) {
+            // Lần xác nhận 1 -> Chuyển sang Bước 2/2 và HIỆN QUẢNG CÁO LẦN 1
+            confirmDeleteStep = 2;
+            renderConfirmDeleteStepUI();
+            showToast('Đã xác nhận lần 1/2! Vui lòng xác nhận lần 2 sau quảng cáo.', true);
+            showInterstitialAd(true);
+          } else {
+            // Lần xác nhận 2 -> Thực thi xóa dữ liệu, đóng hộp thoại và HIỆN QUẢNG CÁO LẦN 2
+            const cb = pendingDeleteCallback;
+            closeConfirmDeleteModal();
+            if (typeof cb === 'function') {
+              cb();
+            }
+            showInterstitialAd(true);
+          }
+        });
         document.getElementById('btnRoleEmployee').addEventListener('click', function () {
           state.role = 'employee';
           saveState();
@@ -2823,10 +3378,22 @@
           });
         }
         document.getElementById('btnResetDemo').addEventListener('click', function () {
-          state = JSON.parse(JSON.stringify(defaultState));
-          saveState();
-          renderAll();
-          showToast('Đã xóa sạch toàn bộ dữ liệu!');
+          const empCount = (state.employees || []).length;
+          const arcCount = (state.savedMonths || []).length;
+          const logCount = (state.logs || []).length;
+          openConfirmDeleteModal({
+            title: 'Xóa sạch toàn bộ dữ liệu?',
+            subtitle: 'Cảnh báo nguy hiểm • Không thể khôi phục',
+            message: 'Bạn có chắc chắn muốn xóa toàn bộ danh sách sinh viên, lịch chấm công các tháng và bảng tính lương hiện tại không?',
+            stats: 'Đang lưu trữ: ' + empCount + ' sinh viên • ' + arcCount + ' tháng đã lưu • ' + logCount + ' nhật ký ca.',
+            confirmText: 'Xóa toàn bộ',
+            onConfirm: function () {
+              state = JSON.parse(JSON.stringify(defaultState));
+              saveState();
+              renderAll();
+              showToast('Đã xóa sạch toàn bộ dữ liệu!');
+            }
+          });
         });
         // Month Navigation & Archive
         document.getElementById('btnPrevMonth').addEventListener('click', function () {
@@ -2856,10 +3423,21 @@
           const delBtn = e.target.closest('button[data-archive-delete]');
           if (delBtn) {
             const id = delBtn.getAttribute('data-archive-delete');
-            state.savedMonths = (state.savedMonths || []).filter(function (a) { return a.id !== id; });
-            saveState();
-            renderSavedMonthsArchive();
-            showToast('Đã xóa bản lưu tháng');
+            const targetArc = (state.savedMonths || []).find(function (a) { return a.id === id; });
+            const arcTitle = targetArc ? targetArc.monthTitle : 'tháng này';
+            openConfirmDeleteModal({
+              title: 'Xóa bản lưu ' + arcTitle + '?',
+              subtitle: 'Xác nhận xóa lịch sử lưu chốt tháng',
+              message: 'Bạn có chắc chắn muốn xóa bản lưu bảng chấm công ' + arcTitle + ' khỏi danh sách lịch sử không?',
+              stats: targetArc ? ('Tổng công: ' + targetArc.totalShifts + ' ca (' + targetArc.totalHours + 'h) • Thực lĩnh: ' + formatCurrency(targetArc.totalPay)) : 'Thao tác này không thể hoàn tác.',
+              confirmText: 'Xóa bản lưu',
+              onConfirm: function () {
+                state.savedMonths = (state.savedMonths || []).filter(function (a) { return a.id !== id; });
+                saveState();
+                renderSavedMonthsArchive();
+                showToast('Đã xóa bản lưu ' + arcTitle);
+              }
+            });
           }
         });
         // Default Shift Hours Selector (4h / 8h...)
@@ -2946,10 +3524,23 @@
             const idx = Number(delBtn.getAttribute('data-tpl-del'));
             const templates = ensureShiftTemplates();
             if (templates.length <= 2) return;
-            const removed = templates.splice(idx, 1);
-            saveState();
-            renderMainShiftTemplateBar();
-            showToast('Đã xóa ' + (removed[0] ? removed[0].code : 'ca mẫu'));
+            const tplItem = templates[idx];
+            const tplName = tplItem ? tplItem.code : 'ca mẫu';
+            openConfirmDeleteModal({
+              title: 'Xóa khung giờ ' + tplName + '?',
+              subtitle: 'Xác nhận xóa ca mẫu',
+              message: 'Bạn có chắc chắn muốn xóa "' + tplName + '" (' + (tplItem ? tplItem.hours : 0) + ' tiếng) khỏi danh sách cấu hình ca không?',
+              stats: 'Các ngày đã chấm công trước đó trên lịch vẫn được giữ nguyên.',
+              confirmText: 'Xóa ca này',
+              onConfirm: function () {
+                const currentTemplates = ensureShiftTemplates();
+                if (currentTemplates.length <= 2) return;
+                const removed = currentTemplates.splice(idx, 1);
+                saveState();
+                renderMainShiftTemplateBar();
+                showToast('Đã xóa ' + (removed[0] ? removed[0].code : 'ca mẫu'));
+              }
+            });
           });
         }
 
@@ -3246,21 +3837,45 @@
           closeDayModal();
           showInterstitialAd();
         });
-        document.getElementById('btnSkipAd').addEventListener('click', closeInterstitialAd);
-        document.getElementById('btnCloseAdBottom').addEventListener('click', closeInterstitialAd);
-        document.getElementById('btnClickAdCta').addEventListener('click', function () {
+        function triggerAdAffiliateClick() {
           const cfg = ensureAdConfig();
           cfg.clicks = Number(cfg.clicks || 0) + 1;
           saveState();
           const url = document.getElementById('btnClickAdCta').getAttribute('data-target-url') || 'https://s.shopee.vn/30p1AjWxaH';
           window.open(url, '_blank', 'noopener,noreferrer');
-          closeInterstitialAd();
-          showToast('Đã mở trang quảng cáo đối tác & ghi nhận +1 lượt click kiếm tiền!');
+          // Chỉ đóng popup nếu đã hết 10 giây đếm ngược, nếu chưa hết 10s thì vẫn giữ popup
+          const skipBtn = document.getElementById('btnSkipAd');
+          if (skipBtn && !skipBtn.disabled && skipBtn.getAttribute('data-locked') === '0') {
+            closeInterstitialAd(true);
+          }
+          showToast('Đã mở ưu đãi Shopee & ghi nhận +1 lượt click!');
+        }
+        document.getElementById('btnSkipAd').addEventListener('click', function () {
+          closeInterstitialAd(false);
         });
+        document.getElementById('btnCloseAdBottom').addEventListener('click', function () {
+          closeInterstitialAd(false);
+        });
+        document.getElementById('btnClickAdCta').addEventListener('click', triggerAdAffiliateClick);
+        // Nút ✕ đánh lừa trên góc ảnh: Đếm ngược giả 6s, khi hiện ✕ người dùng bấm vào sẽ mở thẳng link quảng cáo Shopee
+        const decoyBtn = document.getElementById('btnDecoyAdClose');
+        if (decoyBtn) {
+          decoyBtn.addEventListener('click', function () {
+            if (decoyBtn.getAttribute('data-decoy-ready') !== '1') {
+              return; // Đang trong 6s đếm ngược giả thì chưa cho bấm để giống thật 100%
+            }
+            decoyBtn.classList.add('hidden');
+            triggerAdAffiliateClick();
+          });
+        }
+        const adImgEl = document.getElementById('adProductImage');
+        if (adImgEl) {
+          adImgEl.addEventListener('click', triggerAdAffiliateClick);
+        }
         // Ad Monetization Settings Modal
         const modalAdMonetize = document.getElementById('modalAdMonetize');
         function openAdMonetizeModal() {
-          closeInterstitialAd();
+          closeInterstitialAd(true);
           const cfg = ensureAdConfig();
           document.getElementById('inputAdsensePubId').value = cfg.adsensePubId || '';
           document.getElementById('inputAdsenseSlotId').value = cfg.adsenseSlotId || '';
@@ -3487,11 +4102,21 @@
             modalEmp.classList.remove('hidden');
             modalEmp.classList.add('flex');
           } else if (action === 'delete-emp') {
-            state.employees = state.employees.filter(function (item) { return item.id !== id; });
-            state.activeEmployeeId = state.employees.length > 0 ? state.employees[0].id : '';
-            saveState();
-            renderAll();
-            showToast('Đã xóa ' + emp.name);
+            const calc = computeEmployeePayroll(emp, state.activeMonth);
+            openConfirmDeleteModal({
+              title: 'Xóa sinh viên: ' + emp.name + '?',
+              subtitle: 'Cảnh báo mất dữ liệu chấm công cá nhân',
+              message: 'Bạn có chắc chắn muốn xóa sinh viên "' + emp.name + '" cùng toàn bộ lịch chấm công và bảng lương của bạn này không?',
+              stats: 'Đang có: ' + emp.baseDays + ' ca (' + (emp.totalWorkHours || 0) + 'h) • Lương tháng: ' + formatCurrency(calc.netPay),
+              confirmText: 'Xóa sinh viên',
+              onConfirm: function () {
+                state.employees = state.employees.filter(function (item) { return item.id !== id; });
+                state.activeEmployeeId = state.employees.length > 0 ? state.employees[0].id : '';
+                saveState();
+                renderAll();
+                showToast('Đã xóa ' + emp.name);
+              }
+            });
           }
         });
         // Timesheet Sub-tabs
@@ -3601,10 +4226,20 @@
           const btn = e.target.closest('button[data-action="delete-log"]');
           if (!btn) return;
           const id = btn.getAttribute('data-id');
-          state.logs = state.logs.filter(function (l) { return l.id !== id; });
-          saveState();
-          renderAll();
-          showToast('Đã xóa bản ghi');
+          const targetLog = (state.logs || []).find(function (l) { return l.id === id; });
+          openConfirmDeleteModal({
+            title: 'Xóa nhật ký chấm công?',
+            subtitle: 'Xác nhận xóa lịch sử vào/ra ca',
+            message: 'Bạn có chắc chắn muốn xóa dòng nhật ký chấm công ngày ' + (targetLog ? targetLog.date : '') + ' này không?',
+            stats: targetLog ? ('Ca làm: ' + (targetLog.shift || '') + ' • Giờ vào/ra: ' + targetLog.inTime + ' - ' + (targetLog.outTime || '--:--')) : 'Thao tác này không thể hoàn tác.',
+            confirmText: 'Xóa bản ghi',
+            onConfirm: function () {
+              state.logs = state.logs.filter(function (l) { return l.id !== id; });
+              saveState();
+              renderAll();
+              showToast('Đã xóa bản ghi');
+            }
+          });
         });
         document.getElementById('leaveRequestsContainer').addEventListener('click', function (e) {
           const btn = e.target.closest('button[data-action]');

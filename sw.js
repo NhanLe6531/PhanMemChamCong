@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cham-cong-sv-v2';
+const CACHE_NAME = 'cham-cong-sv-v5';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (event) => {
@@ -19,7 +19,12 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
+  const url = event.request.url || '';
+  // Không can thiệp vào ads.txt, robots.txt hoặc script của Google AdSense
+  if (url.includes('googlesyndication.com') || url.includes('ads.txt') || url.includes('robots.txt') || url.includes('doubleclick.net')) {
+    return;
+  }
   event.respondWith(
-    caches.match(event.request).then((cached) => cached || fetch(event.request))
+    fetch(event.request).catch(() => caches.match(event.request))
   );
 });
